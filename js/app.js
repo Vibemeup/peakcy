@@ -1,9 +1,9 @@
-// Fade-in on load
+// ---------- Fade-in on load (fixes black page) ----------
 document.addEventListener('DOMContentLoaded', () => {
   document.body.style.opacity = '1';
 });
 
-// Mobile Menu Toggle
+// ---------- Mobile Menu Toggle ----------
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
 
@@ -11,8 +11,13 @@ if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
     const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
     menuToggle.setAttribute('aria-expanded', String(!isExpanded));
-    if (!isExpanded) mobileMenu.removeAttribute('hidden');
-    else mobileMenu.setAttribute('hidden', '');
+    if (!isExpanded) {
+      mobileMenu.removeAttribute('hidden');
+    } else {
+      mobileMenu.setAttribute('hidden', '');
+    }
+    // Clean up focus outline box on tap
+    menuToggle.blur();
   });
 
   mobileMenu.querySelectorAll('a').forEach(link => {
@@ -30,7 +35,7 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-// Smooth scrolling
+// ---------- Smooth scrolling ----------
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
@@ -40,17 +45,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const nav = document.querySelector('.navbar');
     const navHeight = nav ? nav.offsetHeight : 0;
-    window.scrollTo({ top: target.offsetTop - navHeight - 20, behavior: 'smooth' });
+    window.scrollTo({
+      top: target.offsetTop - navHeight - 20,
+      behavior: 'smooth'
+    });
   });
 });
 
-// Navbar scroll effect
+// ---------- Navbar scroll effect ----------
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) navbar.classList.add('scrolled');
-    else navbar.classList.remove('scrolled');
+    if (window.scrollY > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
   }, { passive: true });
 }
 
-// (Form handling placeholder)
+// ---------- (Form handling placeholder – add your own if needed) ----------
