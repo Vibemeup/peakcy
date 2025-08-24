@@ -546,3 +546,44 @@ a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid var(--ac
   /* Slightly smaller hero CTA */
   .cta-primary { padding: 0.9rem 1.6rem; font-size: 0.95rem; }
 }
+
+/* --- Socials heading --- */
+.socials-heading{
+  margin: 0.5rem 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--text-secondary);
+  opacity: .9;
+}
+
+/* --- Social icon pills --- */
+.social-links-footer{
+  display:flex; justify-content:center; gap:1rem; margin:1rem 0 1.5rem;
+}
+.social-links-footer .social-link{
+  display:flex; align-items:center; justify-content:center;
+  width:44px; height:44px; border-radius:50%;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.social-links-footer .social-link:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(10,223,131,.25);
+  border-color: var(--accent);
+  background: rgba(10,223,131,.08);
+}
+.social-links-footer .social-link img{
+  width:22px; height:22px; display:block;
+}
+
+/* remove old overrides */
+.social-links-footer a[aria-label="Instagram"]:hover svg,
+.social-links-footer a[aria-label="TikTok"]:hover svg { fill: currentColor; }
+
+/* --- Accent green hover for icons --- */
+.social-links-footer .social-link:hover img {
+  filter: invert(62%) sepia(20%) saturate(951%) hue-rotate(100deg) brightness(95%) contrast(96%);
+}
