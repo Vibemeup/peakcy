@@ -112,3 +112,8 @@ main{padding-top:64px}
   .hero.hero--simple{padding:3rem 16px 1.6rem}
   .section-narrow{padding:2.2rem 16px}
 }
+
+/* ===== HOT PATCH: force page visible & above background layer ===== */
+body { opacity: 1 !important; transition: none !important; }
+body::before { display: none !important; }          /* remove overlay that can sit on top */
+header, main, section, footer { position: relative; z-index: 1; }  /* ensure content above any bg */
