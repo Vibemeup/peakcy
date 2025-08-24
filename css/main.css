@@ -453,3 +453,41 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     border-radius: 999px;
   }
 }
+
+/* === Mobile: make Apply form fields nearly full-screen wide === */
+@media (max-width: 768px) {
+  #apply .form-container {
+    max-width: none;
+    width: 100%;
+  }
+
+  #apply .form-wrap {
+    margin: 0;
+    border-radius: 0; /* optional: square edges so it feels flush */
+    padding: 1.5rem 1rem;
+  }
+
+  /* Inputs & textarea fill the screen width */
+  #apply .form-group input,
+  #apply .form-group textarea {
+    width: 100%;
+    max-width: 100%;  /* kill any max-width */
+    font-size: 17px;  /* avoids zoom on iOS */
+    padding: 1.1rem 1rem;
+    border-radius: 10px;
+  }
+
+  /* More height for textarea */
+  #apply .form-group textarea {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  /* Button spans entire width too */
+  #apply .submit-btn {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1.2rem 1.6rem;
+    border-radius: 999px;
+  }
+}
