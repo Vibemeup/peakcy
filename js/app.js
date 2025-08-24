@@ -13,7 +13,7 @@ if (menuToggle && mobileMenu) {
         }
     });
 
-    // Close menu when clicking a link
+    // Close on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.setAttribute('hidden', '');
@@ -21,7 +21,7 @@ if (menuToggle && mobileMenu) {
         });
     });
 
-    // Close on Escape key
+    // Close on Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
             mobileMenu.setAttribute('hidden', '');
@@ -29,17 +29,6 @@ if (menuToggle && mobileMenu) {
         }
     });
 }
-
-// Fade-in on scroll
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -66,61 +55,4 @@ window.addEventListener('scroll', () => {
     }
 }, { passive: true });
 
-// Form handling
-const form = document.getElementById('applicationForm');
-const formMessage = document.getElementById('formMessage');
-const inputs = form.querySelectorAll('input[required]');
-
-inputs.forEach(input => {
-    input.addEventListener('blur', e => {
-        const field = e.target;
-        field.style.borderColor = field.value.trim() ? 'var(--accent)' : 'var(--red)';
-    });
-});
-
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    let isValid = true;
-    inputs.forEach(input => {
-        const value = input.value.trim();
-        if (!value) {
-            input.style.borderColor = 'var(--red)';
-            isValid = false;
-        } else {
-            input.style.borderColor = 'var(--accent)';
-        }
-    });
-    if (!isValid) {
-        showFormMessage('Please fill all required fields.', 'error');
-        return;
-    }
-
-    const submitBtn = form.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Submitting...';
-    submitBtn.disabled = true;
-
-    try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        showFormMessage('🎉 Application received! We\'ll review and contact you within 48 hours.', 'success');
-        form.reset();
-        inputs.forEach(input => input.style.borderColor = '');
-    } catch (error) {
-        showFormMessage('Something went wrong. Please try again.', 'error');
-    } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-});
-
-function showFormMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = `form-message ${type}-message`;
-    formMessage.style.display = 'block';
-    formMessage.scrollIntoView({ behavior: 'smooth' });
-}
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.opacity = '1';
-});
+// Form handling (keep your existing)
