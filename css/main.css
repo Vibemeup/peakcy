@@ -240,7 +240,6 @@ body::before {
     margin-bottom: 2rem;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 16px rgba(10,223,131,0.1);
-    animation: fadeInUp 0.8s ease-out;
 }
 
 .hero h1 {
@@ -259,9 +258,10 @@ body::before {
 .hero p {
     font-size: 1.3rem;
     color: white;
-    margin-bottom: 4rem; /* Increased space above CTA */
+    margin-bottom: 3.5rem;
     max-width: 800px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     line-height: 1.6;
     text-shadow: 0 1px 4px rgba(0,0,0,0.7);
 }
@@ -312,19 +312,95 @@ section {
 }
 
 /* About Section */
+.about {
+    background: 
+        linear-gradient(135deg, var(--bg-secondary) 0%, rgba(10, 10, 10, 0.9) 100%),
+        radial-gradient(circle at 50% 50%, rgba(10, 223, 131, 0.05) 0%, transparent 70%);
+    position: relative;
+    overflow: hidden;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle, rgba(10, 223, 131, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: drift 30s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-50px, -50px) rotate(360deg); }
+}
+
+.about-hero {
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    text-align: center;
+    line-height: 1.6;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-unified-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    border-top: 4px solid transparent;
+}
+
+.about-unified-card:hover {
+    border-top-color: var(--accent);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-glow);
+}
+
+.about-unified-text {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
 .about-finale {
-    background: linear-gradient(135deg, var(--accent-subtle), rgba(212,175,55,0.1));
+    background: linear-gradient(135deg, var(--accent-subtle), rgba(212, 175, 55, 0.1));
     border: 2px solid;
     border-image: var(--gradient) 1;
     border-radius: var(--radius);
-    padding: 2.5rem;
-    font-size: 1.3rem;
+    padding: 2.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--accent);
     font-style: italic;
     backdrop-filter: blur(20px);
     box-shadow: var(--shadow-glow);
-    margin-top: 3rem;
+    margin: 3rem auto;
+    max-width: 800px;
+    line-height: 1.6;
+}
+
+.about-mission {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 2rem;
+    line-height: 1.5;
 }
 
 /* Identity Section */
@@ -352,8 +428,6 @@ section {
     backdrop-filter: blur(10px);
     text-align: center;
     border-top: 4px solid transparent;
-    transform: translateY(0);
-    transition: all 0.4s ease;
 }
 
 .identity-card::before {
@@ -393,8 +467,6 @@ section {
     font-weight: 700;
     margin-bottom: 1.8rem;
     color: var(--text-primary);
-    position: relative;
-    z-index: 2;
 }
 
 .identity-header svg {
@@ -417,8 +489,6 @@ section {
 
 .identity-list {
     list-style: none;
-    position: relative;
-    z-index: 2;
     text-align: left;
     max-width: 360px;
     margin: 0 auto;
@@ -432,7 +502,6 @@ section {
     color: var(--text-secondary);
     line-height: 1.55;
     transition: all 0.3s ease;
-    padding: 0.3rem 0;
 }
 
 .identity-list li:hover {
@@ -513,7 +582,6 @@ section {
     overflow: hidden;
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow);
-    transform: translateY(0);
 }
 
 .pillar-card::before {
@@ -627,7 +695,7 @@ section {
 }
 
 .form-container {
-    max-width: 500px; /* 🔴 Narrower form */
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -812,6 +880,12 @@ section {
     .identity-card {
         padding: 2.2rem;
     }
+    .about-hero {
+        font-size: 1.2rem;
+    }
+    .about-mission {
+        font-size: 1.15rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -834,6 +908,9 @@ section {
     }
     .section-title {
         font-size: 1.9rem;
+    }
+    .about-unified-card {
+        padding: 1.8rem;
     }
 }
 
