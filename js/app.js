@@ -1,9 +1,4 @@
-// Enhanced Intersection Observer for fade-in animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
+// Intersection Observer for fade-in animations
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -15,11 +10,9 @@ const observer = new IntersectionObserver((entries) => {
             }
         }
     });
-}, observerOptions);
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-});
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -28,9 +21,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             const navHeight = document.querySelector('.navbar').offsetHeight;
-            const targetPosition = target.offsetTop - navHeight - 20;
             window.scrollTo({
-                top: targetPosition,
+                top: target.offsetTop - navHeight - 20,
                 behavior: 'smooth'
             });
         }
@@ -39,26 +31,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
-let lastScrollY = window.scrollY;
-
-function updateNavbar() {
-    const scrollY = window.scrollY;
-    if (scrollY > 100) {
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-
-    if (scrollY > lastScrollY && scrollY > 200) {
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        navbar.style.transform = 'translateY(0)';
-    }
-    lastScrollY = scrollY;
-}
-
-window.addEventListener('scroll', () => {
-    requestAnimationFrame(updateNavbar);
 }, { passive: true });
 
 // Form validation
@@ -67,53 +45,26 @@ const formMessage = document.getElementById('formMessage');
 const inputs = form.querySelectorAll('input[required]');
 
 inputs.forEach(input => {
-    input.addEventListener('blur', validateField);
-    input.addEventListener('input', clearFieldError);
+    input.addEventListener('blur', e => {
+        const field = e.target;
+        field.style.borderColor = field.value.trim() ? 'var(--accent)' : 'var(--red)';
+    });
 });
-
-function validateField(e) {
-    const field = e.target;
-    const value = field.value.trim();
-    field.style.borderColor = '';
-    if (!value) {
-        field.style.borderColor = 'var(--red)';
-        return false;
-    }
-    if (field.type === 'email') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            field.style.borderColor = 'var(--red)';
-            return false;
-        }
-    }
-    if (field.type === 'tel') {
-        const phoneRegex = /^[\+]?[\d\s\-\(\)]{8,}$/;
-        if (!phoneRegex.test(value)) {
-            field.style.borderColor = 'var(--red)';
-            return false;
-        }
-    }
-    field.style.borderColor = 'var(--accent)';
-    return true;
-}
-
-function clearFieldError(e) {
-    const field = e.target;
-    if (field.value.trim()) {
-        field.style.borderColor = '';
-    }
-}
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
     let isValid = true;
     inputs.forEach(input => {
-        if (!validateField({target: input})) {
+        const value = input.value.trim();
+        if (!value) {
+            input.style.borderColor = 'var(--red)';
             isValid = false;
+        } else {
+            input.style.borderColor = 'var(--accent)';
         }
     });
     if (!isValid) {
-        showFormMessage('Please check the highlighted fields and try again.', 'error');
+        showFormMessage('Please fill all required fields.', 'error');
         return;
     }
 
@@ -139,19 +90,10 @@ function showFormMessage(message, type) {
     formMessage.textContent = message;
     formMessage.className = `form-message ${type}-message`;
     formMessage.style.display = 'block';
-    formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    if (type === 'success') {
-        setTimeout(() => {
-            formMessage.style.opacity = '0';
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-                formMessage.style.opacity = '1';
-            }, 300);
-        }, 8000);
-    }
+    formMessage.scrollIntoView({ behavior: 'smooth' });
 }
 
 // Initial load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     document.body.style.opacity = '1';
 });
