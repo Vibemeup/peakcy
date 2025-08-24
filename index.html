@@ -20,19 +20,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-  <!-- CSS (corrected path) -->
+  <!-- CSS (correct path) -->
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR (logo word is one piece: “PeakCY”, icon + word in green) -->
   <header id="navbar" class="navbar">
     <div class="nav-container">
       <a class="logo" href="/">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M3 18l7-12 5 9 3-5 3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span class="peak">Peak</span><span class="cy">CY</span>
+        <span class="logo-word">PeakCY</span>
       </a>
 
       <nav class="nav-links">
@@ -61,102 +61,102 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero" id="top">
-    <div class="hero-content">
-      <span class="badge">Ambitious · Driven · United</span>
-      <h1>We’re only <span class="peak-word">PEAK</span>ing the best.</h1>
-      <p>A private community for those committed to growth — in body, mind, and life. Together, we rise to the peak.</p>
-      <a class="cta-primary" href="#apply">Apply to Join</a>
-    </div>
-  </section>
+  <!-- SIMPLE HERO (no giant background, no resizing surprises) -->
+  <main>
+    <section id="top" class="hero hero--simple">
+      <p class="kicker">Ambitious. Driven. United.</p>
+      <h1>We’re only PEAKing the best.</h1>
+      <p class="subtitle">
+        A private community for those committed to growth — in body, mind, and life.
+        Together, we rise to the peak.
+      </p>
+      <p><a class="cta-primary" href="#apply">Apply to Join</a></p>
+    </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <h2 class="section-title">The Peak Awaits — And We’re Going Together.</h2>
-    <p class="about-hero">We are dreamers, builders, and go-getters—diverse in journey, united in purpose. From every city, every background, and every walk of life, we come together to push further, grow stronger, and climb higher.</p>
+    <!-- ABOUT (that one paragraph is green) -->
+    <section id="about" class="section-narrow">
+      <h2 class="section-title">The Peak Awaits — And We’re Going Together.</h2>
 
-    <div class="about-unified-card">
-      <p class="about-unified-text">We share knowledge. We celebrate progress. We lift each other when the path gets tough. Because the best life isn’t lived in comfort—it’s lived at the Peak—together.</p>
-    </div>
+      <p class="about-p green-text">
+        We are dreamers, builders, and go‑getters—diverse in journey, united in purpose. From every city,
+        every background, and every walk of life, we come together to push further, grow stronger, and climb higher.
+      </p>
 
-    <p class="about-mission">When the right people unite, with fire in their hearts and purpose in their steps, reaching the top isn’t just possible… <strong>it’s inevitable.</strong></p>
-    <p class="about-finale">This is more than a community. This is a movement. And we want you with us. Welcome to PeakCY. Our mission: nothing less than the peak.</p>
-  </section>
+      <p class="about-p">
+        We share knowledge. We celebrate progress. We lift each other when the path gets tough. Because the best life
+        isn’t lived in comfort—it’s lived at the Peak—together.
+      </p>
+      <p class="about-p">
+        When the right people unite, with fire in their hearts and purpose in their steps, reaching the top isn’t just
+        possible… it’s inevitable.
+      </p>
+      <p class="about-p">
+        This is more than a community. This is a movement. And we want you with us. Welcome to PeakCY. Our mission:
+        nothing less than the peak.
+      </p>
+    </section>
 
-  <!-- IDENTITY -->
-  <section class="identity" id="fit">
-    <h2 class="section-title">Are You One of Us?</h2>
-    <div class="identity-grid">
-      <article class="identity-card">
-        <div class="identity-header">
-          <span class="identity-badge yes">✓</span>
-          <span>You belong if you are</span>
+    <!-- FIT (plain lists, like your original) -->
+    <section id="fit" class="section-narrow">
+      <h2 class="section-title">Are You One of Us?</h2>
+      <div class="lists-two">
+        <div>
+          <h3>You belong if you are</h3>
+          <ul>
+            <li><strong>Ambitious</strong> — always striving to grow, not settle.</li>
+            <li><strong>Team‑Minded</strong> — growth is a team sport, not a solo climb.</li>
+            <li><strong>Curious</strong> — open‑minded, positive, and always learning.</li>
+            <li><strong>Accountable</strong> — you bring energy and follow through.</li>
+            <li><strong>Driven</strong> — you want to be around people who raise the bar.</li>
+          </ul>
         </div>
-        <ul class="identity-list">
-          <li><strong>Ambitious</strong> — always striving to grow, not settle.</li>
-          <li><strong>Team-Minded</strong> — growth is a team sport, not a solo climb.</li>
-          <li><strong>Curious</strong> — open-minded, positive, and always learning.</li>
-          <li><strong>Accountable</strong> — you bring energy and follow through.</li>
-          <li><strong>Driven</strong> — you want to be around people who raise the bar.</li>
-        </ul>
-      </article>
-
-      <article class="identity-card">
-        <div class="identity-header">
-          <span class="identity-badge no">×</span>
-          <span>This isn’t for</span>
+        <div>
+          <h3>This isn’t for</h3>
+          <ul>
+            <li><strong>Blamers</strong> — avoid responsibility.</li>
+            <li><strong>Talkers</strong> — talk the talk but never walk the walk.</li>
+            <li><strong>Settlers</strong> — choose average when capable of more.</li>
+            <li><strong>Excuse‑Makers</strong> — always finding reasons why not.</li>
+            <li><strong>Drainers</strong> — take energy instead of adding to it.</li>
+          </ul>
         </div>
-        <ul class="identity-list">
-          <li><strong>Blamers</strong> — avoid responsibility.</li>
-          <li><strong>Talkers</strong> — talk the talk but never walk the walk.</li>
-          <li><strong>Settlers</strong> — choose average when capable of more.</li>
-          <li><strong>Excuse-Makers</strong> — always finding reasons why not.</li>
-          <li><strong>Drainers</strong> — take energy instead of adding to it.</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <!-- PILLARS -->
-  <section id="pillars">
-    <h2 class="section-title">The PeakCY Pillars</h2>
-    <p class="section-lead pillars-lead">Mindset, Health, Wealth, Community — the four forces that move us upward together.</p>
-
-    <div class="pillars-grid">
-      <article class="pillar-card"><div class="pillar-icon">+</div><h3>Mindset</h3><p>Build unshakable focus, discipline, and clarity that turns obstacles into opportunities.</p></article>
-      <article class="pillar-card"><div class="pillar-icon">♥</div><h3>Health</h3><p>Real fitness. Real nutrition. Real energy that fuels your peak performance.</p></article>
-      <article class="pillar-card"><div class="pillar-icon">★</div><h3>Wealth</h3><p>Smarter ways to earn, grow, and protect your future with proven strategies.</p></article>
-      <article class="pillar-card"><div class="pillar-icon">⚑</div><h3>Community</h3><p>Masterminds, challenges, and events that accelerate your climb to the top.</p></article>
-    </div>
-  </section>
-
-  <!-- QUOTE -->
-  <section class="quote-section">
-    <div class="quote-box">
-      <p class="quote">“Excellence is not a single act, but a habit formed in the company of those who demand more — from themselves, and from you.”</p>
-      <p class="quote-author">— Inspired by Aristotle</p>
-    </div>
-  </section>
-
-  <!-- APPLY -->
-  <section class="apply" id="apply">
-    <div class="form-container">
-      <h2 class="section-title">Apply to Join</h2>
-      <p class="section-lead">Admission is selective. Tell us why you belong at the peak.</p>
-
-      <div class="form-wrap">
-        <form id="applicationForm" method="POST" action="https://formspree.io/f/your-id-here">
-          <div class="form-group"><label>Full Name *<input name="fullName" required></label></div>
-          <div class="form-group"><label>Phone *<input name="phone" required inputmode="tel" autocomplete="tel"></label></div>
-          <div class="form-group"><label>Email *<input name="email" type="email" required autocomplete="email"></label></div>
-          <div class="form-group"><label>Why do you want to join PeakCY?<textarea name="reason" rows="4"></textarea></label></div>
-          <button type="submit" class="submit-btn">Submit Application</button>
-        </form>
-        <p id="thanks" class="copyright" style="display:none;margin-top:1rem">Thanks! We’ll be in touch.</p>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- PILLARS (plain text, no icon cards) -->
+    <section id="pillars" class="section-narrow">
+      <h2 class="section-title">The PeakCY Pillars</h2>
+      <ul class="plain-list">
+        <li><strong>Mindset:</strong> Build unshakable focus, discipline, and clarity.</li>
+        <li><strong>Health:</strong> Real fitness. Real nutrition. Real energy.</li>
+        <li><strong>Wealth:</strong> Smarter ways to earn, grow, and protect your future.</li>
+        <li><strong>Community:</strong> Masterminds, challenges, and events that accelerate your climb.</li>
+      </ul>
+      <blockquote class="plain-quote">
+        “Excellence is not a single act, but a habit formed in the company of those who demand more — from themselves, and from you.”
+        <br><small>— Inspired by Aristotle</small>
+      </blockquote>
+    </section>
+
+    <!-- APPLY (unchanged form) -->
+    <section class="apply" id="apply">
+      <div class="form-container">
+        <h2 class="section-title">Apply to Join</h2>
+        <p class="section-lead">Admission is selective. Tell us why you belong at the peak.</p>
+
+        <div class="form-wrap">
+          <form id="applicationForm" method="POST" action="https://formspree.io/f/your-id-here">
+            <div class="form-group"><label>Full Name *<input name="fullName" required></label></div>
+            <div class="form-group"><label>Phone *<input name="phone" required inputmode="tel" autocomplete="tel"></label></div>
+            <div class="form-group"><label>Email *<input name="email" type="email" required autocomplete="email"></label></div>
+            <div class="form-group"><label>Why do you want to join PeakCY?<textarea name="reason" rows="4"></textarea></label></div>
+            <button type="submit" class="submit-btn">Submit Application</button>
+          </form>
+          <p id="thanks" class="copyright" style="display:none;margin-top:1rem">Thanks! We’ll be in touch.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -170,7 +170,7 @@
     </div>
   </footer>
 
-  <!-- JS (corrected path) -->
+  <!-- JS -->
   <script src="/js/main.js"></script>
 </body>
 </html>

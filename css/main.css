@@ -243,3 +243,40 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* Tighten vertical rhythm a bit */
 section { padding-block: 3.8rem }
 @media (min-width: 769px) { section { padding-block: 4.6rem } }
+
+/* === PeakCY “classic” vibe overrides === */
+
+/* brand color + logo */
+:root { --accent: #0adf83; } /* keep your original green */
+.logo-icon { stroke: var(--accent) !important; }
+.logo .logo-word { color: var(--accent) !important; font-weight: 900; letter-spacing: .2px; }
+
+/* simple hero (no big background) */
+.hero.hero--simple {
+  background: none !important;
+  min-height: auto !important;
+  padding: 5rem 1.2rem 2.2rem !important;
+  text-align: center;
+}
+.hero.hero--simple::before,
+.hero.hero--simple::after { display: none !important; }
+.hero.hero--simple .cta-primary { margin-top: .6rem; }
+
+/* narrower content like before */
+.section-narrow { max-width: 900px; margin: 0 auto; padding: 3rem 1.2rem; }
+.section-narrow .section-title { text-align: left; }
+
+/* that specific paragraph in green */
+.green-text { color: var(--accent) !important; }
+
+/* plain pillars */
+.plain-list { margin: .6rem 0 0 1.25rem; }
+.plain-list li { margin: .3rem 0; }
+.plain-quote { margin-top: 1rem; color: #a3a3a3; border-left: 3px solid var(--accent); padding-left: .8rem; }
+
+/* two simple columns that stack on mobile */
+.lists-two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+@media (max-width: 768px){ .lists-two { grid-template-columns: 1fr; } }
+
+/* keep nav tidy; don’t blow up sizes */
+.section-title { font-size: clamp(1.8rem, 4.5vw, 2.4rem) !important; }
