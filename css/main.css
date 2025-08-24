@@ -372,3 +372,84 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition: opacity .2s ease, transform .2s ease;
 }
 .mobile-menu .mobile-social:hover img{ opacity: 1; transform: translateY(-1px); }
+
+/* ===== Mobile-only form sizing polish ===== */
+@media (max-width: 768px) {
+  /* make the form area feel wider */
+  #apply .form-container {
+    max-width: 680px; /* wider than default on phones */
+    width: 100%;
+  }
+  #apply .form-wrap {
+    padding: 2rem 1.5rem;   /* slightly tighter padding */
+  }
+
+  /* easier to type, avoids iOS zoom */
+  #apply .form-group label {
+    font-size: 1.1rem;
+  }
+  #apply .form-group input,
+  #apply .form-group textarea {
+    font-size: 16px;        /* important for mobile UX */
+    padding: 1.1rem 1.2rem;
+    border-radius: 14px;
+  }
+  #apply .form-group textarea {
+    min-height: 140px;      /* more comfortable textarea height */
+  }
+
+  /* button: mobile label is shorter, keep proportions nice */
+  #apply .submit-btn {
+    font-size: 1.05rem;
+    padding: 1.1rem 1.6rem;
+    border-radius: 999px;
+  }
+}
+
+/* ===== Mobile: make Apply form full-width & comfy to type ===== */
+@media (max-width: 768px) {
+  /* remove section side padding just for Apply */
+  #apply { padding-left: 0; padding-right: 0; }
+
+  /* let the container + form use the whole width */
+  #apply .container,
+  #apply .form-container {
+    max-width: none;
+    width: 100%;
+  }
+
+  /* card sits close to edges with a small safe gutter */
+  #apply .form-wrap {
+    margin: 0;                 /* no extra margins */
+    padding: 1.6rem 1.1rem;    /* tighter padding so inputs feel wider */
+    border-radius: 20px;
+  }
+  /* iOS/Android safe-area insets + minimum 12px gutter */
+  @supports (padding: max(0px)) {
+    #apply .form-wrap {
+      margin-left: max(12px, env(safe-area-inset-left));
+      margin-right: max(12px, env(safe-area-inset-right));
+    }
+  }
+
+  /* bigger, easier-to-type fields */
+  #apply .form-group label { font-size: 1.1rem; }
+  #apply .form-group input,
+  #apply .form-group textarea {
+    width: 100%;
+    font-size: 17px;           /* avoids iOS zoom; more readable */
+    padding: 1.1rem 1rem;
+    border-radius: 14px;
+  }
+  #apply .form-group textarea {
+    min-height: 180px;         /* more vertical room */
+  }
+
+  /* button keeps proportions */
+  #apply .submit-btn {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1.1rem 1.6rem;
+    border-radius: 999px;
+  }
+}
