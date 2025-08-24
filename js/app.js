@@ -1,9 +1,9 @@
-// ------- Fade-in on load (also backed up by tiny inline snippet) -------
+// Fade-in safety
 document.addEventListener('DOMContentLoaded', () => {
   document.body.style.opacity = '1';
 });
 
-// ------- Mobile Menu Toggle -------
+// Mobile Menu Toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
 
@@ -13,10 +13,9 @@ if (menuToggle && mobileMenu) {
     menuToggle.setAttribute('aria-expanded', String(!isExpanded));
     if (!isExpanded) mobileMenu.removeAttribute('hidden');
     else mobileMenu.setAttribute('hidden', '');
-    menuToggle.blur(); // clear focus outline after tap
+    menuToggle.blur();
   });
 
-  // Close menu when a link is tapped
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       mobileMenu.setAttribute('hidden', '');
@@ -24,7 +23,6 @@ if (menuToggle && mobileMenu) {
     });
   });
 
-  // ESC to close
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
       mobileMenu.setAttribute('hidden', '');
@@ -33,7 +31,7 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-// ------- Smooth scrolling (desktop + mobile) -------
+// Smooth scrolling (+ mobile: scroll directly to form card)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
@@ -41,7 +39,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(href);
     if (!target) return;
 
-    // On mobile, #apply should scroll to the form card itself
     if (href === '#apply' && window.innerWidth <= 768) {
       e.preventDefault();
       scrollToApplyForm();
@@ -67,14 +64,14 @@ function scrollToApplyForm() {
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
-// If user lands directly on #apply on mobile, align to the form
+// Align to #apply on mobile when landing directly at that hash
 document.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth <= 768 && location.hash === '#apply') {
     setTimeout(scrollToApplyForm, 0);
   }
 });
 
-// ------- Navbar scroll effect -------
+// Navbar scroll effect
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
@@ -83,7 +80,7 @@ if (navbar) {
   }, { passive: true });
 }
 
-// ------- Mobile: shorten button label (desktop unchanged) -------
+// Mobile: shorten button label
 document.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth <= 768) {
     const btn = document.querySelector('#applicationForm .submit-btn');
@@ -91,4 +88,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// (Form handling placeholder – wire up later if needed)
+// (Form handling placeholder – add your submit logic later if needed)
