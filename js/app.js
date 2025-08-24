@@ -13,6 +13,7 @@ if (menuToggle && mobileMenu) {
         }
     });
 
+    // Close menu when clicking a link
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.setAttribute('hidden', '');
@@ -20,6 +21,7 @@ if (menuToggle && mobileMenu) {
         });
     });
 
+    // Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
             mobileMenu.setAttribute('hidden', '');
