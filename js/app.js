@@ -1,16 +1,41 @@
-// Intersection Observer for fade-in animations
+// Mobile Menu Toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+
+if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        if (!isExpanded) {
+            mobileMenu.removeAttribute('hidden');
+        } else {
+            mobileMenu.setAttribute('hidden', '');
+        }
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.setAttribute('hidden', '');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
+            mobileMenu.setAttribute('hidden', '');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+// Fade-in on scroll
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            if (entry.target.classList.contains('identity-card') || 
-                entry.target.classList.contains('pillar-card')) {
-                const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
-                entry.target.style.transitionDelay = `${index * 0.1}s`;
-            }
         }
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
@@ -39,7 +64,7 @@ window.addEventListener('scroll', () => {
     }
 }, { passive: true });
 
-// Form validation
+// Form handling
 const form = document.getElementById('applicationForm');
 const formMessage = document.getElementById('formMessage');
 const inputs = form.querySelectorAll('input[required]');

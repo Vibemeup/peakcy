@@ -65,11 +65,16 @@
                     <span class="peak">Peak</span><span class="cy">CY</span>
                 </span>
             </a>
-            <div class="nav-links">
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="mobile-menu" hidden>
                 <a href="#about">About</a>
                 <a href="#edge">Pillars</a>
                 <a href="#apply">Apply</a>
-            </div>
+            </nav>
         </div>
     </nav>
 
@@ -92,8 +97,8 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title fade-in">PeakCY: We Rise Together, We Reach the Peak Together!</h2>
-            <div class="about-content fade-in">
+            <h2 class="section-title">The Peak Awaits - And We’re Rising Together.</h2>
+            <div class="about-content">
                 <p class="about-hero">
                     We are dreamers, builders, and go-getters—diverse in journey, united in purpose.
                     From every city, every background, and every walk of life, we come together to push further, grow stronger, and climb higher.
@@ -124,10 +129,10 @@
     <!-- Identity Section -->
     <section class="identity">
         <div class="container">
-            <h2 class="section-title fade-in">Are You One of Us?</h2>
-            <p class="section-lead fade-in">PeakCY is for people who want to climb further, faster, together.</p>
+            <h2 class="section-title">Are You One of Us?</h2>
+            <p class="section-lead">PeakCY is for people who want to climb further, faster, together.</p>
             <div class="identity-grid">
-                <div class="identity-card yes fade-in">
+                <div class="identity-card yes">
                     <div class="identity-header">
                         <span class="identity-badge yes">✓</span>
                         <span>You Belong If You Are</span>
@@ -140,7 +145,7 @@
                         <li><strong>Driven</strong> you want to be surrounded by people who raise the bar.</li>
                     </ul>
                 </div>
-                <div class="identity-card no fade-in">
+                <div class="identity-card no">
                     <div class="identity-header">
                         <span class="identity-badge no">×</span>
                         <span>This Isn't For</span>
@@ -160,12 +165,12 @@
     <!-- Pillars Section -->
     <section id="edge" class="pillars">
         <div class="container">
-            <h2 class="section-title fade-in">The PeakCY Pillars</h2>
-            <div class="pillars-lead fade-in">
+            <h2 class="section-title">The PeakCY Pillars</h2>
+            <div class="pillars-lead">
                 Every peak stands on a foundation. At PeakCY, ours is built on four pillars: mindset, health, wealth, and community. Together, they create balance, power, and sustainable growth.
             </div>
             <div class="pillars-grid">
-                <article class="pillar-card fade-in">
+                <article class="pillar-card">
                     <div class="pillar-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
@@ -177,7 +182,7 @@
                     <h3>Mindset</h3>
                     <p>Build unshakable focus, discipline, and clarity that turns obstacles into opportunities.</p>
                 </article>
-                <article class="pillar-card fade-in">
+                <article class="pillar-card">
                     <div class="pillar-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
@@ -186,7 +191,7 @@
                     <h3>Health</h3>
                     <p>Real fitness. Real nutrition. Real energy that fuels your peak performance.</p>
                 </article>
-                <article class="pillar-card fade-in">
+                <article class="pillar-card">
                     <div class="pillar-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <circle cx="12" cy="8" r="5"/>
@@ -198,7 +203,7 @@
                     <h3>Wealth</h3>
                     <p>Smarter ways to earn, grow, and protect your future with proven strategies.</p>
                 </article>
-                <article class="pillar-card fade-in">
+                <article class="pillar-card">
                     <div class="pillar-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -216,12 +221,12 @@
 
     <!-- Quote Section -->
     <section class="quote-section">
-        <div class="container fade-in">
-            <div class="quote-wrap">
-                <blockquote class="quote-box">
-                    <p class="quote">"Excellence is not a single act, but a habit formed in the company of those who demand more — from themselves, and from you."</p>
-                    <cite class="quote-author">— Inspired by Aristotle</cite>
-                </blockquote>
+        <div class="container">
+            <div class="quote-box">
+                <p class="quote">
+                    "Excellence is not a single act, but a habit formed in the company of those who demand more — from themselves, and from you."
+                </p>
+                <cite class="quote-author">— Inspired by Aristotle</cite>
             </div>
         </div>
     </section>
@@ -229,10 +234,10 @@
     <!-- Apply Section -->
     <section id="apply" class="apply">
         <div class="container">
-            <h2 class="section-title fade-in">Apply to Join</h2>
-            <p class="section-lead fade-in">Admission is selective. Tell us why you belong at the peak.</p>
+            <h2 class="section-title">Apply to Join</h2>
+            <p class="section-lead">Admission is selective. Tell us why you belong at the peak.</p>
             <div class="form-container">
-                <div class="form-wrap fade-in">
+                <div class="form-wrap">
                     <form id="applicationForm" novalidate>
                         <div class="form-group">
                             <label for="fullName">Full Name <span aria-label="required">*</span></label>
