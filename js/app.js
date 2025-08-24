@@ -13,7 +13,6 @@ if (menuToggle && mobileMenu) {
         }
     });
 
-    // Close on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenu.setAttribute('hidden', '');
@@ -21,7 +20,6 @@ if (menuToggle && mobileMenu) {
         });
     });
 
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
             mobileMenu.setAttribute('hidden', '');
