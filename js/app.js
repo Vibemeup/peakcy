@@ -1,77 +1,46 @@
-// Fade-in safety
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.style.opacity = '1';
-});
+// Clean any accidental ?fullName=&... on load
+if (location.search) {
+  history.replaceState(null, "", location.pathname + location.hash);
+}
 
 // Mobile Menu Toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
-
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
-    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', String(!isExpanded));
-    if (!isExpanded) mobileMenu.removeAttribute('hidden');
-    else mobileMenu.setAttribute('hidden', '');
-    menuToggle.blur();
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    if (isOpen) mobileMenu.setAttribute('hidden', '');
+    else mobileMenu.removeAttribute('hidden');
   });
 
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
       mobileMenu.setAttribute('hidden', '');
       menuToggle.setAttribute('aria-expanded', 'false');
     });
   });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-  });
 }
 
-// Smooth scrolling (+ mobile: scroll directly to form card)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const href = this.getAttribute('href');
+// Smooth scroll (account for fixed navbar)
+function scrollToTarget(el) {
+  const nav = document.getElementById('navbar');
+  const navH = nav ? nav.offsetHeight : 0;
+  const y = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
     if (!href || href === '#') return;
     const target = document.querySelector(href);
     if (!target) return;
-
-    if (href === '#apply' && window.innerWidth <= 768) {
-      e.preventDefault();
-      scrollToApplyForm();
-      return;
-    }
-
     e.preventDefault();
-    const nav = document.querySelector('.navbar');
-    const navHeight = nav ? nav.offsetHeight : 0;
-    window.scrollTo({
-      top: target.offsetTop - navHeight - 20,
-      behavior: 'smooth'
-    });
+    scrollToTarget(target);
   });
 });
 
-function scrollToApplyForm() {
-  const nav = document.querySelector('.navbar');
-  const navHeight = nav ? nav.offsetHeight : 0;
-  const formWrap = document.querySelector('#apply .form-wrap') || document.querySelector('#apply');
-  if (!formWrap) return;
-  const top = formWrap.getBoundingClientRect().top + window.scrollY - navHeight - 12;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
-// Align to #apply on mobile when landing directly at that hash
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.innerWidth <= 768 && location.hash === '#apply') {
-    setTimeout(scrollToApplyForm, 0);
-  }
-});
-
-// Navbar scroll effect
+// Navbar shadow on scroll
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
@@ -80,12 +49,28 @@ if (navbar) {
   }, { passive: true });
 }
 
-// Mobile: shorten button label
+// Apply form: submit via POST, show thank-you
+const form = document.getElementById('applicationForm');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    try {
+      await fetch(form.action, { method: 'POST', body: fd });
+      form.reset();
+      const thanks = document.getElementById('thanks');
+      if (thanks) thanks.style.display = 'block';
+      history.replaceState(null, "", location.pathname + location.hash);
+    } catch (err) {
+      // Optional: surface a friendly error
+      alert('Submission failed. Please try again later.');
+    }
+  });
+}
+
+// If someone lands directly at #apply on mobile, align nicely
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.innerWidth <= 768) {
-    const btn = document.querySelector('#applicationForm .submit-btn');
-    if (btn) btn.firstChild.nodeValue = 'Submit Application';
+  if (location.hash && document.querySelector(location.hash)) {
+    scrollToTarget(document.querySelector(location.hash));
   }
 });
-
-// (Form handling placeholder – add your submit logic later if needed)
