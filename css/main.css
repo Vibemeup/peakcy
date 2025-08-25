@@ -1208,14 +1208,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .mobile-menu a{ padding: .75rem .9rem; }
 }
 
-/* --- Fix section title centering after inline-block tweak --- */
-.section-title{
+/* ---- HARD CENTER SECTION TITLES (desktop + any layout) ---- */
+:where(body) :where(.section-title){
+  /* works inside normal flow, flex, or grid parents */
   display: block !important;
+  width: 100% !important;
   margin-left: auto !important;
   margin-right: auto !important;
   text-align: center !important;
+  float: none !important;             /* in case any legacy float slipped in */
+  align-self: center !important;      /* if parent is flex/grid */
+  justify-self: center !important;    /* if parent is grid */
 }
-.section-title::after{
+
+/* keep the fancy underline centered */
+:where(body) :where(.section-title)::after{
   left: 50% !important;
   transform: translateX(-50%) !important;
+}
+
+/* desktop-specific guard, in case a large-screen rule elsewhere forces left */
+@media (min-width: 1025px){
+  :where(body) :where(.section-title){
+    text-align: center !important;
+  }
 }
