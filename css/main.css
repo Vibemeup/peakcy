@@ -1120,3 +1120,90 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   outline-offset: 3px;
   border-radius: 12px;
 }
+
+/* ===== Mobile menu polish (compact panel + crisp "X") ===== */
+
+/* 1) Rebuild hamburger/X using absolute bars so the cross is perfect */
+.menu-toggle{
+  position: relative;
+  width: 32px; height: 22px;
+}
+.menu-toggle span{
+  position: absolute; left: 0; right: 0;
+  height: 2px; background: var(--text-primary);
+  border-radius: 2px; transition: transform .22s ease, opacity .2s ease;
+}
+/* place bars at 0 / middle / bottom */
+.menu-toggle span:nth-child(1){ top: 0; }
+.menu-toggle span:nth-child(2){ top: 10px; }
+.menu-toggle span:nth-child(3){ top: 20px; }
+
+/* turn into a perfect X centered on the middle line */
+.menu-toggle[aria-expanded="true"] span:nth-child(1){
+  transform: translateY(10px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] span:nth-child(2){
+  opacity: 0;
+}
+.menu-toggle[aria-expanded="true"] span:nth-child(3){
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* 2) Compact dropdown panel (right-aligned; not full-screen) */
+.mobile-menu{
+  position: fixed;
+  top: 68px;
+  right: 1rem;           /* anchor to the right */
+  left: auto;            /* override 100% width */
+  width: min(420px, 92vw);
+  max-height: min(70vh, 560px);
+  overflow: auto;
+  padding: .75rem 0;
+  border-radius: 14px;
+  background: rgba(5,5,7,.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+  gap: .35rem;
+}
+
+/* keep show/hide transitions */
+.mobile-menu[hidden]{ opacity:0; visibility:hidden; transform: translateY(-10px); }
+.mobile-menu:not([hidden]){ opacity:1; visibility:visible; transform: translateY(0); }
+
+/* 3) Left-align items inside the panel + tighter row height */
+.mobile-menu a{
+  width: 100%;
+  text-align: left;                 /* left aligned for readability */
+  justify-content: flex-start;
+  padding: .8rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.mobile-menu a:hover{
+  background: rgba(255,255,255,.06);
+  color: var(--text-primary);
+}
+
+/* 4) Make the "Apply" CTA stand out but still compact */
+.mobile-menu a[href="#apply"]{
+  background: var(--gradient);
+  color: var(--bg-primary);
+  font-weight: 800;
+  box-shadow: 0 10px 28px rgba(10,223,131,.28);
+}
+.mobile-menu a[href="#apply"]:hover{
+  filter: saturate(110%);
+}
+
+/* 5) Small phones: even tighter, keep the panel feel */
+@media (max-width: 480px){
+  .mobile-menu{
+    right: .75rem;
+    width: 92vw;
+    max-height: 65vh;
+    border-radius: 12px;
+  }
+  .mobile-menu a{ padding: .75rem .9rem; }
+}

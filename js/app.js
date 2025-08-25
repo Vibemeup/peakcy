@@ -164,3 +164,30 @@ document.addEventListener('DOMContentLoaded', () => {
     revealables.forEach(el => io.observe(el));
   }
 });
+
+// --- Close mobile menu on resize-up and click-outside
+(function(){
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  if (!menuToggle || !mobileMenu) return;
+
+  // close on resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && !mobileMenu.hasAttribute('hidden')) {
+      mobileMenu.setAttribute('hidden', '');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // click outside to close
+  document.addEventListener('click', (e) => {
+    if (mobileMenu.hasAttribute('hidden')) return;
+    const withinMenu = mobileMenu.contains(e.target);
+    const onToggle   = menuToggle.contains(e.target);
+    if (!withinMenu && !onToggle) {
+      mobileMenu.setAttribute('hidden', '');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
