@@ -49,33 +49,32 @@ if (navbar) {
   }, { passive: true });
 }
 
-// Apply form: submit via POST, show thank-you
+// Apply form: submit via POST, show thank-you (if #thanks exists)
 const form = document.getElementById('applicationForm');
 if (form) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
     try {
-      await fetch(form.action, { method: 'POST', body: fd });
+      await fetch(form.action || '#', { method: 'POST', body: fd });
       form.reset();
       const thanks = document.getElementById('thanks');
       if (thanks) thanks.style.display = 'block';
       history.replaceState(null, "", location.pathname + location.hash);
     } catch (err) {
-      // Optional: surface a friendly error
       alert('Submission failed. Please try again later.');
     }
   });
 }
 
-// If someone lands directly at #apply on mobile, align nicely
+// Align nicely when landing on a hash
 document.addEventListener('DOMContentLoaded', () => {
   if (location.hash && document.querySelector(location.hash)) {
     scrollToTarget(document.querySelector(location.hash));
   }
 });
 
-// ============ Micro reveal on scroll (no layout changes) ============
+// Micro reveal on scroll (no layout changes)
 const revealables = document.querySelectorAll(
   '.about-unified-card, .identity-card, .pillar-card, .quote-box, .form-wrap'
 );
@@ -84,7 +83,6 @@ revealables.forEach(el => {
   el.style.transform = 'translateY(12px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
 });
-
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -94,5 +92,4 @@ const io = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.16 });
-
 revealables.forEach(el => io.observe(el));
