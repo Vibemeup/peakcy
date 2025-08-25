@@ -721,3 +721,124 @@ body.menu-open{ overflow: hidden; }
   border-top: 4px solid var(--accent) !important; /* keep the accent bar only */
 }
 
+/* =========================
+   MENU: no overflow, no auto-highlight, X pinned
+   ========================= */
+
+/* Stop the green pill on "Apply" inside the mobile menu */
+.mobile-menu a[href="#apply"]{
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+/* Keep the X fixed and visible while open */
+@media (max-width: 768px){
+  .menu-toggle[aria-expanded="true"]{
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+    right: calc(env(safe-area-inset-right, 0px) + 14px) !important;
+    left: auto !important;
+    z-index: 5000 !important;
+  }
+}
+
+/* Enforce panel width & gutters; fully hide when closed */
+.mobile-menu{
+  box-sizing: border-box;
+  max-width: min(420px, 92vw) !important;
+  border-radius: 14px !important;
+}
+@media (max-width: 768px){
+  .mobile-menu{
+    left: .75rem !important;
+    right: .75rem !important;
+    max-width: calc(100vw - 1.5rem) !important;
+  }
+}
+.mobile-menu[hidden]{ display: none !important; }
+.nav-container{ overflow: visible; }
+body.menu-open{ overflow: hidden; }
+
+/* =========================
+   PILLARS: icon centered, text left
+   ========================= */
+.pillars-grid .pillar-card{ text-align: left !important; }
+.pillars-grid .pillar-icon{
+  margin: 0 auto .9rem auto !important;  /* center icon block */
+}
+
+/* =========================
+   QUOTE + APPLY FORM width = pillar/cards width
+   ========================= */
+.quote-box{
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border: none !important;                   /* remove outer border you circled */
+  border-top: 4px solid var(--accent) !important; /* keep accent bar */
+}
+.apply .form-container{ max-width: 1200px !important; }
+
+/* Consistent mobile gutters */
+@media (max-width: 768px){
+  .quote-section .container,
+  .apply .container{ padding-left: 1rem !important; padding-right: 1rem !important; }
+}
+
+/* =========================
+   FOOTER SOCIALS: ensure no overlay steals clicks
+   ========================= */
+.footer{ position: relative; z-index: 3; }
+.apply .form-wrap{ position: relative; z-index: 1; }
+.footer .social-link{ pointer-events: auto; }
+
+/* Defensive: ignore pseudo overlays in footer */
+.footer *::before, .footer *::after{ pointer-events: none; }
+
+/* =========================
+   HERO (mobile): remove moving shine, show more photo, keep CTA glow
+   ========================= */
+@media (max-width: 768px){
+  .hero::after, body::after{ display: none !important; } /* kill animated shine */
+  .hero::before{
+    background: linear-gradient(
+      180deg,
+      rgba(5,5,7,0.78) 0%,
+      rgba(5,5,7,0.58) 48%,
+      rgba(5,5,7,0.78) 100%
+    ) !important;
+  }
+  .cta-primary{ box-shadow: 0 14px 36px rgba(10,223,131,.32) !important; }
+}
+
+/* =========================
+   NICE MID‑PAGE BG like the hero
+   (subtle aurora behind the Quote section)
+   ========================= */
+.quote-section{
+  position: relative;
+  overflow: hidden;
+}
+.quote-section::after{
+  content:"";
+  position:absolute; inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(800px 400px at 15% 30%, rgba(10,223,131,.08), transparent 60%),
+    radial-gradient(700px 350px at 85% 70%, rgba(212,175,55,.06), transparent 60%);
+  filter: blur(20px) saturate(115%);
+  opacity:.9;
+  mix-blend-mode: screen;
+}
+
+/* =========================
+   Tidy up CTA gap below hero (mobile)
+   ========================= */
+@media (max-width: 768px){
+  .hero{ padding-bottom: 0 !important; min-height: calc(100vh - 68px) !important; }
+  .hero p{ margin-bottom: 1rem !important; }
+  #about{ padding-top: .75rem !important; }
+}
