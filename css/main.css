@@ -1234,63 +1234,38 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   }
 }
 
-/* ===== Apply page mobile fixes: full-width form + centered title ===== */
+/* ===== Mobile form fields: full width with small gutter ===== */
 @media (max-width: 768px){
-  /* 1) Remove horizontal gutters in the Apply section */
-  .apply{
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* 2) Remove container padding only inside Apply */
-  .apply .container{
+  /* Remove hard max-width, let form span viewport */
+  .apply .form-container,
+  .apply .form-wrap{
     max-width: none !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* 3) Let the form really use the viewport width */
-  .form-container{
-    max-width: none !important;
-    width: 100vw !important;          /* true edge-to-edge */
+    width: 100% !important;
     margin: 0 !important;
-  }
-
-  /* 4) Keep nice inner padding but no card edges on mobile */
-  .form-wrap{
     border-radius: 0 !important;
-    border-left: none !important;
-    border-right: none !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;  /* gutter */
   }
 
-  /* 5) Inputs: full width + comfy typing (prevents iOS zoom) */
-  .form-group input,
-  .form-group textarea{
+  /* Inputs + textarea */
+  .apply .form-group input,
+  .apply .form-group textarea{
     width: 100% !important;
-    font-size: 16px !important;
+    font-size: 16px !important;     /* avoid iOS zoom */
+    border-radius: 8px !important;  /* keep slight rounding */
   }
-  .form-group input{ min-height: 52px; }
-  .form-group textarea{ min-height: 140px; }
 
-  /* 6) Center the "Apply to Join" heading explicitly in this section */
-  .apply .section-title{
-    display: block !important;
+  /* Submit button */
+  .apply .submit-btn{
     width: 100% !important;
-    margin-inline: auto !important;
-    text-align: center !important;
-  }
-  .apply .section-title::after{
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    margin-top: 1rem !important;
+    border-radius: 50px !important; /* keep CTA pill look */
   }
 }
 
-/* Tiny phones: slightly tighter inner padding */
 @media (max-width: 480px){
-  .form-wrap{
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+  .apply .form-wrap{
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important; /* slightly tighter on tiny phones */
   }
 }
