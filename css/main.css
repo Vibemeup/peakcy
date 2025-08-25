@@ -842,3 +842,154 @@ body.menu-open{ overflow: hidden; }
   .hero p{ margin-bottom: 1rem !important; }
   #about{ padding-top: .75rem !important; }
 }
+
+/* =========================================================
+   A) MOBILE MENU — full overlay that never overflows
+   ========================================================= */
+@media (max-width: 768px){
+  /* Make panel a proper overlay that cannot exceed viewport width */
+  .mobile-menu{
+    position: fixed !important;
+    top: 68px !important;          /* under the navbar */
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    padding: 0.75rem 0.75rem !important;
+
+    background: rgba(5,5,7,.96) !important;
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
+
+    z-index: 5000 !important;
+  }
+
+  /* Remove default highlight on Apply inside menu */
+  .mobile-menu a[href="#apply"]{
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    border-radius: 10px !important;
+  }
+
+  /* Pin the hamburger/X when open so it never drifts */
+  .menu-toggle[aria-expanded="true"]{
+    position: fixed !important;
+    top: 14px !important;
+    right: 14px !important;
+    left: auto !important;
+    z-index: 5001 !important;
+  }
+
+  /* Lock scroll while menu open */
+  body.menu-open{ overflow: hidden !important; }
+}
+.mobile-menu[hidden]{ display: none !important; }
+.nav-container{ overflow: visible; } /* ensure the pinned X isn’t clipped */
+
+/* =========================================================
+   B) PILLARS — icon centered, text left (for consistency)
+   ========================================================= */
+.pillars-grid .pillar-card{ text-align: left !important; }
+.pillars-grid .pillar-icon{ margin: 0 auto .9rem auto !important; }
+
+/* =========================================================
+   C) WIDTH CONSISTENCY — Quote + Apply form = pillar width
+   ========================================================= */
+/* The site’s main content width is defined by .container (max 1200px + padding).
+   Make the boxes inside use the full container width just like pillar cards. */
+
+.quote-section .container,
+.apply .container{
+  max-width: 1200px !important;    /* same as pillars container */
+  padding-left: 2rem !important;   /* match default container padding */
+  padding-right: 2rem !important;
+}
+
+.quote-box,
+.apply .form-wrap{
+  width: 100% !important;          /* stretch to full container width */
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: var(--radius);
+}
+
+/* Remove the outer border from quote, keep the green top bar */
+.quote-box{
+  border: none !important;
+  border-top: 4px solid var(--accent) !important;
+}
+
+/* =========================================================
+   D) FOOTER SOCIALS — never trigger form focus/submission
+   ========================================================= */
+.footer{ position: relative; z-index: 20; }
+.apply{ position: relative; z-index: 1; }
+.apply .form-wrap{ position: relative; z-index: 1; }
+
+/* Kill pointer events of decorative overlays above the footer */
+.apply *::before, .apply *::after{ pointer-events: none; }
+.footer .social-link{ pointer-events: auto; }
+
+/* =========================================================
+   E) HERO (mobile) — keep CTA glow, remove moving shine,
+      show more of the photo
+   ========================================================= */
+@media (max-width: 768px){
+  .hero::after, body::after{ display: none !important; }
+  .hero::before{
+    background: linear-gradient(
+      180deg,
+      rgba(5,5,7,0.78) 0%,
+      rgba(5,5,7,0.58) 48%,
+      rgba(5,5,7,0.78) 100%
+    ) !important;
+  }
+  .cta-primary{ box-shadow: 0 14px 36px rgba(10,223,131,.32) !important; }
+}
+
+/* =========================================================
+   F) Mid‑page “mountain” accent — subtle image behind Quote
+   (no HTML changes required)
+   ========================================================= */
+.quote-section{
+  position: relative;
+  overflow: hidden;
+}
+.quote-section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, rgba(5,5,7,.65) 0%, rgba(5,5,7,.85) 100%),
+    url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
+  opacity: .28;              /* subtle */
+  z-index: 0;
+}
+.quote-section .container,
+.quote-box{
+  position: relative;
+  z-index: 1;                /* keep text above the image */
+}
+
+/* Slight breathing around the mid‑page image */
+.quote-section{ padding-top: 3rem; padding-bottom: 3rem; }
+
+/* =========================================================
+   G) Small tidy so CTA doesn’t float with a big gap on phones
+   ========================================================= */
+@media (max-width: 768px){
+  .hero{ padding-bottom: 0 !important; min-height: calc(100vh - 68px) !important; }
+  .hero p{ margin-bottom: 1rem !important; }
+  #about{ padding-top: .75rem !important; }
+}

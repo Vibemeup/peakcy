@@ -1,5 +1,5 @@
 /* ==================================================
-   PeakCY — app.js (menu + UX hardening)
+   PeakCY — app.js (robust mobile menu + strict form)
    ================================================== */
 
 function getNavHeight() {
@@ -13,65 +13,73 @@ function smoothScrollTo(el) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure page is visible
   document.body.style.opacity = '1';
 
-  /* Navbar shadow on scroll */
+  /* Navbar shadow */
   const navbar = document.getElementById('navbar');
   const setScrolled = () => navbar && navbar.classList.toggle('scrolled', window.scrollY > 8);
   setScrolled();
   window.addEventListener('scroll', setScrolled, { passive: true });
 
-  /* -------- Mobile menu (robust, no overflow, X pinned) -------- */
+  /* ----------------- Mobile menu (full overlay, bulletproof) ----------------- */
   const toggle = document.querySelector('.menu-toggle');
   const menu   = document.querySelector('.mobile-menu');
 
   if (toggle && menu) {
-    let isAnimating = false;
+    let openState = false;
 
     const open = () => {
-      if (isAnimating || !menu.hidden) return;
-      isAnimating = true;
+      if (openState) return;
+      openState = true;
 
-      // ensure correct display box and width constraints before transition
-      menu.style.display = 'flex';
+      // full overlay mode
       menu.hidden = false;
+      menu.style.display = 'flex';
+      document.body.classList.add('menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
 
-      requestAnimationFrame(() => {
-        toggle.setAttribute('aria-expanded', 'true');
-        document.body.classList.add('menu-open');   // lock scroll
-        isAnimating = false;
-      });
+      // pin X so it never “runs away”
+      toggle.style.position = 'fixed';
+      toggle.style.top = '14px';
+      toggle.style.right = '14px';
+      toggle.style.left = 'auto';
+      toggle.style.zIndex = '5001';
     };
 
     const close = () => {
-      if (isAnimating || menu.hidden) return;
-      isAnimating = true;
+      if (!openState) return;
+      openState = false;
 
       toggle.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('menu-open');
 
-      requestAnimationFrame(() => {
-        menu.hidden = true;
-        menu.style.display = '';
-        isAnimating = false;
-      });
+      menu.hidden = true;
+      menu.style.display = '';
+
+      // restore toggle positioning
+      toggle.style.position = '';
+      toggle.style.top = '';
+      toggle.style.right = '';
+      toggle.style.left = '';
+      toggle.style.zIndex = '';
     };
 
-    toggle.addEventListener('click', () => (menu.hidden ? open() : close()));
-    // close on link tap
+    toggle.addEventListener('click', () => (openState ? close() : open()));
+    // Close when tapping any link in the menu
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-    // close on ESC
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    // outside click closes
+    // Close on outside click
     document.addEventListener('click', (e) => {
-      if (menu.hidden) return;
+      if (!openState) return;
       if (!menu.contains(e.target) && !toggle.contains(e.target)) close();
     });
-    // desktop resize safety
+    // ESC closes
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    // Safety on resize
     window.addEventListener('resize', () => { if (innerWidth > 768) close(); });
   }
 
-  /* Smooth anchor scroll (offset for fixed navbar) */
+  /* Smooth anchor scroll (offset fixed navbar) */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
@@ -84,23 +92,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Form "thanks" (strict) ---------- */
+  /* ----------------- Form: "thanks" only on real submit ----------------- */
   const form = document.getElementById('applicationForm');
   const thanks = document.getElementById('thanks');
-  let submitViaBtn = false;
 
   if (form) {
-    const submitBtn = form.querySelector('.submit-btn');
-    if (submitBtn) {
-      submitBtn.addEventListener('click', () => { submitViaBtn = true; }, true);
-    }
+    let lastClickedIsSubmit = false;
+
+    form.addEventListener('mousedown', (e) => {
+      lastClickedIsSubmit = !!(e.target && e.target.classList && e.target.classList.contains('submit-btn'));
+    }, true);
 
     form.addEventListener('submit', (e) => {
-      // Only trigger when the actual submit button submits the form
-      const fromBtn = (e.submitter && e.submitter.classList && e.submitter.classList.contains('submit-btn')) || submitViaBtn;
-      if (!fromBtn) return;  // ignore any stray submits
+      const viaBtn =
+        (e.submitter && e.submitter.classList && e.submitter.classList.contains('submit-btn')) ||
+        lastClickedIsSubmit;
+
+      if (!viaBtn) {
+        // Ignore phantom submits (e.g., from labels/overlays)
+        lastClickedIsSubmit = false;
+        return;
+      }
+
       e.preventDefault();
-      submitViaBtn = false;
+      lastClickedIsSubmit = false;
 
       form.reset();
       if (thanks) {
@@ -110,11 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Footer socials — open normally (no interference) */
+  /* Footer & mobile socials: never hijack to form */
   document.querySelectorAll('.footer .social-link, .mobile-menu .mobile-social').forEach(a => {
     a.addEventListener('click', (e) => {
-      // let the browser handle external links
-      e.stopPropagation();
+      e.stopPropagation(); // prevent any accidental bubbling to labels/overlays
     });
   });
 });
