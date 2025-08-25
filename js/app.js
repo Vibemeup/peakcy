@@ -1,110 +1,98 @@
-/* ===============================
-   PeakCY – app.js (mobile fixes + fade-in)
-   =============================== */
-
-// Fade-in on load (fix black page if CSS starts at opacity:0)
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.style.opacity = '1';
-});
-
-/* ---------- Helpers ---------- */
-function getNavHeight() {
-  const nav = document.querySelector('.navbar');
-  return nav ? nav.offsetHeight : 0;
+// Clean any accidental ?fullName=&... on load
+if (location.search) {
+  history.replaceState(null, "", location.pathname + location.hash);
 }
 
-function scrollToApplyForm() {
-  const formWrap = document.querySelector('#apply .form-wrap') || document.querySelector('#apply');
-  if (!formWrap) return;
-  const top = formWrap.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-/* ---------- Mobile Menu Toggle ---------- */
+// Mobile Menu Toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
-
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
-    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', String(!isExpanded));
-    if (!isExpanded) {
-      mobileMenu.removeAttribute('hidden');
-    } else {
-      mobileMenu.setAttribute('hidden', '');
-    }
-    // remove tap focus glow on mobile
-    menuToggle.blur();
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+    if (isOpen) mobileMenu.setAttribute('hidden', '');
+    else mobileMenu.removeAttribute('hidden');
   });
 
-  // Close menu when any link inside the menu is clicked
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
       mobileMenu.setAttribute('hidden', '');
       menuToggle.setAttribute('aria-expanded', 'false');
     });
   });
-
-  // Close on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-  });
 }
 
-/* ---------- Smooth scrolling (with mobile #apply special case) ---------- */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const href = this.getAttribute('href');
+// Smooth scroll (account for fixed navbar)
+function scrollToTarget(el) {
+  const nav = document.getElementById('navbar');
+  const navH = nav ? nav.offsetHeight : 0;
+  const y = el.getBoundingClientRect().top + window.scrollY - navH - 12;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
     if (!href || href === '#') return;
-
-    // If it's the Apply link on mobile, scroll to the form card specifically
-    if (isMobile() && href === '#apply') {
-      e.preventDefault();
-      scrollToApplyForm();
-      return;
-    }
-
-    // Normal smooth scroll for other anchors
     const target = document.querySelector(href);
     if (!target) return;
     e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.scrollY - getNavHeight() - 20;
-    window.scrollTo({ top, behavior: 'smooth' });
+    scrollToTarget(target);
   });
 });
 
-// If a user lands on /#apply directly on mobile, adjust scroll after load
-document.addEventListener('DOMContentLoaded', () => {
-  if (isMobile() && location.hash === '#apply') {
-    // allow layout to settle first
-    setTimeout(scrollToApplyForm, 0);
-  }
-});
-
-/* ---------- Navbar scroll effect ---------- */
+// Navbar shadow on scroll
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    if (window.scrollY > 100) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
   }, { passive: true });
 }
 
-/* ---------- Mobile-only: shorten submit button label ---------- */
+// Apply form: submit via POST, show thank-you
+const form = document.getElementById('applicationForm');
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    try {
+      await fetch(form.action, { method: 'POST', body: fd });
+      form.reset();
+      const thanks = document.getElementById('thanks');
+      if (thanks) thanks.style.display = 'block';
+      history.replaceState(null, "", location.pathname + location.hash);
+    } catch (err) {
+      // Optional: surface a friendly error
+      alert('Submission failed. Please try again later.');
+    }
+  });
+}
+
+// If someone lands directly at #apply on mobile, align nicely
 document.addEventListener('DOMContentLoaded', () => {
-  if (!isMobile()) return;
-  const btn = document.querySelector('#applicationForm .submit-btn');
-  if (btn) btn.textContent = 'Submit Application';
+  if (location.hash && document.querySelector(location.hash)) {
+    scrollToTarget(document.querySelector(location.hash));
+  }
 });
 
-// (Form handling placeholder – add your own if needed)
+// ============ Micro reveal on scroll (no layout changes) ============
+const revealables = document.querySelectorAll(
+  '.about-unified-card, .identity-card, .pillar-card, .quote-box, .form-wrap'
+);
+revealables.forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.16 });
+
+revealables.forEach(el => io.observe(el));
