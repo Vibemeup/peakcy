@@ -1233,3 +1233,64 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     text-align: center !important;
   }
 }
+
+/* ===== Apply page mobile fixes: full-width form + centered title ===== */
+@media (max-width: 768px){
+  /* 1) Remove horizontal gutters in the Apply section */
+  .apply{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 2) Remove container padding only inside Apply */
+  .apply .container{
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 3) Let the form really use the viewport width */
+  .form-container{
+    max-width: none !important;
+    width: 100vw !important;          /* true edge-to-edge */
+    margin: 0 !important;
+  }
+
+  /* 4) Keep nice inner padding but no card edges on mobile */
+  .form-wrap{
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* 5) Inputs: full width + comfy typing (prevents iOS zoom) */
+  .form-group input,
+  .form-group textarea{
+    width: 100% !important;
+    font-size: 16px !important;
+  }
+  .form-group input{ min-height: 52px; }
+  .form-group textarea{ min-height: 140px; }
+
+  /* 6) Center the "Apply to Join" heading explicitly in this section */
+  .apply .section-title{
+    display: block !important;
+    width: 100% !important;
+    margin-inline: auto !important;
+    text-align: center !important;
+  }
+  .apply .section-title::after{
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* Tiny phones: slightly tighter inner padding */
+@media (max-width: 480px){
+  .form-wrap{
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
