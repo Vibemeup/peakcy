@@ -511,3 +511,83 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
   .hero{ background-attachment: scroll !important; }
 }
+
+/* ================================
+   MOBILE POLISH HOT-FIX (≤768px)
+   ================================ */
+@media (max-width: 768px){
+
+  /* 1) Make content wider/easier to read on mobile */
+  .container{
+    padding-left: 1rem !important;   /* was 2rem */
+    padding-right: 1rem !important;
+  }
+
+  /* 2) Pillars: single column, less padding, left-aligned text */
+  .pillars-grid{
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  .pillar-card{
+    padding: 1rem !important;
+    text-align: left !important;
+    border-radius: 12px !important;
+  }
+  .pillar-icon{
+    margin: 0 0 .75rem 0 !important;   /* icon sits above text, left edge */
+  }
+  .pillar-icon svg{ width: 26px !important; height: 26px !important; }
+  .pillar-card p{
+    font-size: 1.02rem !important;
+    line-height: 1.55 !important;
+    max-width: 55ch;                   /* readable line length */
+  }
+
+  /* 3) Dropdown: simpler, readable, no huge CTA, full-width panel with small margins */
+  .mobile-menu{
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    width: auto !important;
+    max-width: none !important;
+    border-radius: 12px !important;
+    padding: 0.5rem 0 !important;
+  }
+  .mobile-menu a{
+    font-size: 1.05rem !important;
+    line-height: 1.3 !important;
+    padding: 0.8rem 0.9rem !important;
+  }
+  /* Make "Apply" look like the rest (no giant green pill inside the menu) */
+  .mobile-menu a[href="#apply"]{
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+    border-radius: 10px !important;
+  }
+  .mobile-menu a[href="#apply"]:hover{
+    background: rgba(255,255,255,.06) !important;
+  }
+
+  /* 4) Remove the green focus box around the hamburger/X on tap,
+        but keep keyboard focus visible for accessibility */
+  .menu-toggle:focus{ outline: none !important; }
+  .menu-toggle:focus-visible{
+    outline: 3px solid var(--accent) !important;
+    outline-offset: 3px !important;
+  }
+
+  /* 5) Footer: no stray bullets/markers; tighten padding */
+  .footer-links, .footer-links *{
+    list-style: none !important;
+  }
+  .footer-links li::marker{ content: none !important; }
+  .footer{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Extra guard for any footer list anywhere */
+.footer ul, .footer li{ list-style: none !important; padding-left: 0 !important; }
+.footer li::marker{ content: none !important; }
