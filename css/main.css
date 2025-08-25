@@ -600,3 +600,124 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     border-color: rgba(10,223,131,0.30) !important;
   }
 }
+
+/* =========================
+   1) MOBILE MENU — no overflow, no auto-highlight, X stays visible
+   ========================= */
+
+/* Stop the green pill on "Apply" inside the mobile menu */
+.mobile-menu a[href="#apply"]{
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+/* Keep the X fixed within the viewport while the menu is open */
+@media (max-width: 768px){
+  .menu-toggle[aria-expanded="true"]{
+    position: fixed !important;
+    top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+    right: calc(env(safe-area-inset-right, 0px) + 14px) !important;
+    left: auto !important;
+    z-index: 5000 !important; /* above the panel */
+  }
+}
+
+/* Enforce menu width inside the viewport on every open */
+.mobile-menu{
+  box-sizing: border-box;
+  max-width: min(420px, 92vw) !important;
+  border-radius: 14px !important;
+}
+@media (max-width: 768px){
+  .mobile-menu{
+    left: .75rem !important;
+    right: .75rem !important;
+    max-width: calc(100vw - 1.5rem) !important; /* viewport minus gutters */
+  }
+}
+/* Fully remove when hidden to avoid ghosts */
+.mobile-menu[hidden]{ display: none !important; }
+
+/* Avoid container clipping so the fixed X is clickable */
+.nav-container{ overflow: visible; }
+
+/* Prevent background scroll while menu is open */
+body.menu-open{ overflow: hidden; }
+
+/* =========================
+   2) PILLARS — icon centered, text left
+   ========================= */
+.pillars-grid .pillar-card{
+  text-align: left !important;
+}
+.pillars-grid .pillar-icon{
+  margin: 0 auto .9rem auto !important;  /* center the icon */
+}
+
+/* =========================
+   3) QUOTE & APPLY FORM — same width as pillars/cards
+   (use the main container width rather than a narrow 500/800 cap)
+   ========================= */
+.quote-box{
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.apply .form-container{
+  max-width: 1200px !important;
+}
+
+/* Keep mobile gutters consistent */
+@media (max-width: 768px){
+  .quote-section .container,
+  .apply .container{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* =========================
+   4) FOOTER SOCIALS — fix clicks focusing the textarea
+   (ensure footer is on top; disable stray overlays)
+   ========================= */
+.footer{ position: relative; z-index: 2; }
+.apply .form-wrap{ position: relative; z-index: 1; }
+.footer .social-link{ pointer-events: auto; }
+
+/* If any overlay from sections spans into footer, ignore clicks */
+.footer *::before,
+.footer *::after{ pointer-events: none; }
+
+/* =========================
+   5) HERO — mobile: remove moving shine, show more photo,
+      keep CTA green glow
+   ========================= */
+@media (max-width: 768px){
+  /* kill only the animated shine/aurora layers */
+  .hero::after, body::after{ display: none !important; }
+
+  /* lighten mask so image is more visible */
+  .hero::before{
+    background: linear-gradient(
+      180deg,
+      rgba(5,5,7,0.78) 0%,
+      rgba(5,5,7,0.58) 48%,
+      rgba(5,5,7,0.78) 100%
+    ) !important;
+  }
+
+  /* keep the button glow */
+  .cta-primary{
+    box-shadow: 0 14px 36px rgba(10,223,131,.32) !important;
+  }
+}
+
+/* === Remove outer border from quote box === */
+.quote-box{
+  border: none !important;       /* kill the visible outline */
+  border-top: 4px solid var(--accent) !important; /* keep the accent bar only */
+}
+
