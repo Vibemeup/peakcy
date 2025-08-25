@@ -742,3 +742,50 @@ body.menu-open { overflow: hidden !important; }
   font-size: 1.02rem;
   letter-spacing: .2px;
 }
+
+/* --- Mobile menu: enforce width + keep the X always above --- */
+.mobile-menu{
+  box-sizing: border-box;                      /* never overflow */
+  max-width: min(420px, 92vw) !important;      /* re-assert width on reopen */
+  left: auto !important;
+  right: 1rem !important;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px){
+  .mobile-menu{
+    left: .75rem !important;
+    right: .75rem !important;
+    max-width: calc(100vw - 1.5rem) !important; /* viewport minus gutters */
+  }
+}
+
+/* When hidden, fully remove from flow to avoid transition glitches */
+.mobile-menu[hidden]{ display: none !important; }
+
+/* Keep the toggle's X always on top and clickable */
+.menu-toggle{
+  position: relative;
+  z-index: 5000 !important;   /* above .mobile-menu */
+  pointer-events: auto !important;
+}
+
+/* --- Hero: remove seam and tighten vertical space on mobile --- */
+@media (max-width: 768px){
+  /* Slightly stronger mask to hide any faint line above the glow area */
+  .hero::before{
+    background: linear-gradient(
+      180deg,
+      rgba(5,5,7,0.94) 0%,
+      rgba(5,5,7,0.86) 50%,
+      rgba(5,5,7,0.94) 100%
+    ) !important;
+  }
+
+  /* Reduce space beneath the copy/CTA */
+  .hero p{ margin-bottom: 1.2rem !important; }       /* was 2.4rem */
+  .hero{ padding-bottom: 20px !important; }
+
+  /* Make the whole section a touch shorter so the CTA sits higher */
+  .hero{ min-height: calc(100vh - 68px - 60px) !important; } /* navbar + small buffer */
+}

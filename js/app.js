@@ -1,6 +1,10 @@
-// Clean accidental ?fullName=&... on load (from form autocompletes etc.)
+/* ==================================================
+   PeakCY — app.js (robust mobile menu + UX helpers)
+   ================================================== */
+
+// Clean accidental ?fullName=&... on load (from autofills, etc.)
 if (location.search) {
-  history.replaceState(null, "", location.pathname + location.hash);
+  try { history.replaceState(null, "", location.pathname + location.hash); } catch (_) {}
 }
 
 function getNavHeight() {
@@ -14,10 +18,12 @@ function smoothScrollTo(el) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Ensure page visible even if earlier inline scripts were delayed
+  // Ensure body is visible even if inline fallback missed
   try { document.body.style.opacity = '1'; } catch (_) {}
 
-  // --- Navbar shadow on scroll
+  /* ------------------------------
+     Navbar: add shadow when scrolled
+     ------------------------------ */
   const navbar = document.getElementById('navbar');
   const setScrolled = () => {
     if (!navbar) return;
@@ -26,32 +32,73 @@ document.addEventListener('DOMContentLoaded', () => {
   setScrolled();
   window.addEventListener('scroll', setScrolled, { passive: true });
 
-  // --- Mobile Menu Toggle + Body Scroll Lock
+  /* --------------------------------------
+     Mobile Menu Toggle (robust + scrolllock)
+     -------------------------------------- */
   const toggle = document.querySelector('.menu-toggle');
   const menu   = document.querySelector('.mobile-menu');
 
   if (toggle && menu) {
+    let isAnimating = false;
+
     const open = () => {
+      if (isAnimating || !menu.hidden) return;
+      isAnimating = true;
+
+      // Ensure width rules apply immediately; CSS transitions will handle opacity/transform
+      menu.style.display = 'flex';
       menu.hidden = false;
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.classList.add('menu-open');     // lock body scroll
+
+      // Next frame: mark expanded + lock scroll
+      requestAnimationFrame(() => {
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');   // CSS sets overflow:hidden
+        isAnimating = false;
+      });
     };
+
     const close = () => {
-      menu.hidden = true;
+      if (isAnimating || menu.hidden) return;
+      isAnimating = true;
+
       toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');  // unlock
+      document.body.classList.remove('menu-open');
+
+      // Hide on next frame so styles settle and we avoid "stuck" states
+      requestAnimationFrame(() => {
+        menu.hidden = true;
+        menu.style.display = ''; // release inline style; CSS controls on next open
+        isAnimating = false;
+      });
     };
 
     toggle.addEventListener('click', () => (menu.hidden ? open() : close()));
 
-    // Close on any menu link click
+    // Close when a link inside the menu is tapped
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
 
-    // Safety: close if resized to desktop
-    window.addEventListener('resize', () => { if (innerWidth > 768) close(); });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+
+    // Close if clicking outside the menu (and not on the toggle)
+    document.addEventListener('click', (e) => {
+      if (menu.hidden) return;
+      const clickedInsideMenu = menu.contains(e.target);
+      const clickedToggle = toggle.contains(e.target);
+      if (!clickedInsideMenu && !clickedToggle) close();
+    });
+
+    // Safety: if resized to desktop, close and reset
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) close();
+    });
   }
 
-  // --- Smooth scroll for in‑page anchors (including nav & footer)
+  /* -----------------------------------
+     Smooth in‑page anchors (with offset)
+     ----------------------------------- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
@@ -60,11 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!target) return;
       e.preventDefault();
       smoothScrollTo(target);
-      history.pushState(null, "", id);
+      try { history.pushState(null, "", id); } catch (_) {}
     });
   });
 
-  // --- Simple form handler (no backend yet): show thanks, clear fields
+  /* ----------------------------
+     Simple form "thanks" handler
+     ---------------------------- */
   const form = document.getElementById('applicationForm');
   const thanks = document.getElementById('thanks');
   if (form && thanks) {
