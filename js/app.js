@@ -3,6 +3,11 @@ if (location.search) {
   history.replaceState(null, "", location.pathname + location.hash);
 }
 
+// Make sure page is visible even if something delays earlier inline script
+document.addEventListener('DOMContentLoaded', () => {
+  try { document.body.style.opacity = '1'; } catch (_) {}
+});
+
 // Mobile Menu Toggle
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('.mobile-menu');
