@@ -29,14 +29,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Styles (ROOT‑relative + cache‑bust) -->
-  <link rel="stylesheet" href="/css/main.css?v=10">
+  <link rel="stylesheet" href="/css/main.css?v=11">
 
   <!-- Make page visible even if external JS fails -->
   <noscript><style>body{opacity:1!important}</style></noscript>
   <script>
-    // Fallback: if app.js fails, don't leave body at opacity:0
     document.addEventListener('DOMContentLoaded', function () {
-      document.body.style.opacity = '1';
+      try { document.body.style.opacity = '1'; } catch(e){}
     });
   </script>
 </head>
@@ -135,8 +134,8 @@
           </div>
           <ul class="identity-list" role="list">
             <li><strong>Ambitious</strong> always striving to grow, not settle.</li>
-            <li><strong>Team-Minded</strong> you believe growth is a team sport, not a solo climb.</li>
-            <li><strong>Curious</strong> open-minded, positive, and always willing to learn.</li>
+            <li><strong>Team‑Minded</strong> you believe growth is a team sport, not a solo climb.</li>
+            <li><strong>Curious</strong> open‑minded, positive, and always willing to learn.</li>
             <li><strong>Accountable</strong> you bring energy and follow through on your word.</li>
             <li><strong>Driven</strong> you want to be surrounded by people who raise the bar.</li>
           </ul>
@@ -150,7 +149,7 @@
             <li><strong>Blamers</strong> those who blame others instead of taking responsibility.</li>
             <li><strong>Talkers</strong> people who talk the talk but never walk the walk.</li>
             <li><strong>Settlers</strong> those who settle for average when they're capable of more.</li>
-            <li><strong>Excuse-Makers</strong> those who constantly come up with reasons why not.</li>
+            <li><strong>Excuse‑Makers</strong> those who constantly come up with reasons why not.</li>
             <li><strong>Drainers</strong> people who drain energy instead of contributing to it.</li>
           </ul>
         </div>
@@ -287,6 +286,6 @@
   </footer>
 
   <!-- Scripts (ROOT‑relative + cache‑bust) -->
-  <script src="/js/app.js?v=10" defer></script>
+  <script src="/js/app.js?v=11" defer></script>
 </body>
 </html>

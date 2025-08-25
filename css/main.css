@@ -601,13 +601,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .pillars-grid{
     grid-template-columns: 1fr !important;
     gap: 0.75rem !important;
-    /* pull the grid outward to reduce side space */
     margin-left: -0.75rem !important;
     margin-right: -0.75rem !important;
   }
 
   .pillar-card{
-    /* fuller width, comfy but compact */
     padding: 1rem 1rem !important;
     border-radius: 14px !important;
     text-align: left !important;
@@ -621,10 +619,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .pillar-card p{
     font-size: 1.05rem !important;
     line-height: 1.55 !important;
-    max-width: none !important;         /* don't constrain copy */
+    max-width: none !important;
   }
 
-  /* Quote card: make it wide (edge-to-edge feel) */
   .quote-section .container{
     padding-left: .5rem !important;
     padding-right: .5rem !important;
@@ -637,9 +634,111 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     border-radius: 14px !important;
     padding: 1.2rem !important;
   }
-  .quote{ font-size: 1.18rem !important; } /* slightly smaller for dense layout */
+  .quote{ font-size: 1.18rem !important; }
 
-  /* Footer: keep lists clean, remove any stray markers/characters */
   .footer ul, .footer li{ list-style: none !important; padding-left: 0 !important; }
   .footer li::marker{ content: none !important; }
+}
+
+
+/* ========= APPENDED FIXES (as agreed) ========= */
+
+/* 1) Menu: keep the "X" clickable/visible above the panel */
+.menu-toggle{
+  position: relative;
+  z-index: 4000 !important;
+  pointer-events: auto !important;
+}
+.menu-toggle span{ background:#fff; }
+
+/* Raise navbar above decorative layers */
+.navbar { z-index: 3500 !important; }
+
+/* 2) Make mobile menu truly on top and opaque for clarity */
+.mobile-menu{
+  z-index: 3000 !important;
+  background: rgba(5,5,7,.98) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,.60) !important;
+}
+
+/* 3) Lock body scroll when menu open */
+body.menu-open { overflow: hidden !important; }
+
+/* 4) Android ghosting fix for heavy cards */
+@media (max-width: 1024px){
+  .about-unified-card,
+  .identity-card,
+  .pillar-card,
+  .quote-box,
+  .form-wrap{
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,.35) !important;
+    contain: paint;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+/* 5) Pillars: center icon + title; description left */
+.pillar-icon{ margin-left:auto; margin-right:auto; }
+.pillar-card h3{ text-align:center; }
+.pillar-card p{ text-align:left; }
+@media (max-width:768px){
+  .pillar-card{ text-align:left !important; }
+  .pillar-card h3{ text-align:center !important; }
+  .pillar-icon{ margin-left:auto !important; margin-right:auto !important; }
+}
+
+/* 6) Pillar color/banding stabilization on mobile */
+@media (max-width: 1024px){
+  .pillars{ background:#070707; }
+  .pillar-card{
+    background: rgba(18,18,18,0.95) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background-clip: padding-box;
+  }
+  .pillar-icon{
+    background: rgba(10,223,131,0.10) !important;
+    border-color: rgba(10,223,131,0.30) !important;
+  }
+}
+
+/* 7) Hero glow fix on mobile (prevent overlay washing text) */
+@media (max-width:768px){
+  .hero::after{ display:none !important; }
+  .hero::before{
+    background: linear-gradient(135deg,
+      rgba(5,5,7,.92),
+      rgba(5,5,7,.78),
+      rgba(5,5,7,.92)) !important;
+  }
+  .hero-content{ position:relative; z-index:3 !important; }
+  .badge{
+    background: rgba(10,223,131,0.12) !important;
+    border-color: rgba(10,223,131,0.28) !important;
+    box-shadow: 0 8px 20px rgba(10,223,131,.20) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  body::after{ display:none !important; } /* pause aurora */
+}
+
+/* 8) Identity list reflow: title on its own line, text below */
+.identity-list li{
+  display:block !important;                 /* stack */
+  margin-bottom: 1.0rem;
+}
+.identity-list li strong{
+  display:block !important;
+  min-width: auto !important;
+  margin-bottom: .25rem;
+  font-size: 1.02rem;
+  letter-spacing: .2px;
 }
