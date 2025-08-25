@@ -1,134 +1,122 @@
-/* ==================================================
-   PeakCY — app.js (robust mobile menu + strict form)
-   ================================================== */
+/* ===========================================
+   PeakCY — Final JS (menu, smooth scroll, fixes)
+   =========================================== */
 
-function getNavHeight() {
-  const nav = document.getElementById('navbar');
-  return nav ? nav.offsetHeight : 0;
-}
-
-function smoothScrollTo(el) {
-  const y = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
-  window.scrollTo({ top: y, behavior: 'smooth' });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Ensure page is visible
-  document.body.style.opacity = '1';
-
-  /* Navbar shadow */
-  const navbar = document.getElementById('navbar');
-  const setScrolled = () => navbar && navbar.classList.toggle('scrolled', window.scrollY > 8);
-  setScrolled();
-  window.addEventListener('scroll', setScrolled, { passive: true });
-
-  /* ----------------- Mobile menu (full overlay, bulletproof) ----------------- */
+(function () {
+  const body = document.body;
+  const nav = document.querySelector('.navbar');
   const toggle = document.querySelector('.menu-toggle');
-  const menu   = document.querySelector('.mobile-menu');
+  const panel = document.querySelector('.mobile-menu');
 
-  if (toggle && menu) {
-    let openState = false;
+  // Guard for missing elements (SSR etc.)
+  if (!toggle || !panel) return;
 
-    const open = () => {
-      if (openState) return;
-      openState = true;
+  // -------------------------------
+  // Helpers
+  // -------------------------------
+  const openMenu = () => {
+    toggle.setAttribute('aria-expanded', 'true');
+    panel.classList.add('is-open');
+    panel.hidden = false;
+    body.classList.add('menu-open');
+  };
 
-      // full overlay mode
-      menu.hidden = false;
-      menu.style.display = 'flex';
-      document.body.classList.add('menu-open');
-      toggle.setAttribute('aria-expanded', 'true');
+  const closeMenu = () => {
+    toggle.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('is-open');
+    // Let the closing transition finish, then fully hide
+    setTimeout(() => { panel.hidden = true; }, 180);
+    body.classList.remove('menu-open');
+  };
 
-      // pin X so it never “runs away”
-      toggle.style.position = 'fixed';
-      toggle.style.top = '14px';
-      toggle.style.right = '14px';
-      toggle.style.left = 'auto';
-      toggle.style.zIndex = '5001';
-    };
+  const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
-    const close = () => {
-      if (!openState) return;
-      openState = false;
+  // Reset panel geometry on each open (prevents “drift” on some Androids)
+  const clampPanel = () => {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      panel.style.left = '0';
+      panel.style.right = '0';
+      panel.style.width = '100vw';
+      panel.style.maxWidth = '100vw';
+    } else {
+      panel.style.left = '';
+      panel.style.right = '';
+      panel.style.width = '';
+      panel.style.maxWidth = '';
+    }
+  };
 
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
-
-      menu.hidden = true;
-      menu.style.display = '';
-
-      // restore toggle positioning
-      toggle.style.position = '';
-      toggle.style.top = '';
-      toggle.style.right = '';
-      toggle.style.left = '';
-      toggle.style.zIndex = '';
-    };
-
-    toggle.addEventListener('click', () => (openState ? close() : open()));
-    // Close when tapping any link in the menu
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!openState) return;
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) close();
-    });
-    // ESC closes
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    // Safety on resize
-    window.addEventListener('resize', () => { if (innerWidth > 768) close(); });
-  }
-
-  /* Smooth anchor scroll (offset fixed navbar) */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if (!id || id.length < 2) return;
-      const target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      smoothScrollTo(target);
-      try { history.pushState(null, "", id); } catch (_) {}
-    });
+  // -------------------------------
+  // Toggle button
+  // -------------------------------
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    clampPanel();
+    isOpen() ? closeMenu() : openMenu();
   });
 
-  /* ----------------- Form: "thanks" only on real submit ----------------- */
-  const form = document.getElementById('applicationForm');
-  const thanks = document.getElementById('thanks');
-
-  if (form) {
-    let lastClickedIsSubmit = false;
-
-    form.addEventListener('mousedown', (e) => {
-      lastClickedIsSubmit = !!(e.target && e.target.classList && e.target.classList.contains('submit-btn'));
-    }, true);
-
-    form.addEventListener('submit', (e) => {
-      const viaBtn =
-        (e.submitter && e.submitter.classList && e.submitter.classList.contains('submit-btn')) ||
-        lastClickedIsSubmit;
-
-      if (!viaBtn) {
-        // Ignore phantom submits (e.g., from labels/overlays)
-        lastClickedIsSubmit = false;
-        return;
-      }
-
-      e.preventDefault();
-      lastClickedIsSubmit = false;
-
-      form.reset();
-      if (thanks) {
-        thanks.style.display = 'block';
-        setTimeout(() => { thanks.style.display = 'none'; }, 4500);
-      }
-    });
-  }
-
-  /* Footer & mobile socials: never hijack to form */
-  document.querySelectorAll('.footer .social-link, .mobile-menu .mobile-social').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent any accidental bubbling to labels/overlays
-    });
+  // Close on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) closeMenu();
   });
-});
+
+  // Close when clicking a link inside the panel
+  panel.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    // For internal anchors, scroll after closing
+    if (a.getAttribute('href')?.startsWith('#')) {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      closeMenu();
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+      }
+    } else {
+      // External links: just close menu and let the browser follow
+      closeMenu();
+    }
+  });
+
+  // Prevent accidental background scroll or layout drift
+  window.addEventListener('resize', () => {
+    if (isOpen()) clampPanel();
+  });
+  window.addEventListener('orientationchange', () => {
+    if (isOpen()) clampPanel();
+  });
+
+  // -------------------------------
+  // Smart smooth scroll (OPT-IN)
+  // Only anchors with [data-scroll] will smooth scroll.
+  // This avoids hijacking external/social links in the footer.
+  // -------------------------------
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-scroll]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (!href.startsWith('#')) return;
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    e.preventDefault();
+    // Close menu first if we’re on mobile and it’s open
+    if (isOpen()) closeMenu();
+
+    const offset = nav ? nav.offsetHeight : 0;
+    const top = target.getBoundingClientRect().top + window.scrollY - (offset + 8);
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+
+  // -------------------------------
+  // Navbar shadow on scroll
+  // -------------------------------
+  const onScroll = () => {
+    if (window.scrollY > 4) nav?.classList.add('scrolled');
+    else nav?.classList.remove('scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
