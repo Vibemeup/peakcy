@@ -591,3 +591,55 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* Extra guard for any footer list anywhere */
 .footer ul, .footer li{ list-style: none !important; padding-left: 0 !important; }
 .footer li::marker{ content: none !important; }
+
+/* =====================================
+   MOBILE EDGE-TO-EDGE FOR PILLARS + QUOTE
+   ===================================== */
+@media (max-width: 768px){
+
+  /* Use most of the screen: tiny gutters */
+  .pillars-grid{
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    /* pull the grid outward to reduce side space */
+    margin-left: -0.75rem !important;
+    margin-right: -0.75rem !important;
+  }
+
+  .pillar-card{
+    /* fuller width, comfy but compact */
+    padding: 1rem 1rem !important;
+    border-radius: 14px !important;
+    text-align: left !important;
+  }
+  .pillar-icon{
+    margin: 0 0 .75rem 0 !important;
+    width: 60px !important; height: 60px !important;
+  }
+  .pillar-icon svg{ width: 26px !important; height: 26px !important; }
+  .pillar-card h3{ font-size: 1.25rem !important; }
+  .pillar-card p{
+    font-size: 1.05rem !important;
+    line-height: 1.55 !important;
+    max-width: none !important;         /* don't constrain copy */
+  }
+
+  /* Quote card: make it wide (edge-to-edge feel) */
+  .quote-section .container{
+    padding-left: .5rem !important;
+    padding-right: .5rem !important;
+  }
+  .quote-box{
+    max-width: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 14px !important;
+    padding: 1.2rem !important;
+  }
+  .quote{ font-size: 1.18rem !important; } /* slightly smaller for dense layout */
+
+  /* Footer: keep lists clean, remove any stray markers/characters */
+  .footer ul, .footer li{ list-style: none !important; padding-left: 0 !important; }
+  .footer li::marker{ content: none !important; }
+}
