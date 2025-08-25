@@ -1,193 +1,120 @@
-// --- Clean any accidental ?fullName=&... on load
-if (location.search) {
-  history.replaceState(null, "", location.pathname + location.hash);
-}
+/* ===============================
+   PeakCY — App JS (Optimized)
+   =============================== */
 
-function getNavHeight() {
-  const nav = document.getElementById('navbar');
-  return nav ? nav.offsetHeight : 0;
-}
-
-function scrollToTarget(el) {
-  const y = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
-  window.scrollTo({ top: y, behavior: 'smooth' });
-}
-
+// 1) Fade-in on load
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Ensure page visible even if inline script delayed
-  try { document.body.style.opacity = '1'; } catch (_) {}
+  document.body.style.opacity = '1';
+});
 
-  // --- Mobile Menu Toggle + a11y niceties
-  const menuToggle = document.querySelector('.menu-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
+// 2) Navbar scrolled shadow
+(function(){
+  const nav = document.querySelector('.navbar');
+  if (!nav) return;
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 6);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 
-  if (menuToggle && mobileMenu) {
-    const closeMenu = () => {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    };
-    const openMenu = () => {
-      mobileMenu.removeAttribute('hidden');
-      menuToggle.setAttribute('aria-expanded', 'true');
-    };
+// 3) Mobile menu toggle + close on resize/click-outside
+(function(){
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('.mobile-menu');
+  if (!toggle || !menu) return;
 
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-      isOpen ? closeMenu() : openMenu();
-    });
+  const open = () => { menu.removeAttribute('hidden'); toggle.setAttribute('aria-expanded', 'true'); };
+  const close = () => { menu.setAttribute('hidden', ''); toggle.setAttribute('aria-expanded', 'false'); };
 
-    // Close on link click (within menu)
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', closeMenu);
-    });
-
-    // Close on ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMenu();
-    });
-
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.hasAttribute('hidden')) {
-        const withinMenu = mobileMenu.contains(e.target);
-        const onToggle = menuToggle.contains(e.target);
-        if (!withinMenu && !onToggle) closeMenu();
-      }
-    });
-  }
-
-  // --- Smooth scroll (account for fixed navbar)
-  // Handle anchors on same page (works for <a href="#id"> and <a href="/path#id"> on same pathname)
-  document.querySelectorAll('a[href*="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const url = new URL(link.href, location.href);
-      if (url.pathname !== location.pathname) return; // different page
-      const hash = url.hash;
-      if (!hash || hash === '#') return;
-
-      const target = document.querySelector(hash);
-      if (!target) return;
-
-      e.preventDefault();
-      scrollToTarget(target);
-      // Keep the hash in the URL (optional: uncomment next line)
-      // history.pushState(null, "", hash);
-    });
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) close(); else open();
   });
 
-  // --- Navbar shadow on scroll (and set initial state)
-  const navbar = document.getElementById('navbar');
-  if (navbar) {
-    const setShadow = () => {
-      if (window.scrollY > 100) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
+  // click outside
+  document.addEventListener('click', (e) => {
+    if (menu.hasAttribute('hidden')) return;
+    const inside = menu.contains(e.target) || toggle.contains(e.target);
+    if (!inside) close();
+  });
+
+  // resize up -> close
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && !menu.hasAttribute('hidden')) close();
+  });
+})();
+
+// 4) Lazy images with shimmer: use <img data-src="...">
+(function(){
+  const imgs = document.querySelectorAll('img[data-src]');
+  if (!imgs.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const load = (img) => {
+    img.classList.add('img-skeleton');
+    const src = img.getAttribute('data-src');
+    const loader = new Image();
+    loader.onload = () => {
+      img.src = src;
+      img.classList.remove('img-skeleton');
+      img.removeAttribute('data-src');
     };
-    setShadow();
-    window.addEventListener('scroll', setShadow, { passive: true });
-  }
+    loader.src = src;
+  };
 
-  // --- Apply form: submit via POST, show thank-you (if #thanks exists)
-  const form = document.getElementById('applicationForm');
-  if (form) {
-    const submitBtn = form.querySelector('[type="submit"]');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const action = form.getAttribute('action');
-
-      // Guard: don’t POST to '#'
-      if (!action || action === '#') {
-        alert('Form action is not configured.');
-        return;
-      }
-
-      const fd = new FormData(form);
-      try {
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.dataset.originalText = submitBtn.textContent || '';
-          submitBtn.textContent = 'Sending...';
-        }
-
-        const res = await fetch(action, { method: 'POST', body: fd });
-        // You can check res.ok; for now assume success if we got a response
-        if (!res.ok) throw new Error('Bad response');
-
-        form.reset();
-
-        const thanks = document.getElementById('thanks');
-        if (thanks) {
-          thanks.style.display = 'block';
-          // Scroll the user to the thank you message
-          scrollToTarget(thanks);
-        }
-
-        // Clean any appended query again (just in case server redirects back)
-        history.replaceState(null, "", location.pathname + location.hash);
-      } catch (err) {
-        alert('Submission failed. Please try again later.');
-        // console.error(err);
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = submitBtn.dataset.originalText || 'Send';
-        }
-      }
-    });
-  }
-
-  // --- Align nicely when landing on a hash (direct visit or reload)
-  if (location.hash) {
-    const target = document.querySelector(location.hash);
-    if (target) setTimeout(() => scrollToTarget(target), 0);
-  }
-
-  // --- Micro reveal on scroll (no layout shifts)
-  const revealables = document.querySelectorAll(
-    '.about-unified-card, .identity-card, .pillar-card, .quote-box, .form-wrap'
-  );
-  if ('IntersectionObserver' in window) {
-    revealables.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(12px)';
-      el.style.transition = 'opacity .5s ease, transform .5s ease';
-    });
+  // If IntersectionObserver available, defer off-screen images
+  if ('IntersectionObserver' in window && !prefersReduced) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'translateY(0)';
+          load(e.target);
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.16, rootMargin: '40px 0px' });
-    revealables.forEach(el => io.observe(el));
+    }, { rootMargin: '200px 0px' });
+    imgs.forEach(img => io.observe(img));
+  } else {
+    imgs.forEach(load);
   }
-});
+})();
 
-// --- Close mobile menu on resize-up and click-outside
+// 5) Magnetic hover (buttons/cards) — add class "magnetic"
 (function(){
-  const menuToggle = document.querySelector('.menu-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
+  const els = document.querySelectorAll('.magnetic');
+  if (!els.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
 
-  if (!menuToggle || !mobileMenu) return;
-
-  // close on resize to desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && !mobileMenu.hasAttribute('hidden')) {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  // click outside to close
-  document.addEventListener('click', (e) => {
-    if (mobileMenu.hasAttribute('hidden')) return;
-    const withinMenu = mobileMenu.contains(e.target);
-    const onToggle   = menuToggle.contains(e.target);
-    if (!withinMenu && !onToggle) {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
+  els.forEach(el => {
+    const strength = 10; // px
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const mx = e.clientX - (r.left + r.width/2);
+      const my = e.clientY - (r.top  + r.height/2);
+      el.style.transform = `translate(${(mx/r.width)*strength}px, ${(my/r.height)*strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
 })();
+
+// 6) Tilt effect on cards — structure: <div class="tiltable"><div class="tilt-inner">…</div></div>
+(function(){
+  const cards = document.querySelectorAll('.tiltable');
+  if (!cards.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  cards.forEach(card => {
+    const inner = card.querySelector('.tilt-inner') || card;
+    const tilt = 6; // deg
+    card.addEventListener('mousemove', e => {
+      const b = card.getBoundingClientRect();
+      const rx = ((e.clientY - b.top) / b.height - .5) * -tilt;
+      const ry = ((e.clientX - b.left)/ b.width - .5) *  tilt;
+      inner.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    card.addEventListener('mouseleave', () => { inner.style.transform = ''; });
+  });
+})();
+
+// 7) Apply form loading helper (optional)
+// Usage: const wrap = document.querySelector('.form-wrap'); wrap.classList.add('is-loading'); ... wrap.classList.remove('is-loading');
