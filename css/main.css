@@ -1207,3 +1207,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   }
   .mobile-menu a{ padding: .75rem .9rem; }
 }
+
+/* --- Fix section title centering after inline-block tweak --- */
+.section-title{
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+.section-title::after{
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
