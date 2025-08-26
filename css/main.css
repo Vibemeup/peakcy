@@ -169,7 +169,7 @@ body::before{
 }
 
 /* ===============================
-   FIXED HAMBURGER MENU CSS
+   HAMBURGER MENU CSS
    =============================== */
 
 .menu-toggle {
@@ -177,15 +177,44 @@ body::before{
   background: none;
   border: none;
   color: var(--text-primary);
-  font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 4px;
   transition: var(--transition);
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu-toggle:hover {
   background: rgba(255, 255, 255, 0.05);
+}
+
+/* Hamburger Icon Bars */
+.hamburger-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  margin: 3px 0;
+  transition: 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Animation when menu is open */
+.menu-toggle.active .hamburger-bar:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.menu-toggle.active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active .hamburger-bar:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 .mobile-menu {
@@ -200,10 +229,15 @@ body::before{
   z-index: 999;
   padding: 2rem;
   overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
 }
 
 .mobile-menu.active {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .mobile-menu a {
@@ -224,7 +258,6 @@ body::before{
   color: var(--accent);
   border-color: rgba(10, 223, 131, 0.2);
 }
-
 
 .mobile-menu .cta-primary {
   background: var(--gradient) !important;
