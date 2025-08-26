@@ -168,19 +168,29 @@ body::before{
   box-shadow: 0 8px 24px var(--accent-glow); 
 }
 
-/* MOBILE MENU TOGGLE */
+/* ===============================
+   FIXED HAMBURGER MENU CSS
+   =============================== */
+
+/* MOBILE MENU TOGGLE - FIXED SIZING */
 .menu-toggle {
   background: transparent !important;
   border: none !important;
-  padding: 8px !important;
-  width: 40px;
-  height: 40px;
+  padding: 0 !important;
+  width: 48px !important;           /* Larger button */
+  height: 48px !important;          /* Larger button */
   cursor: pointer;
   position: relative;
   z-index: 1001;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: background-color 0.2s ease;
   display: none;
+  
+  /* Perfect centering */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;                         /* Even spacing between bars */
 }
 
 .menu-toggle:hover {
@@ -192,27 +202,35 @@ body::before{
   outline-offset: 2px;
 }
 
+/* HAMBURGER BARS - PERFECTLY ALIGNED */
 .menu-toggle span {
-  display: block;
-  width: 24px !important;
-  height: 2px !important;
+  display: block !important;
+  width: 26px !important;           /* Wider bars */
+  height: 3px !important;           /* Slightly thicker */
   background: #fff !important;
-  margin: 5px 0 !important;
-  border-radius: 1px;
-  transition: all 0.3s ease;
-  transform-origin: center;
+  border-radius: 2px !important;
+  margin: 0 !important;             /* No margin - using gap instead */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;  /* Center transform origin */
+  position: relative;
+}
+
+/* X TRANSFORM WHEN OPEN - PROPERLY CENTERED */
+.menu-toggle[aria-expanded="true"] {
+  gap: 0;                          /* Remove gap when transforming to X */
 }
 
 .menu-toggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
 
 .menu-toggle[aria-expanded="true"] span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .menu-toggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 /* MOBILE MENU PANEL */
