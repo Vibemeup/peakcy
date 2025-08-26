@@ -1,5 +1,5 @@
 // ===============================
-// PeakCY — FIXED app.js
+// PeakCY — FIXED app.js (unified)
 // ===============================
 
 /* Strip accidental ?query on load (keep hash) */
@@ -9,8 +9,12 @@ if (location.search) {
 
 /* Helpers */
 function navEl() { return document.getElementById("navbar"); }
-function menuToggleEl() { return document.getElementById("menuToggle"); }
-function mobileMenuEl() { return document.getElementById("mobileMenu"); }
+function getToggleEl() {
+  return document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
+}
+function getPanelEl() {
+  return document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
+}
 
 function setNavHeightVar() {
   const nav = navEl();
@@ -28,17 +32,12 @@ function smoothScrollTo(el) {
   window.scrollTo({ top, behavior: "smooth" });
 }
 
-function lockScroll() { 
-  document.body.style.overflow = "hidden"; 
-}
-
-function unlockScroll() { 
-  document.body.style.overflow = ""; 
-}
+function lockScroll() { document.body.style.overflow = "hidden"; }
+function unlockScroll() { document.body.style.overflow = ""; }
 
 document.addEventListener("DOMContentLoaded", () => {
   // Make page visible
-  document.body.style.opacity = "1";
+  try { document.body.style.opacity = "1"; } catch (_) {}
 
   // Safety: prevent horizontal wobble
   document.documentElement.style.overflowX = "hidden";
@@ -48,97 +47,82 @@ document.addEventListener("DOMContentLoaded", () => {
   setNavHeightVar();
   window.addEventListener("resize", setNavHeightVar);
 
-  const toggle = menuToggleEl();
-  const panel = mobileMenuEl();
-
-  console.log("Toggle element:", toggle);
-  console.log("Panel element:", panel);
+  const toggle = getToggleEl();
+  const panel  = getPanelEl();
+  const body   = document.body;
 
   if (!toggle || !panel) {
     console.error("Missing hamburger toggle or mobile menu elements");
     return;
   }
 
+  // Utility
+  const isMenuOpen = () => toggle.getAttribute("aria-expanded") === "true";
+
+  // Initialize menu state (closed)
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.classList.remove("active");
+  panel.classList.remove("is-open", "active");
+  panel.setAttribute("hidden", "");
+  body.classList.remove("menu-open");
+  unlockScroll();
+
+  // Open/Close controls
   const openMenu = () => {
-    console.log("Opening menu");
     panel.removeAttribute("hidden");
-    panel.classList.add("is-open");
+    panel.classList.add("is-open", "active");
+    toggle.classList.add("active");
     toggle.setAttribute("aria-expanded", "true");
-    document.body.classList.add("menu-open");
+    body.classList.add("menu-open");
     lockScroll();
   };
 
   const closeMenu = () => {
-    console.log("Closing menu");
-    panel.classList.remove("is-open");
+    panel.classList.remove("is-open", "active");
     panel.setAttribute("hidden", "");
+    toggle.classList.remove("active");
     toggle.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("menu-open");
+    body.classList.remove("menu-open");
     unlockScroll();
   };
 
-  const isMenuOpen = () => {
-    return toggle.getAttribute("aria-expanded") === "true";
-  };
-
-  // Initialize menu state
-  toggle.setAttribute("aria-expanded", "false");
-  panel.setAttribute("hidden", "");
-  panel.classList.remove("is-open");
+  const toggleMenu = () => (isMenuOpen() ? closeMenu() : openMenu());
 
   // Toggle button click
   toggle.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Hamburger clicked, current state:", isMenuOpen());
-    
-    if (isMenuOpen()) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    toggleMenu();
   });
 
-  // Close when clicking menu links
+  // Close when clicking a link inside the mobile menu
   panel.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", (e) => {
-      console.log("Menu link clicked, closing menu");
-      closeMenu();
+    link.addEventListener("click", () => {
+      if (isMenuOpen()) closeMenu();
     });
   });
 
   // Close on ESC key
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isMenuOpen()) {
-      console.log("ESC pressed, closing menu");
-      closeMenu();
-    }
+    if (e.key === "Escape" && isMenuOpen()) closeMenu();
   });
 
-  // Close when clicking outside
+  // Close when clicking outside menu & toggle
   document.addEventListener("click", (e) => {
     if (!isMenuOpen()) return;
-    
     const clickedInsideMenu = panel.contains(e.target);
     const clickedToggle = toggle.contains(e.target);
-    
-    if (!clickedInsideMenu && !clickedToggle) {
-      console.log("Clicked outside menu, closing");
-      closeMenu();
-    }
+    if (!clickedInsideMenu && !clickedToggle) closeMenu();
   });
 
-  // Smooth-scroll for in-page anchors
+  // Smooth-scroll for in-page anchors (supports "#id" and "/#id")
   const handleAnchorClick = (e, anchor) => {
     const href = anchor.getAttribute("href");
     if (!href) return;
 
     let id = null;
-    if (href.startsWith("#")) {
-      id = href.slice(1);
-    } else if (href.startsWith("/#")) {
-      id = href.replace("/#", "");
-    }
+    if (href.startsWith("#")) id = href.slice(1);
+    else if (href.startsWith("/#")) id = href.replace("/#", "");
 
     if (!id) return;
 
@@ -147,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       if (isMenuOpen()) closeMenu();
       smoothScrollTo(el);
-      history.pushState(null, "", `#${id}`);
+      try { history.pushState(null, "", `#${id}`); } catch (_) {}
     }
   };
 
@@ -158,12 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle hash on page load
   if (location.hash) {
     const el = document.getElementById(location.hash.substring(1));
-    if (el) {
-      setTimeout(() => smoothScrollTo(el), 100);
-    }
+    if (el) setTimeout(() => smoothScrollTo(el), 100);
   }
 
-  // Re-adjust scroll target on resize if hash present
+  // Re-adjust scroll target on resize if hash present (with light debounce)
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
@@ -175,4 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 150);
   });
-});
+
+  // ===============================
+  // Extra block you asked to add:
+  // (Merged to avoid double-binding; it now calls the same state toggles)
+  // ===============================
+  // If your HTML only has class-based selectors
