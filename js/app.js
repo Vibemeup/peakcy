@@ -28,22 +28,18 @@ function smoothScrollTo(el) {
   window.scrollTo({ top, behavior: "smooth" });
 }
 
-function lockScroll() {
-  document.documentElement.style.overflow = "hidden";
-}
-
-function unlockScroll() {
-  document.documentElement.style.overflow = "";
-}
+function lockScroll() { document.documentElement.style.overflow = "hidden"; }
+function unlockScroll() { document.documentElement.style.overflow = ""; }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Always show page even if inline script didn’t run
+  // Make page visible
   try { document.body.style.opacity = "1"; } catch (_) {}
 
-  // Prevent horizontal wobble as a safety
+  // Safety: prevent horizontal wobble
   document.documentElement.style.overflowX = "hidden";
   document.body.style.overflowX = "hidden";
 
+  // Nav height CSS var
   setNavHeightVar();
   window.addEventListener("resize", setNavHeightVar);
 
@@ -54,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!panel) return;
     panel.removeAttribute("hidden");
     panel.classList.add("is-open");
-    panel.style.display = "block"; // hard fallback against old CSS
+    panel.style.display = "block"; // fallback against legacy CSS
     if (toggle) toggle.setAttribute("aria-expanded", "true");
     document.body.classList.add("menu-open");
     lockScroll();
@@ -96,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Smooth-scroll for in-page anchors like #about
+  // Smooth-scroll for in-page anchors (#about)
   const handleAnchorClick = (e, anchor) => {
     const href = anchor.getAttribute("href");
     if (!href) return;
@@ -120,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     a.addEventListener("click", (e) => handleAnchorClick(e, a));
   });
 
-  // If page loads with a hash, offset-scroll to it after layout
+  // Offset-scroll if page loads with a hash
   if (location.hash) {
     const el = document.getElementById(location.hash.substring(1));
     if (el) setTimeout(() => smoothScrollTo(el), 0);
