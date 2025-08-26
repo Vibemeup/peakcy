@@ -1,5 +1,5 @@
 /* ==================================================
-   PeakCY — app.js (robust mobile menu + strict form)
+   PeakCY — app.js (stable mobile menu + lazy video)
    ================================================== */
 
 function getNavHeight() {
@@ -22,61 +22,46 @@ document.addEventListener('DOMContentLoaded', () => {
   setScrolled();
   window.addEventListener('scroll', setScrolled, { passive: true });
 
-  /* ----------------- Mobile menu (full overlay, bulletproof) ----------------- */
+  /* -------- Mobile menu: simple, no inline pinning -------- */
   const toggle = document.querySelector('.menu-toggle');
   const menu   = document.querySelector('.mobile-menu');
 
+  const openMenu = () => {
+    if (!menu) return;
+    menu.hidden = false;
+    document.body.classList.add('menu-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+  };
+
+  const closeMenu = () => {
+    if (!menu) return;
+    menu.hidden = true;
+    document.body.classList.remove('menu-open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  };
+
   if (toggle && menu) {
-    let openState = false;
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeMenu() : openMenu();
+    });
 
-    const open = () => {
-      if (openState) return;
-      openState = true;
+    // Close when tapping any link in the mobile menu
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-      // full overlay mode
-      menu.hidden = false;
-      menu.style.display = 'flex';
-      document.body.classList.add('menu-open');
-      toggle.setAttribute('aria-expanded', 'true');
-
-      // pin X so it never “runs away”
-      toggle.style.position = 'fixed';
-      toggle.style.top = '14px';
-      toggle.style.right = '14px';
-      toggle.style.left = 'auto';
-      toggle.style.zIndex = '5001';
-    };
-
-    const close = () => {
-      if (!openState) return;
-      openState = false;
-
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('menu-open');
-
-      menu.hidden = true;
-      menu.style.display = '';
-
-      // restore toggle positioning
-      toggle.style.position = '';
-      toggle.style.top = '';
-      toggle.style.right = '';
-      toggle.style.left = '';
-      toggle.style.zIndex = '';
-    };
-
-    toggle.addEventListener('click', () => (openState ? close() : open()));
-    // Close when tapping any link in the menu
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     // Close on outside click
     document.addEventListener('click', (e) => {
-      if (!openState) return;
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) close();
+      if (menu.hidden) return;
+      const clickInsideMenu = menu.contains(e.target);
+      const clickOnToggle   = toggle.contains(e.target);
+      if (!clickInsideMenu && !clickOnToggle) closeMenu();
     });
+
     // ESC closes
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
     // Safety on resize
-    window.addEventListener('resize', () => { if (innerWidth > 768) close(); });
+    window.addEventListener('resize', () => { if (innerWidth > 768) closeMenu(); });
   }
 
   /* Smooth anchor scroll (offset fixed navbar) */
@@ -92,43 +77,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ----------------- Form: "thanks" only on real submit ----------------- */
-  const form = document.getElementById('applicationForm');
-  const thanks = document.getElementById('thanks');
+  /* -------- Lazy PLAY/PAUSE for /video.mp4 when in view -------- */
+  const vid = document.getElementById('clubVideo');
+  if (vid) {
+    // Mobile autoplay requires muted + playsinline (already set in HTML)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+          try { await vid.play(); } catch(_) { /* ignore autoplay blocks */ }
+        } else {
+          try { vid.pause(); } catch(_) {}
+        }
+      });
+    }, { threshold: 0.35 });
 
-  if (form) {
-    let lastClickedIsSubmit = false;
-
-    form.addEventListener('mousedown', (e) => {
-      lastClickedIsSubmit = !!(e.target && e.target.classList && e.target.classList.contains('submit-btn'));
-    }, true);
-
-    form.addEventListener('submit', (e) => {
-      const viaBtn =
-        (e.submitter && e.submitter.classList && e.submitter.classList.contains('submit-btn')) ||
-        lastClickedIsSubmit;
-
-      if (!viaBtn) {
-        // Ignore phantom submits (e.g., from labels/overlays)
-        lastClickedIsSubmit = false;
-        return;
-      }
-
-      e.preventDefault();
-      lastClickedIsSubmit = false;
-
-      form.reset();
-      if (thanks) {
-        thanks.style.display = 'block';
-        setTimeout(() => { thanks.style.display = 'none'; }, 4500);
-      }
-    });
+    io.observe(vid);
   }
 
-  /* Footer & mobile socials: never hijack to form */
+  /* -------- Footer social links: never hijack to the form -------- */
   document.querySelectorAll('.footer .social-link, .mobile-menu .mobile-social').forEach(a => {
     a.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent any accidental bubbling to labels/overlays
+      // Make sure clicks do not bubble into any labels/overlays
+      e.stopPropagation();
     });
   });
 });
