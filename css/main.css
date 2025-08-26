@@ -1331,3 +1331,43 @@ html, body { overflow-x: hidden; }
   .navbar .nav-container .nav-links { display: flex !important; gap: 18px; }
   .navbar .nav-container #menuToggle.menu-toggle { display: none !important; }
 }
+
+/* ===============================
+   PeakCY — FORCE hamburger + X
+   =============================== */
+
+/* Reset size */
+#menuToggle {
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  z-index: 3000;
+}
+
+/* The 3 bars */
+#menuToggle span {
+  display: block;
+  width: 20px !important;
+  height: 2px !important;
+  margin: 3px 0 !important;
+  background: #fff !important;
+  border-radius: 1px;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+/* Morph to X when aria-expanded=true */
+#menuToggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+#menuToggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+#menuToggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}

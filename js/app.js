@@ -1,104 +1,112 @@
 // ===============================
-// PeakCY — FINAL app.js (mobile menu + smooth scroll + safety)
+// PeakCY — FINAL app.js
 // ===============================
 
-/* --- Clean any accidental query (?foo=...) on load, keep hash --- */
+/* Strip accidental ?query on load (keep hash) */
 if (location.search) {
   try { history.replaceState(null, "", location.pathname + location.hash); } catch (_) {}
 }
 
-/* --- Helpers --- */
+/* Helpers */
+function navEl() { return document.getElementById("navbar"); }
+function menuToggleEl() { return document.getElementById("menuToggle") || document.querySelector(".menu-toggle"); }
+function mobileMenuEl() { return document.getElementById("mobileMenu") || document.querySelector(".mobile-menu"); }
+
+function setNavHeightVar() {
+  const nav = navEl();
+  if (nav) document.documentElement.style.setProperty("--nav-height", nav.offsetHeight + "px");
+}
+
 function getNavHeight() {
-  const nav = document.getElementById("navbar");
+  const nav = navEl();
   return nav ? nav.offsetHeight : 0;
 }
 
 function smoothScrollTo(el) {
   if (!el) return;
-  const y = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
-  window.scrollTo({ top: y, behavior: "smooth" });
+  const top = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
+  window.scrollTo({ top, behavior: "smooth" });
 }
 
-function lockScroll() { document.documentElement.style.overflow = "hidden"; }
-function unlockScroll() { document.documentElement.style.overflow = ""; }
+function lockScroll() {
+  document.documentElement.style.overflow = "hidden";
+}
+
+function unlockScroll() {
+  document.documentElement.style.overflow = "";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Ensure page visible even if inline script didn't run
+  // Always show page even if inline script didn’t run
   try { document.body.style.opacity = "1"; } catch (_) {}
 
-  // Set CSS var for nav height (for mobile menu top offset) and keep updated
-  const navEl = document.getElementById("navbar");
-  const setNavHeightVar = () => {
-    if (navEl) document.documentElement.style.setProperty("--nav-height", navEl.offsetHeight + "px");
-  };
+  // Prevent horizontal wobble as a safety
+  document.documentElement.style.overflowX = "hidden";
+  document.body.style.overflowX = "hidden";
+
   setNavHeightVar();
   window.addEventListener("resize", setNavHeightVar);
 
-  // Extra safety: prevent horizontal wobble
-  try {
-    document.documentElement.style.overflowX = "hidden";
-    document.body.style.overflowX = "hidden";
-  } catch (_) {}
-
-  // --- Mobile Menu Toggle + a11y
-  const menuToggle = document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
-  const mobileMenu = document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
+  const toggle = menuToggleEl();
+  const panel  = mobileMenuEl();
 
   const openMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.removeAttribute("hidden");
-    mobileMenu.classList.add("is-open");  // CSS makes it visible
-    mobileMenu.style.display = "block";   // hard fallback in case of CSS caching
-    menuToggle?.setAttribute("aria-expanded", "true");
+    if (!panel) return;
+    panel.removeAttribute("hidden");
+    panel.classList.add("is-open");
+    panel.style.display = "block"; // hard fallback against old CSS
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
     lockScroll();
   };
 
   const closeMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.classList.remove("is-open");
-    mobileMenu.setAttribute("hidden", "");
-    menuToggle?.setAttribute("aria-expanded", "false");
+    if (!panel) return;
+    panel.classList.remove("is-open");
+    panel.setAttribute("hidden", "");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
     unlockScroll();
   };
 
-  const isMenuOpen = () => menuToggle?.getAttribute("aria-expanded") === "true";
+  const isMenuOpen = () => toggle && toggle.getAttribute("aria-expanded") === "true";
 
-  if (menuToggle && mobileMenu) {
-    // Toggle on button click
-    menuToggle.addEventListener("click", () => {
-      if (isMenuOpen()) closeMenu();
-      else openMenu();
+  if (toggle && panel) {
+    // Toggle button
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      isMenuOpen() ? closeMenu() : openMenu();
     });
 
-    // Close when any link inside mobile menu is clicked
-    mobileMenu.querySelectorAll("a").forEach(a => {
+    // Close when clicking a link inside the panel
+    panel.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => closeMenu());
     });
 
-    // Close on Escape
+    // Close on ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isMenuOpen()) closeMenu();
     });
 
-    // Close when clicking outside the menu (but not the toggle)
+    // Close when clicking outside panel & toggle
     document.addEventListener("click", (e) => {
       if (!isMenuOpen()) return;
       const t = e.target;
-      if (!mobileMenu.contains(t) && !menuToggle.contains(t)) closeMenu();
+      if (!panel.contains(t) && !toggle.contains(t)) closeMenu();
     });
   }
 
-  // --- Smooth-scroll for in-page anchors (desktop & mobile)
+  // Smooth-scroll for in-page anchors like #about
   const handleAnchorClick = (e, anchor) => {
     const href = anchor.getAttribute("href");
     if (!href) return;
 
-    // Support "#about" and "/#about"
-    const isHash = href.startsWith("#");
-    const isRootHash = href.startsWith("/#");
-    if (!isHash && !isRootHash) return;
+    let id = null;
+    if (href.startsWith("#")) id = href.slice(1);
+    else if (href.startsWith("/#")) id = href.replace("/#", "");
 
-    const id = isHash ? href.slice(1) : href.replace("/#", "");
+    if (!id) return;
+
     const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
@@ -108,23 +116,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // All same-page anchors
   document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(a => {
     a.addEventListener("click", (e) => handleAnchorClick(e, a));
   });
 
-  // If page loads with a hash, offset-scroll to it once DOM is ready
+  // If page loads with a hash, offset-scroll to it after layout
   if (location.hash) {
     const el = document.getElementById(location.hash.substring(1));
     if (el) setTimeout(() => smoothScrollTo(el), 0);
   }
 
-  // Recalculate on resize—helps if navbar height changes
+  // Re-adjust scroll target on orientation/resize if hash present
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      setNavHeightVar();
       if (location.hash) {
         const el = document.getElementById(location.hash.substring(1));
         if (el) smoothScrollTo(el);
