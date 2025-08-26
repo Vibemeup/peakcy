@@ -23,7 +23,7 @@
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:smooth; overflow-x: hidden; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -33,9 +33,9 @@ body {
     linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   color: var(--text-primary);
   line-height: 1.65;
-  overflow-x:hidden;
-  position:relative;
-  opacity:0;         /* JS sets to 1 */
+  overflow-x: hidden;
+  position: relative;
+  opacity: 0;
   transition: opacity .3s ease;
 }
 
@@ -51,1480 +51,1159 @@ body::before{
 
 @keyframes float { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-15px) rotate(1deg)} }
 
-/* NAVBAR */
-.navbar{
-  position:fixed; top:0; width:100%; z-index:1000;
+/* ===============================
+   NAVBAR & MOBILE MENU
+   =============================== */
+
+.navbar {
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  z-index: 1000;
   background: rgba(5,5,5,.85);
   backdrop-filter: blur(20px);
-  border-bottom:1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   transition: var(--transition);
-  height:68px;
-}
-.navbar.scrolled{ background: rgba(5,5,5,.95); box-shadow: var(--shadow); }
-
-.nav-container{
-  max-width:1200px; margin:0 auto;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:1rem 2rem; height:100%;
+  height: 68px;
+  overflow: visible;
 }
 
-.logo{
-  font-size:1.5rem; font-weight:900; display:flex; align-items:center; gap:.6rem;
-  text-decoration:none; color:var(--text-primary); transition: var(--transition);
+.navbar.scrolled { 
+  background: rgba(5,5,5,.95); 
+  box-shadow: var(--shadow); 
 }
-.logo:hover{ transform: translateY(-2px) scale(1.02); }
-.logo:hover .logo-icon{ filter: drop-shadow(0 0 20px var(--accent-glow)); transform: scale(1.1) rotate(15deg); }
-.logo:hover .peak{ text-shadow: 0 0 15px rgba(255,255,255,.6); }
-.logo:hover .cy{ text-shadow: 0 0 15px rgba(212,175,55,.6); }
 
-.logo-icon{ width:32px; height:32px; stroke:var(--accent); filter: drop-shadow(0 0 10px rgba(10,223,131,.4)); transition:var(--transition); }
-.peak{ color:var(--text-primary); text-shadow:0 0 8px rgba(255,255,255,.2); }
-.cy{ color:var(--gold); text-shadow:0 0 8px rgba(212,175,55,.3); }
+.nav-container {
+  max-width: 1200px; 
+  margin: 0 auto;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  padding: 1rem 2rem; 
+  height: 100%;
+}
 
-.nav-links{ display:flex; gap:2rem; align-items:center; }
-.nav-links a{
-  color:var(--text-secondary); text-decoration:none; font-weight:600;
-  transition: var(--transition); padding:.5rem 1rem; border-radius:8px; position:relative; overflow:hidden;
+.logo {
+  font-size: 1.5rem; 
+  font-weight: 900; 
+  display: flex; 
+  align-items: center; 
+  gap: .6rem;
+  text-decoration: none; 
+  color: var(--text-primary); 
+  transition: var(--transition);
 }
-.nav-links a:hover{ color:var(--text-primary); background: rgba(255,255,255,.05); transform: translateY(-1px); }
-.nav-links a[href="#apply"]{
-  background: var(--gradient); color: var(--bg-primary); font-weight:700;
-  padding:.7rem 1.8rem; border-radius:50px; box-shadow: var(--shadow-glow);
+
+.logo:hover { 
+  transform: translateY(-2px) scale(1.02); 
 }
-.nav-links a[href="#apply"]:hover{ color:var(--bg-primary); transform: translateY(-3px); box-shadow: 0 8px 24px var(--accent-glow); }
+
+.logo:hover .logo-icon { 
+  filter: drop-shadow(0 0 20px var(--accent-glow)); 
+  transform: scale(1.1) rotate(15deg); 
+}
+
+.logo:hover .peak { 
+  text-shadow: 0 0 15px rgba(255,255,255,.6); 
+}
+
+.logo:hover .cy { 
+  text-shadow: 0 0 15px rgba(212,175,55,.6); 
+}
+
+.logo-icon { 
+  width: 32px; 
+  height: 32px; 
+  stroke: var(--accent); 
+  filter: drop-shadow(0 0 10px rgba(10,223,131,.4)); 
+  transition: var(--transition); 
+}
+
+.peak { 
+  color: var(--text-primary); 
+  text-shadow: 0 0 8px rgba(255,255,255,.2); 
+}
+
+.cy { 
+  color: var(--gold); 
+  text-shadow: 0 0 8px rgba(212,175,55,.3); 
+}
+
+/* DESKTOP NAVIGATION */
+.nav-links { 
+  display: flex; 
+  gap: 2rem; 
+  align-items: center; 
+}
+
+.nav-links a {
+  color: var(--text-secondary); 
+  text-decoration: none; 
+  font-weight: 600;
+  transition: var(--transition); 
+  padding: .5rem 1rem; 
+  border-radius: 8px; 
+  position: relative; 
+  overflow: hidden;
+}
+
+.nav-links a:hover { 
+  color: var(--text-primary); 
+  background: rgba(255,255,255,.05); 
+  transform: translateY(-1px); 
+}
+
+.nav-links a.cta-primary {
+  background: var(--gradient); 
+  color: var(--bg-primary); 
+  font-weight: 700;
+  padding: .7rem 1.8rem; 
+  border-radius: 50px; 
+  box-shadow: var(--shadow-glow);
+}
+
+.nav-links a.cta-primary:hover { 
+  color: var(--bg-primary); 
+  transform: translateY(-3px); 
+  box-shadow: 0 8px 24px var(--accent-glow); 
+}
 
 /* MOBILE MENU TOGGLE */
-.menu-toggle{
-  display:none; flex-direction:column; justify-content:space-between;
-  width:30px; height:22px; background:none; border:none; cursor:pointer; z-index:1100;
-}
-.menu-toggle span{ width:100%; height:2px; background:#fff; border-radius:1px; transition: all .3s ease; }
-.menu-toggle[aria-expanded="true"] span:nth-child(1){ transform: rotate(45deg) translate(5px,6px); }
-.menu-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
-.menu-toggle[aria-expanded="true"] span:nth-child(3){ transform: rotate(-45deg) translate(5px,-6px); }
-
-/* MOBILE MENU */
-.mobile-menu{
-  position:fixed; top:68px; left:0; width:100%;
-  background: var(--bg-primary); padding:1rem 0;
-  display:flex; flex-direction:column; align-items:center; gap:1.5rem;
-  box-shadow:0 10px 30px rgba(0,0,0,.3); z-index:1090; transition: all .4s ease;
-  opacity:0; visibility:hidden; transform: translateY(-10px);
-  backdrop-filter: blur(10px); border-top:1px solid var(--border);
-}
-.mobile-menu a{
-  color:var(--text-primary); font-weight:600; font-size:1.1rem; text-decoration:none;
-  padding:.6rem 1.5rem; border-radius:8px; width:90%; text-align:center; transition: all .3s ease;
-}
-.mobile-menu a:hover{ background: rgba(255,255,255,.05); color: var(--accent); }
-.mobile-menu[hidden]{ opacity:0; visibility:hidden; transform: translateY(-10px); }
-.mobile-menu:not([hidden]){ opacity:1; visibility:visible; transform: translateY(0); }
-
-/* Mobile menu socials */
-.mobile-menu .mobile-social{
-  display:flex; align-items:center; gap:10px; width:92%; justify-content:flex-start;
-  font-weight:600; font-size:1.05rem;
-}
-.mobile-menu .mobile-social img{
-  width:18px; height:18px; display:inline-block; opacity:.9; transition: opacity .2s ease, transform .2s ease;
-}
-.mobile-menu .mobile-social:hover img{ opacity:1; transform: translateY(-1px); }
-
-/* HERO */
-.hero{
-  min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;
-  text-align:center; position:relative;
-  background:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
-}
-.hero::before{
-  content:''; position:absolute; inset:0;
-  background: linear-gradient(135deg, rgba(5,5,5,.9), rgba(5,5,5,.7), rgba(10,223,131,.1), rgba(5,5,5,.8));
-  z-index:1;
-}
-.hero::after{
-  content:''; position:absolute; inset:0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(10,223,131,.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0,179,102,.1) 0%, transparent 50%);
-  z-index:1; animation: heroGlow 8s ease-in-out infinite alternate;
-}
-@keyframes heroGlow{ 0%{opacity:.6} 100%{opacity:1} }
-.hero-content{ position:relative; z-index:2; max-width:900px; padding:2rem; }
-
-.badge{
-  display:inline-flex; align-items:center; gap:.5rem;
-  background: var(--accent-subtle); color: var(--accent);
-  border:1px solid rgba(10,223,131,.2); border-radius:50px; padding:.6rem 1.5rem;
-  font-weight:700; font-size:.95rem; margin-bottom:2rem;
-  backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(10,223,131,.1);
-}
-.hero h1{ font-size:clamp(2.8rem, 8vw, 5.5rem); font-weight:900; margin-bottom:1.5rem; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,.7); }
-.hero h1 .peak-word{ color:var(--accent); text-shadow:0 0 30px var(--accent-glow); }
-.hero p{
-  font-size:1.3rem; color:#fff; margin-bottom:3.8rem; max-width:800px; margin-left:auto; margin-right:auto; line-height:1.6; text-shadow:0 1px 4px rgba(0,0,0,.7);
-}
-.cta-primary{ display:inline-block; background: var(--gradient); color: var(--bg-primary); padding:1.2rem 3rem; border-radius:50px; text-decoration:none; font-weight:800; font-size:1.1rem; box-shadow: var(--shadow-glow); }
-.cta-primary:hover{ transform: translateY(-4px); box-shadow: 0 25px 50px rgba(10,223,131,.3); }
-
-/* SECTIONS */
-section{ padding:6rem 2rem; position:relative; z-index:2; }
-.container{ max-width:1200px; margin:0 auto; }
-.section-title{ font-size:clamp(2.2rem,6vw,3.2rem); font-weight:900; margin-bottom:1.5rem; text-align:center; color:var(--text-primary); letter-spacing:-.02em; line-height:1.2; }
-.section-lead{ font-size:1.2rem; color:var(--text-secondary); text-align:center; max-width:800px; margin:0 auto 3rem; line-height:1.7; }
-
-/* ABOUT */
-.about-hero{ font-size:1.4rem; color:var(--text-secondary); margin-bottom:2rem; max-width:800px; text-align:center; line-height:1.6; margin-left:auto; margin-right:auto; }
-.green-text{ color:#0adf83 !important; }
-.about-unified-card{
-  background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius);
-  padding:2rem; transition: var(--transition); position:relative; overflow:hidden; backdrop-filter: blur(10px);
-  max-width:700px; margin:0 auto 2.5rem; text-align:center; border-top:4px solid transparent;
-}
-.about-unified-card:hover{ border-top-color: var(--accent); transform: translateY(-6px); box-shadow: var(--shadow-glow); }
-.about-unified-text{ font-size:1.15rem; line-height:1.7; color:var(--text-secondary); }
-.about-finale{
-  background: linear-gradient(135deg, var(--accent-subtle), rgba(212,175,55,.1));
-  border:2px solid; border-image: var(--gradient) 1; border-radius: var(--radius);
-  padding:2rem; font-size:1.25rem; font-weight:600; color:var(--accent); font-style:italic;
-  backdrop-filter: blur(20px); box-shadow: var(--shadow-glow); margin:2.5rem auto; max-width:800px; line-height:1.6;
-}
-.about-mission{ font-size:1.35rem; color:var(--text-primary); font-weight:700; text-align:center; margin-top:2rem; line-height:1.5; }
-.about-mission strong{
-  background: var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:800;
-}
-
-/* IDENTITY */
-.identity{ background: var(--bg-primary); position:relative; }
-.identity-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-top:3rem; }
-.identity-card{
-  background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius);
-  padding:2.5rem; box-shadow: var(--shadow); transition: all .5s ease; position:relative; overflow:hidden; backdrop-filter: blur(10px); text-align:center;
-}
-.identity-header{ display:flex; align-items:center; justify-content:center; gap:1rem; font-size:1.3rem; font-weight:700; margin-bottom:1.8rem; color:var(--text-primary); }
-.identity-badge{ display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; font-weight:bold; font-size:1.1rem; flex-shrink:0; }
-.identity-badge.yes{ background: var(--accent-subtle); color: var(--accent); border:2px solid var(--accent); }
-.identity-badge.no{ background: var(--red-subtle); color: var(--red); border:2px solid var(--red); }
-.identity-list{ list-style:none; text-align:left; max-width:360px; margin:0 auto; }
-.identity-list li{ display:flex; align-items:flex-start; gap:.8rem; margin-bottom:1rem; color:var(--text-secondary); line-height:1.55; transition: all .3s ease; }
-.identity-list li strong{ color:var(--text-primary); font-weight:700; min-width:100px; }
-
-/* PILLARS */
-.pillars-lead{
-  max-width:800px; margin:0 auto 3rem; padding:1.5rem 2rem; background: var(--bg-card);
-  border:1px solid var(--border); border-radius: var(--radius); color: var(--text-primary);
-  font-size:1.25rem; line-height:1.7; box-shadow: var(--shadow); backdrop-filter: blur(10px); font-style:italic;
-}
-.pillars-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:2rem; margin-top:2rem; }
-.pillar-card{
-  background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius);
-  padding:2.5rem; text-align:center; transition: all .5s ease; box-shadow: var(--shadow);
-}
-.pillar-icon{
-  width:80px; height:80px; background: rgba(10,223,131,.1); border:2px solid rgba(10,223,131,.3);
-  border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 2rem; transition: all .4s ease;
-}
-.pillar-icon svg{ width:36px; height:36px; stroke: var(--accent); }
-.pillar-card:hover .pillar-icon{ background: var(--accent); border-color: var(--accent); transform: scale(1.15); box-shadow: 0 0 30px var(--accent-glow); }
-.pillar-card:hover .pillar-icon svg{ stroke: var(--bg-primary); }
-
-/* QUOTE */
-.quote-section{ background: var(--bg-primary); padding:4rem 2rem; position:relative; }
-.quote-box{
-  max-width:800px; margin:0 auto; padding:2.5rem; background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow); backdrop-filter: blur(20px); text-align:center; position:relative; overflow:hidden; border-top:4px solid var(--accent);
-}
-.quote{ font-style:italic; font-size:1.45rem; line-height:1.7; color:var(--text-secondary); margin-bottom:1.5rem; }
-.quote-author{ color:var(--accent); font-weight:700; font-size:1.15rem; }
-
-/* APPLY */
-.apply{ background: var(--bg-secondary); padding:5rem 2rem; }
-.form-container{ max-width:500px; margin:0 auto; }
-.form-wrap{ background: var(--bg-card); border:1px solid var(--border); border-radius: var(--radius); padding:3rem; box-shadow: var(--shadow); backdrop-filter: blur(20px); }
-.form-group label{ display:block; margin-bottom:.5rem; font-weight:600; color:var(--text-primary); }
-.form-group input, .form-group textarea{
-  width:100%; padding:1rem 1.2rem; background: rgba(255,255,255,.05); border:2px solid var(--border); border-radius:12px; color:var(--text-primary);
-  font-family:inherit; font-size:1rem; backdrop-filter: blur(10px);
-}
-.form-group input:focus, .form-group textarea:focus{ outline:none; border-color: var(--accent); box-shadow:0 0 0 3px rgba(10,223,131,.1); }
-.submit-btn{
-  width:100%; background: var(--gradient); color: var(--bg-primary); border:none; padding:1.2rem 2rem; border-radius:50px; font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow: var(--shadow-glow);
-}
-.submit-btn:hover{ transform: translateY(-3px); box-shadow: 0 15px 35px rgba(10,223,131,.4); }
-
-/* FOOTER */
-.footer{ background: var(--bg-primary); padding:3rem 2rem; text-align:center; border-top:1px solid var(--border); }
-.footer-links{ display:flex; justify-content:center; gap:2rem; margin-bottom:1.5rem; }
-.footer-links a{ color:var(--text-secondary); text-decoration:none; font-weight:600; padding:.5rem 1rem; border-radius:8px; }
-.footer-links a:hover{ color: var(--accent); background: rgba(10,223,131,.05); }
-
-.socials-heading{
-  margin:.5rem 0 .75rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; font-size:.85rem; color:var(--text-secondary); opacity:.9;
-}
-.social-links-footer{ display:flex; justify-content:center; gap:1rem; margin:1rem 0 1.5rem; }
-.social-links-footer .social-link{
-  display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:50%;
-  background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-}
-.social-links-footer .social-link:hover{
-  transform: translateY(-3px); box-shadow: 0 10px 20px rgba(10,223,131,.25); border-color: var(--accent); background: rgba(10,223,131,.08);
-}
-.social-links-footer .social-link img{ width:22px; height:22px; display:block; }
-.social-links-footer .social-link:hover img{
-  filter: invert(62%) sepia(20%) saturate(951%) hue-rotate(100deg) brightness(95%) contrast(96%);
-}
-.copyright{ color:var(--text-muted); font-size:.95rem; }
-
-/* RESPONSIVE (original + polish) */
-@media (max-width:768px){
-  .menu-toggle{ display:flex; }
-  .nav-links{ display:none; }
-  .nav-container{ padding:1rem 1.5rem; }
-  .hero{ padding-top:68px; min-height: calc(100vh - 68px); }
-  .identity-grid{ grid-template-columns:1fr; gap:1.25rem; }
-  .identity-card{ padding:1.4rem; text-align:left; }
-  .identity-header{ justify-content:flex-start; font-size:1.1rem; }
-  .identity-list{ max-width:100%; }
-  .identity-list li{ font-size:1rem; gap:.6rem; margin-bottom:.75rem; }
-  .pillars-grid{ grid-template-columns:1fr 1fr; gap:1rem; }
-  .pillar-card{ padding:1.4rem; }
-  .pillar-icon{ width:64px; height:64px; margin-bottom:1rem; }
-  .pillar-icon svg{ width:28px; height:28px; }
-  section{ padding:4.5rem 1rem; }
-  .section-title{ font-size:1.9rem; }
-  .section-lead{ font-size:1.05rem; margin-bottom:2rem; }
-}
-@media (max-width:480px){
-  .hero h1{ font-size:2.2rem; }
-  .cta-primary{ padding:1rem 2rem; font-size:1rem; }
-  .quote-box{ padding:2rem; }
-  .section-title{ font-size:1.8rem; }
-  .quote{ font-size:1.25rem; }
-  .pillars-grid{ grid-template-columns:1fr; }
-  .pillar-card{ padding:1.2rem; }
-  .pillar-icon{ width:56px; height:56px; }
-  .pillar-icon svg{ width:24px; height:24px; }
-}
-
-/* REDUCED MOTION */
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration: .01ms !important; transition-duration: .01ms !important; }
-}
-
-/* ACCESSIBILITY (focus-visible) */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
-  outline:3px solid var(--accent); outline-offset:2px;
-}
-/* Remove tap outline specifically for hamburger */
-.menu-toggle:focus{ outline:none; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar{ width:8px; }
-::-webkit-scrollbar-track{ background: var(--bg-primary); }
-::-webkit-scrollbar-thumb{ background: var(--accent); border-radius:4px; }
-::-webkit-scrollbar-thumb:hover{ background: var(--accent-hover); }
-
-/* === Clean, centered hamburger / X === */
-.menu-toggle{
-  position: relative;
-  width: 32px;  /* keep touch target the same */
-  height: 24px;
-}
-.menu-toggle span{
-  position: absolute;
-  left: 0; right: 0;
-  height: 2px;
-  background: #fff;
-  border-radius: 1px;
-  transform-origin: center;
-  transition: transform .25s ease, opacity .2s ease, background .2s ease;
-}
-/* bars positioned precisely */
-.menu-toggle span:nth-child(1){ top: 0; }
-.menu-toggle span:nth-child(2){ top: 50%; transform: translateY(-50%); }
-.menu-toggle span:nth-child(3){ bottom: 0; }
-
-/* X state – bars meet in the middle */
-.menu-toggle[aria-expanded="true"] span:nth-child(1){
-  transform: translateY(11px) rotate(45deg);
-}
-.menu-toggle[aria-expanded="true"] span:nth-child(2){
-  opacity: 0;
-}
-.menu-toggle[aria-expanded="true"] span:nth-child(3){
-  transform: translateY(-11px) rotate(-45deg);
-}
-
-/* remove green outline on tap, keep focus-visible for keyboard users */
-.menu-toggle:focus { outline: none; }
-.menu-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-/* === Center socials in the mobile dropdown === */
-.mobile-menu .mobile-social{
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* center icon + label */
-  gap: 10px;
-  width: 100%;
-  text-align: center;
-}
-.mobile-menu .mobile-social img{
-  width: 18px; height: 18px; opacity: .95;
-  transition: opacity .2s ease, transform .2s ease;
-}
-.mobile-menu .mobile-social:hover img{ opacity: 1; transform: translateY(-1px); }
-
-/* ===== Mobile-only form sizing polish ===== */
-@media (max-width: 768px) {
-  /* make the form area feel wider */
-  #apply .form-container {
-    max-width: 680px; /* wider than default on phones */
-    width: 100%;
-  }
-  #apply .form-wrap {
-    padding: 2rem 1.5rem;   /* slightly tighter padding */
-  }
-
-  /* easier to type, avoids iOS zoom */
-  #apply .form-group label {
-    font-size: 1.1rem;
-  }
-  #apply .form-group input,
-  #apply .form-group textarea {
-    font-size: 16px;        /* important for mobile UX */
-    padding: 1.1rem 1.2rem;
-    border-radius: 14px;
-  }
-  #apply .form-group textarea {
-    min-height: 140px;      /* more comfortable textarea height */
-  }
-
-  /* button: mobile label is shorter, keep proportions nice */
-  #apply .submit-btn {
-    font-size: 1.05rem;
-    padding: 1.1rem 1.6rem;
-    border-radius: 999px;
-  }
-}
-
-/* ===== Mobile: make Apply form full-width & comfy to type ===== */
-@media (max-width: 768px) {
-  /* remove section side padding just for Apply */
-  #apply { padding-left: 0; padding-right: 0; }
-
-  /* let the container + form use the whole width */
-  #apply .container,
-  #apply .form-container {
-    max-width: none;
-    width: 100%;
-  }
-
-  /* card sits close to edges with a small safe gutter */
-  #apply .form-wrap {
-    margin: 0;                 /* no extra margins */
-    padding: 1.6rem 1.1rem;    /* tighter padding so inputs feel wider */
-    border-radius: 20px;
-  }
-  /* iOS/Android safe-area insets + minimum 12px gutter */
-  @supports (padding: max(0px)) {
-    #apply .form-wrap {
-      margin-left: max(12px, env(safe-area-inset-left));
-      margin-right: max(12px, env(safe-area-inset-right));
-    }
-  }
-
-  /* bigger, easier-to-type fields */
-  #apply .form-group label { font-size: 1.1rem; }
-  #apply .form-group input,
-  #apply .form-group textarea {
-    width: 100%;
-    font-size: 17px;           /* avoids iOS zoom; more readable */
-    padding: 1.1rem 1rem;
-    border-radius: 14px;
-  }
-  #apply .form-group textarea {
-    min-height: 180px;         /* more vertical room */
-  }
-
-  /* button keeps proportions */
-  #apply .submit-btn {
-    width: 100%;
-    font-size: 1.05rem;
-    padding: 1.1rem 1.6rem;
-    border-radius: 999px;
-  }
-}
-
-/* === Mobile: make Apply form fields nearly full-screen wide === */
-@media (max-width: 768px) {
-  #apply .form-container {
-    max-width: none;
-    width: 100%;
-  }
-
-  #apply .form-wrap {
-    margin: 0;
-    border-radius: 0; /* optional: square edges so it feels flush */
-    padding: 1.5rem 1rem;
-  }
-
-  /* Inputs & textarea fill the screen width */
-  #apply .form-group input,
-  #apply .form-group textarea {
-    width: 100%;
-    max-width: 100%;  /* kill any max-width */
-    font-size: 17px;  /* avoids zoom on iOS */
-    padding: 1.1rem 1rem;
-    border-radius: 10px;
-  }
-
-  /* More height for textarea */
-  #apply .form-group textarea {
-    min-height: 180px;
-    resize: vertical;
-  }
-
-  /* Button spans entire width too */
-  #apply .submit-btn {
-    width: 100%;
-    font-size: 1.05rem;
-    padding: 1.2rem 1.6rem;
-    border-radius: 999px;
-  }
-}
-
-/* === Header Apply Button Fixes === */
-.nav-links .cta-primary {
-  background: var(--accent);
-  color: #fff !important;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  margin-left: 0.75rem;
-  transition: background 0.25s ease;
-}
-
-.nav-links .cta-primary:hover {
-  background: #12ff9d; /* lighter accent on hover */
-  color: #000 !important;
-}
-
-.mobile-menu .cta-primary {
-  display: block;
-  background: var(--accent);
-  color: #fff !important;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin: 0.75rem 0;
-  font-weight: 600;
-}
-
-/* === Fix horizontal wobble & overflow === */
-html, body {
-  overflow-x: hidden; /* kill sideways scroll */
-}
-
-img, svg, video, canvas {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Some components/sites use 100vw which causes overflow on mobile due to scrollbar */
-*[style*="100vw"] {
-  width: 100% !important;
-}
-
-/* === Navbar container & hamburger alignment === */
-.navbar .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;            /* add safe-side padding so burger isn't glued to edge */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;     /* prevent accidental overflow */
-}
-
 .menu-toggle {
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-  margin-left: 12px;          /* tiny gap from last nav link */
+  background: transparent !important;
+  border: none !important;
+  padding: 8px !important;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  display: none;
 }
 
-/* Make sure the three bars don't overflow */
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .menu-toggle span {
   display: block;
-  width: 22px;
-  height: 2px;
-  margin: 3px 0;
-  background: currentColor;
+  width: 24px !important;
+  height: 2px !important;
+  background: #fff !important;
+  margin: 5px 0 !important;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+  transform-origin: center;
 }
 
-/* === Mobile menu panel should not create horizontal scroll === */
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* MOBILE MENU PANEL */
 .mobile-menu {
   position: fixed;
-  top: var(--nav-height, 64px);
+  top: 68px;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;                /* not 100vw to avoid overflow on some browsers */
-  box-sizing: border-box;
-  padding: 16px;
-  background: rgba(10,10,10,.96);
-  backdrop-filter: blur(6px);
-  overflow-y: auto;
+  width: 100%;
+  background: rgba(5, 5, 5, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  padding: 2rem 1rem;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Mobile Apply button stays readable */
-.mobile-menu .cta-primary {
-  display: block;
-  background: var(--accent);
-  color: #fff !important;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin: 0.75rem 0;
+.mobile-menu.is-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+.mobile-menu[hidden] {
+  display: none !important;
+}
+
+.mobile-menu a {
+  color: var(--text-primary);
+  text-decoration: none;
   font-weight: 600;
-}
-
-
-/* === Footer mobile fixes: wrap links, center, prevent overflow === */
-.footer { overflow-x: hidden; }
-
-.footer .container {
-  padding-inline: 16px;                /* safe side padding on small screens */
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;                      /* allow wrapping to new lines */
-  justify-content: center;              /* center the row */
-  gap: 10px 20px;                       /* row/column gaps */
-  margin: 0 auto 1rem;
-}
-
-.footer-links a {
-  white-space: nowrap;                  /* keep each link on a single line */
-  padding: 6px 10px;
-  border-radius: 6px;
-}
-
-.social-links-footer {
-  display: flex;
-  flex-wrap: wrap;                      /* icons wrap instead of forcing width */
-  justify-content: center;
-  gap: 14px;
-  margin: 0.25rem 0 1rem;
-}
-
-.social-links-footer .social-link img {
-  display: block;
-  width: 22px;
-  height: 22px;
-}
-
-.copyright {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   text-align: center;
-  padding: 12px 16px 16px;
-  overflow-wrap: anywhere;              /* let long words wrap */
-  word-break: break-word;
+  min-width: 200px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
-/* Slightly smaller footer nav text on tiny screens */
-@media (max-width: 420px) {
-  .footer-links a {
-    font-size: 0.95rem;
+.mobile-menu a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+  border-color: rgba(10, 223, 131, 0.2);
+}
+
+.mobile-menu .cta-primary {
+  background: var(--gradient) !important;
+  color: var(--bg-primary) !important;
+  font-weight: 700;
+  margin-top: 1rem;
+  box-shadow: var(--shadow-glow);
+}
+
+.mobile-menu .cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(10, 223, 131, 0.4);
+  color: var(--bg-primary) !important;
+}
+
+.mobile-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.mobile-social img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.mobile-social:hover img {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* RESPONSIVE NAVIGATION */
+@media (min-width: 768px) {
+  .nav-links { 
+    display: flex !important; 
+    gap: 2rem; 
+    align-items: center; 
+  }
+  .menu-toggle { 
+    display: none !important; 
+  }
+  .mobile-menu {
+    display: none !important;
   }
 }
 
-/* === Global safety tweaks === */
-
-/* Kill horizontal scrolling */
-html, body {
-  overflow-x: hidden;
-}
-
-/* Ensure no element breaks layout */
-*, *::before, *::after {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* Navbar container safe padding */
-.navbar .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;       /* add left/right padding so hamburger isn't glued to screen edge */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+@media (max-width: 767.98px) {
+  .nav-links { 
+    display: none !important; 
+  }
+  .menu-toggle { 
+    display: inline-flex !important; 
+  }
 }
 
 /* ===============================
-   PeakCY — Global + Footer + Apply Fixes
+   HERO SECTION
    =============================== */
 
-/* Kill horizontal scrolling */
-html, body {
-  overflow-x: hidden;
-}
-
-/* Prevent elements from pushing layout */
-*, *::before, *::after {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* Navbar container safe padding */
-.navbar .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;       /* safe left/right padding */
-  display: flex;
+.hero {
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
   align-items: center;
-  justify-content: space-between;
+  text-align: center; 
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
 }
 
-/* === Apply button (header + mobile menu) === */
-.nav-links .cta-primary {
-  background: #000;                 /* black background */
-  color: var(--accent) !important;  /* green text */
-  border: 2px solid var(--accent);  /* green outline */
-  padding: 0.45rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  margin-left: 0.75rem;
-  transition: all 0.25s ease;
+.hero::before {
+  content: ''; 
+  position: absolute; 
+  inset: 0;
+  background: linear-gradient(135deg, rgba(5,5,5,.9), rgba(5,5,5,.7), rgba(10,223,131,.1), rgba(5,5,5,.8));
+  z-index: 1;
 }
 
-.nav-links .cta-primary:hover {
-  background: var(--accent);  /* hover invert */
-  color: #000 !important;
+.hero::after {
+  content: ''; 
+  position: absolute; 
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(10,223,131,.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0,179,102,.1) 0%, transparent 50%);
+  z-index: 1; 
+  animation: heroGlow 8s ease-in-out infinite alternate;
 }
 
-.mobile-menu .cta-primary {
-  display: block;
-  background: #000;
-  color: var(--accent) !important;
-  border: 2px solid var(--accent);
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin: 0.75rem 0;
-  font-weight: 600;
+@keyframes heroGlow { 
+  0% { opacity: .6 } 
+  100% { opacity: 1 } 
 }
 
-.mobile-menu .cta-primary:hover {
-  background: var(--accent);
-  color: #000 !important;
+.hero-content { 
+  position: relative; 
+  z-index: 2; 
+  max-width: 900px; 
+  padding: 2rem; 
+}
+
+.badge {
+  display: inline-flex; 
+  align-items: center; 
+  gap: .5rem;
+  background: var(--accent-subtle); 
+  color: var(--accent);
+  border: 1px solid rgba(10,223,131,.2); 
+  border-radius: 50px; 
+  padding: .6rem 1.5rem;
+  font-weight: 700; 
+  font-size: .95rem; 
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px); 
+  box-shadow: 0 4px 16px rgba(10,223,131,.1);
+}
+
+.hero h1 { 
+  font-size: clamp(2.8rem, 8vw, 5.5rem); 
+  font-weight: 900; 
+  margin-bottom: 1.5rem; 
+  color: #fff; 
+  text-shadow: 0 1px 4px rgba(0,0,0,.7); 
+}
+
+.hero h1 .peak-word { 
+  color: var(--accent); 
+  text-shadow: 0 0 30px var(--accent-glow); 
+}
+
+.hero p {
+  font-size: 1.3rem; 
+  color: #fff; 
+  margin-bottom: 3.8rem; 
+  max-width: 800px; 
+  margin-left: auto; 
+  margin-right: auto; 
+  line-height: 1.6; 
+  text-shadow: 0 1px 4px rgba(0,0,0,.7);
+}
+
+.cta-primary { 
+  display: inline-block; 
+  background: var(--gradient); 
+  color: var(--bg-primary); 
+  padding: 1.2rem 3rem; 
+  border-radius: 50px; 
+  text-decoration: none; 
+  font-weight: 800; 
+  font-size: 1.1rem; 
+  box-shadow: var(--shadow-glow); 
+  transition: var(--transition);
+}
+
+.cta-primary:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 25px 50px rgba(10,223,131,.3); 
 }
 
 /* ===============================
-   PeakCY — Global, Header, Footer, Hamburger Fixes
+   SECTIONS
    =============================== */
 
-/* --- Global safety --- */
-html, body { overflow-x: hidden; }
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  max-width: 100%;
+section { 
+  padding: 6rem 2rem; 
+  position: relative; 
+  z-index: 2; 
 }
 
-/* Navbar container safe padding */
-.navbar .nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
-/* --- Apply button (desktop & mobile) --- */
-.nav-links .cta-primary {
-  background: #000;
-  color: var(--accent) !important;
-  border: 2px solid var(--accent);
-  padding: 0.45rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  margin-left: 0.75rem;
-  transition: all 0.25s ease;
+.section-title { 
+  font-size: clamp(2.2rem,6vw,3.2rem); 
+  font-weight: 900; 
+  margin-bottom: 1.5rem; 
+  text-align: center; 
+  color: var(--text-primary); 
+  letter-spacing: -.02em; 
+  line-height: 1.2; 
 }
 
-.nav-links .cta-primary:hover {
-  background: var(--accent);
-  color: #000 !important;
+.section-lead { 
+  font-size: 1.2rem; 
+  color: var(--text-secondary); 
+  text-align: center; 
+  max-width: 800px; 
+  margin: 0 auto 3rem; 
+  line-height: 1.7; 
 }
 
-.mobile-menu .cta-primary {
-  display: block;
-  background: #000;
-  color: var(--accent) !important;
-  border: 2px solid var(--accent);
+/* ===============================
+   ABOUT SECTION
+   =============================== */
+
+.about-hero { 
+  font-size: 1.4rem; 
+  color: var(--text-secondary); 
+  margin-bottom: 2rem; 
+  max-width: 800px; 
+  text-align: center; 
+  line-height: 1.6; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.green-text { 
+  color: #0adf83 !important; 
+}
+
+.about-unified-card {
+  background: var(--bg-card); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius);
+  padding: 2rem; 
+  transition: var(--transition); 
+  position: relative; 
+  overflow: hidden; 
+  backdrop-filter: blur(10px);
+  max-width: 700px; 
+  margin: 0 auto 2.5rem; 
+  text-align: center; 
+  border-top: 4px solid transparent;
+}
+
+.about-unified-card:hover { 
+  border-top-color: var(--accent); 
+  transform: translateY(-6px); 
+  box-shadow: var(--shadow-glow); 
+}
+
+.about-unified-text { 
+  font-size: 1.15rem; 
+  line-height: 1.7; 
+  color: var(--text-secondary); 
+}
+
+.about-finale {
+  background: linear-gradient(135deg, var(--accent-subtle), rgba(212,175,55,.1));
+  border: 2px solid; 
+  border-image: var(--gradient) 1; 
+  border-radius: var(--radius);
+  padding: 2rem; 
+  font-size: 1.25rem; 
+  font-weight: 600; 
+  color: var(--accent); 
+  font-style: italic;
+  backdrop-filter: blur(20px); 
+  box-shadow: var(--shadow-glow); 
+  margin: 2.5rem auto; 
+  max-width: 800px; 
+  line-height: 1.6;
+}
+
+.about-mission { 
+  font-size: 1.35rem; 
+  color: var(--text-primary); 
+  font-weight: 700; 
+  text-align: center; 
+  margin-top: 2rem; 
+  line-height: 1.5; 
+}
+
+.about-mission strong {
+  background: var(--gradient); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+  font-weight: 800;
+}
+
+/* ===============================
+   IDENTITY SECTION
+   =============================== */
+
+.identity { 
+  background: var(--bg-primary); 
+  position: relative; 
+}
+
+.identity-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 3rem; 
+  margin-top: 3rem; 
+}
+
+.identity-card {
+  background: var(--bg-card); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius);
+  padding: 2.5rem; 
+  box-shadow: var(--shadow); 
+  transition: all .5s ease; 
+  position: relative; 
+  overflow: hidden; 
+  backdrop-filter: blur(10px); 
   text-align: center;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin: 0.75rem 0;
-  font-weight: 600;
 }
 
-.mobile-menu .cta-primary:hover {
-  background: var(--accent);
-  color: #000 !important;
+.identity-header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 1rem; 
+  font-size: 1.3rem; 
+  font-weight: 700; 
+  margin-bottom: 1.8rem; 
+  color: var(--text-primary); 
 }
 
-/* --- Footer mobile fixes --- */
-.footer { overflow-x: hidden; }
-
-.footer .container {
-  padding-inline: 16px;
+.identity-badge { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 32px; 
+  height: 32px; 
+  border-radius: 50%; 
+  font-weight: bold; 
+  font-size: 1.1rem; 
+  flex-shrink: 0; 
 }
 
-.footer-links {
-  display: flex;
+.identity-badge.yes { 
+  background: var(--accent-subtle); 
+  color: var(--accent); 
+  border: 2px solid var(--accent); 
+}
+
+.identity-badge.no { 
+  background: var(--red-subtle); 
+  color: var(--red); 
+  border: 2px solid var(--red); 
+}
+
+.identity-list { 
+  list-style: none; 
+  text-align: left; 
+  max-width: 360px; 
+  margin: 0 auto; 
+}
+
+.identity-list li { 
+  display: flex; 
+  align-items: flex-start; 
+  gap: .8rem; 
+  margin-bottom: 1rem; 
+  color: var(--text-secondary); 
+  line-height: 1.55; 
+  transition: all .3s ease; 
+}
+
+.identity-list li strong { 
+  color: var(--text-primary); 
+  font-weight: 700; 
+  min-width: 100px; 
+}
+
+/* ===============================
+   PILLARS SECTION
+   =============================== */
+
+.pillars-lead {
+  max-width: 800px; 
+  margin: 0 auto 3rem; 
+  padding: 1.5rem 2rem; 
+  background: var(--bg-card);
+  border: 1px solid var(--border); 
+  border-radius: var(--radius); 
+  color: var(--text-primary);
+  font-size: 1.25rem; 
+  line-height: 1.7; 
+  box-shadow: var(--shadow); 
+  backdrop-filter: blur(10px); 
+  font-style: italic;
+}
+
+.pillars-grid { 
+  display: grid; 
+  grid-template-columns: repeat(4,1fr); 
+  gap: 2rem; 
+  margin-top: 2rem; 
+}
+
+.pillar-card {
+  background: var(--bg-card); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius);
+  padding: 2.5rem; 
+  text-align: center; 
+  transition: all .5s ease; 
+  box-shadow: var(--shadow);
+}
+
+.pillar-icon {
+  width: 80px; 
+  height: 80px; 
+  background: rgba(10,223,131,.1); 
+  border: 2px solid rgba(10,223,131,.3);
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin: 0 auto 2rem; 
+  transition: all .4s ease;
+}
+
+.pillar-icon svg { 
+  width: 36px; 
+  height: 36px; 
+  stroke: var(--accent); 
+}
+
+.pillar-card:hover .pillar-icon { 
+  background: var(--accent); 
+  border-color: var(--accent); 
+  transform: scale(1.15); 
+  box-shadow: 0 0 30px var(--accent-glow); 
+}
+
+.pillar-card:hover .pillar-icon svg { 
+  stroke: var(--bg-primary); 
+}
+
+/* ===============================
+   QUOTE SECTION
+   =============================== */
+
+.quote-section { 
+  background: var(--bg-primary); 
+  padding: 4rem 2rem; 
+  position: relative; 
+}
+
+.quote-box {
+  max-width: 800px; 
+  margin: 0 auto; 
+  padding: 2.5rem; 
+  background: var(--bg-card); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius);
+  box-shadow: var(--shadow); 
+  backdrop-filter: blur(20px); 
+  text-align: center; 
+  position: relative; 
+  overflow: hidden; 
+  border-top: 4px solid var(--accent);
+}
+
+.quote { 
+  font-style: italic; 
+  font-size: 1.45rem; 
+  line-height: 1.7; 
+  color: var(--text-secondary); 
+  margin-bottom: 1.5rem; 
+}
+
+.quote-author { 
+  color: var(--accent); 
+  font-weight: 700; 
+  font-size: 1.15rem; 
+}
+
+/* ===============================
+   APPLY SECTION
+   =============================== */
+
+.apply { 
+  background: var(--bg-secondary); 
+  padding: 5rem 2rem; 
+}
+
+.form-container { 
+  max-width: 500px; 
+  margin: 0 auto; 
+}
+
+.form-wrap { 
+  background: var(--bg-card); 
+  border: 1px solid var(--border); 
+  border-radius: var(--radius); 
+  padding: 3rem; 
+  box-shadow: var(--shadow); 
+  backdrop-filter: blur(20px); 
+}
+
+.form-group { 
+  margin-bottom: 1.5rem; 
+}
+
+.form-group label { 
+  display: block; 
+  margin-bottom: .5rem; 
+  font-weight: 600; 
+  color: var(--text-primary); 
+}
+
+.form-group input, .form-group textarea {
+  width: 100%; 
+  padding: 1rem 1.2rem; 
+  background: rgba(255,255,255,.05); 
+  border: 2px solid var(--border); 
+  border-radius: 12px; 
+  color: var(--text-primary);
+  font-family: inherit; 
+  font-size: 1rem; 
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.form-group input:focus, .form-group textarea:focus { 
+  outline: none; 
+  border-color: var(--accent); 
+  box-shadow: 0 0 0 3px rgba(10,223,131,.1); 
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  width: 100%; 
+  background: var(--gradient); 
+  color: var(--bg-primary); 
+  border: none; 
+  padding: 1.2rem 2rem; 
+  border-radius: 50px; 
+  font-size: 1.1rem; 
+  font-weight: 800; 
+  cursor: pointer; 
+  box-shadow: var(--shadow-glow);
+  transition: var(--transition);
+}
+
+.submit-btn:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 15px 35px rgba(10,223,131,.4); 
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+
+.footer { 
+  background: var(--bg-primary); 
+  padding: 3rem 2rem; 
+  text-align: center; 
+  border-top: 1px solid var(--border); 
+}
+
+.footer-links { 
+  display: flex; 
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px 20px;
-  margin: 0 auto 1rem;
+  justify-content: center; 
+  gap: 10px 20px; 
+  margin: 0 auto 1rem; 
 }
 
-.footer-links a {
+.footer-links a { 
+  color: var(--text-secondary); 
+  text-decoration: none; 
+  font-weight: 600; 
+  padding: .5rem 1rem; 
+  border-radius: 8px;
   white-space: nowrap;
-  padding: 6px 10px;
-  border-radius: 6px;
+  transition: var(--transition);
 }
 
-.social-links-footer {
-  display: flex;
+.footer-links a:hover { 
+  color: var(--accent); 
+  background: rgba(10,223,131,.05); 
+}
+
+.socials-heading {
+  margin: .5rem 0 .75rem; 
+  text-transform: uppercase; 
+  letter-spacing: .08em; 
+  font-weight: 700; 
+  font-size: .85rem; 
+  color: var(--text-secondary); 
+  opacity: .9;
+}
+
+.social-links-footer { 
+  display: flex; 
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-  margin: 0.25rem 0 1rem;
+  justify-content: center; 
+  gap: 14px; 
+  margin: .25rem 0 1rem; 
 }
 
-.social-links-footer .social-link img {
-  display: block;
-  width: 22px;
-  height: 22px;
+.social-links-footer .social-link {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%;
+  background: rgba(255,255,255,.04); 
+  border: 1px solid rgba(255,255,255,.1); 
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
 }
 
-.copyright {
+.social-links-footer .social-link:hover {
+  transform: translateY(-3px); 
+  box-shadow: 0 10px 20px rgba(10,223,131,.25); 
+  border-color: var(--accent); 
+  background: rgba(10,223,131,.08);
+}
+
+.social-links-footer .social-link img { 
+  width: 22px; 
+  height: 22px; 
+  display: block; 
+}
+
+.social-links-footer .social-link:hover img {
+  filter: invert(62%) sepia(20%) saturate(951%) hue-rotate(100deg) brightness(95%) contrast(96%);
+}
+
+.copyright { 
+  color: var(--text-muted); 
+  font-size: .95rem;
   text-align: center;
   padding: 12px 16px 16px;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+
+@media (max-width: 768px) {
+  .nav-container { 
+    padding: 1rem 1.5rem; 
+  }
+  
+  .hero { 
+    padding-top: 68px; 
+    min-height: calc(100vh - 68px); 
+  }
+  
+  .identity-grid { 
+    grid-template-columns: 1fr; 
+    gap: 1.25rem; 
+  }
+  
+  .identity-card { 
+    padding: 1.4rem; 
+    text-align: left; 
+  }
+  
+  .identity-header { 
+    justify-content: flex-start; 
+    font-size: 1.1rem; 
+  }
+  
+  .identity-list { 
+    max-width: 100%; 
+  }
+  
+  .identity-list li { 
+    font-size: 1rem; 
+    gap: .6rem; 
+    margin-bottom: .75rem; 
+  }
+  
+  .pillars-grid { 
+    grid-template-columns: 1fr 1fr; 
+    gap: 1rem; 
+  }
+  
+  .pillar-card { 
+    padding: 1.4rem; 
+  }
+  
+  .pillar-icon { 
+    width: 64px; 
+    height: 64px; 
+    margin-bottom: 1rem; 
+  }
+  
+  .pillar-icon svg { 
+    width: 28px; 
+    height: 28px; 
+  }
+  
+  section { 
+    padding: 4.5rem 1rem; 
+  }
+  
+  .section-title { 
+    font-size: 1.9rem; 
+  }
+  
+  .section-lead { 
+    font-size: 1.05rem; 
+    margin-bottom: 2rem; 
+  }
+
+  .form-container { 
+    max-width: none;
+    width: 100%;
+  }
+
+  .form-wrap { 
+    margin: 0;
+    padding: 1.5rem 1rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
+    padding: 1.1rem 1rem;
+    border-radius: 10px;
+  }
+
+  .form-group textarea {
+    min-height: 140px;
+  }
+
+  .submit-btn {
+    font-size: 1.05rem;
+    padding: 1.2rem 1.6rem;
+  }
+
+  .footer-links a {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { 
+    font-size: 2.2rem; 
+  }
+  
+  .cta-primary { 
+    padding: 1rem 2rem; 
+    font-size: 1rem; 
+  }
+  
+  .quote-box { 
+    padding: 2rem; 
+  }
+  
+  .section-title { 
+    font-size: 1.8rem; 
+  }
+  
+  .quote { 
+    font-size: 1.25rem; 
+  }
+  
+  .pillars-grid { 
+    grid-template-columns: 1fr; 
+  }
+  
+  .pillar-card { 
+    padding: 1.2rem; 
+  }
+  
+  .pillar-icon { 
+    width: 56px; 
+    height: 56px; 
+  }
+  
+  .pillar-icon svg { 
+    width: 24px; 
+    height: 24px; 
+  }
+
+  .footer-links a {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 420px) {
-  .footer-links a { font-size: 0.95rem; }
+  .footer-links a {
+    font-size: 0.85rem;
+  }
 }
 
-/* --- Hamburger fixes --- */
-@media (min-width: 768px) {
-  .menu-toggle { display: none; }
-  .nav-links { display: flex; gap: 18px; }
+/* ===============================
+   ACCESSIBILITY & UTILITIES
+   =============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * { 
+    animation-duration: .01ms !important; 
+    transition-duration: .01ms !important; 
+  }
 }
 
-@media (max-width: 767.98px) {
-  .nav-links { display: none; }
-  .menu-toggle { display: inline-flex; }
-}
-
-.menu-toggle {
-  appearance: none;
-  background: transparent !important;
-  border: 0 !important;
-  color: #fff;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  margin-left: 12px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  position: relative;
-  z-index: 1001;
-  cursor: pointer;
-}
-
-.menu-toggle span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  margin: 4px 0;
-  background: currentColor;
-  border-radius: 1px;
-  transition: transform .2s ease, opacity .2s ease;
-}
-
-.menu-toggle:hover { color: #eaeaea; }
-.menu-toggle:focus-visible {
-  outline: 2px solid var(--accent);
+a:focus-visible, 
+button:focus-visible, 
+input:focus-visible, 
+textarea:focus-visible {
+  outline: 3px solid var(--accent); 
   outline-offset: 2px;
 }
 
-/* Mobile menu panel */
-.mobile-menu {
-  position: fixed;
-  top: var(--nav-height, 64px);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px;
-  background: rgba(10,10,10,.96);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  overflow-y: auto;
+.menu-toggle:focus { 
+  outline: none; 
 }
 
-/* Nuke any old box styles */
-.menu-toggle,
-.menu-toggle * { box-shadow: none !important; }
-
-/* ===============================
-   PeakCY — Hamburger Final Fix
-   =============================== */
-
-/* Show links on desktop, burger on mobile */
-@media (min-width: 768px) {
-  .menu-toggle { display: none; }
-  .nav-links { display: flex; gap: 18px; }
-}
-@media (max-width: 767.98px) {
-  .nav-links { display: none; }
-  .menu-toggle { display: inline-flex; }
+.menu-toggle:focus-visible { 
+  outline: 2px solid var(--accent); 
+  outline-offset: 2px; 
 }
 
-/* Clean hamburger button */
-.menu-toggle {
-  appearance: none;
-  background: transparent !important;
-  border: 0 !important;
-  color: #fff;               /* bar color */
-  width: 44px;
-  height: 44px;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  margin-left: 12px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  position: relative;
-  z-index: 1001;
-  cursor: pointer;
-}
-.menu-toggle span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  margin: 4px 0;
-  background: currentColor;
-  border-radius: 1px;
-  transition: transform .2s ease, opacity .2s ease;
-}
-.menu-toggle:hover { color: #eaeaea; }
-.menu-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Ensure hidden actually hides, and visible fills viewport without causing sideways scroll */
-.mobile-menu[hidden] { display: none !important; }
-.mobile-menu {
-  position: fixed;
-  top: var(--nav-height, 64px);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px;
-  background: rgba(10,10,10,.96);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-/* Nuke any stray styles from earlier */
-.menu-toggle,
-.menu-toggle * { box-shadow: none !important; }
-
-/* === Mobile menu final visibility overrides === */
-.mobile-menu[hidden] { display: none !important; }
-
-.mobile-menu {
-  position: fixed;
-  top: var(--nav-height, 64px);
-  left: 0; right: 0; bottom: 0;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  background: rgba(10,10,10,.96);
-  backdrop-filter: blur(6px);
-  z-index: 2000;                 /* above header */
-  overflow-y: auto;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-
-.mobile-menu.is-open {
-  opacity: 1;
-  pointer-events: auto;
-  display: block !important;     /* hard override, in case any older rule persists */
-}
-
-/* ===============================
-   PeakCY — FORCE mobile nav behavior
-   =============================== */
-
-/* 1) On mobile: hide desktop links, show burger */
-@media (max-width: 767.98px) {
-  .navbar .nav-container .nav-links {
-    display: none !important;   /* hide desktop nav for sure */
-  }
-  .navbar .nav-container #menuToggle.menu-toggle {
-    display: inline-flex !important;  /* show the burger */
-  }
-}
-
-/* 2) On desktop: show desktop links, hide burger */
-@media (min-width: 768px) {
-  .navbar .nav-container .nav-links {
-    display: flex !important;
-    gap: 18px;
-  }
-  .navbar .nav-container #menuToggle.menu-toggle {
-    display: none !important;
-  }
-}
-
-/* 3) Make sure the mobile panel actually overlays and is visible when opened */
-.mobile-menu[hidden] { display: none !important; }
-
-.mobile-menu {
-  position: fixed !important;
-  top: var(--nav-height, 64px) !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
-  padding: 16px !important;
-  box-sizing: border-box !important;
-  background: rgba(10,10,10,.96) !important;
-  backdrop-filter: blur(6px);
-  z-index: 2000 !important;         /* above header */
-  overflow-y: auto !important;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-
-.mobile-menu.is-open {
-  display: block !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* 4) Clean hamburger visuals (ensure it stays as 3 bars) */
-#menuToggle.menu-toggle {
-  appearance: none;
-  background: transparent !important;
-  border: 0 !important;
-  color: #fff;
-  width: 44px; height: 44px; padding: 0;
-  margin-left: 12px;
-  align-items: center; justify-content: center;
-  border-radius: 8px;
-  position: relative; z-index: 2100; /* above panel edge */
-  cursor: pointer;
-}
-#menuToggle.menu-toggle span {
-  display: block;
-  width: 22px; height: 2px; margin: 4px 0;
-  background: currentColor; border-radius: 1px;
-}
-
-/* 5) Safety: no sideways scroll while panel is open */
-html, body { overflow-x: hidden; }
-
-/* ===============================
-   PeakCY — Mobile nav FINAL
-   =============================== */
-
-/* Desktop vs Mobile visibility */
-@media (min-width: 768px) {
-  .navbar .nav-container .nav-links { display: flex !important; gap: 18px; }
-  #menuToggle.menu-toggle { display: none !important; }
-}
-@media (max-width: 767.98px) {
-  .navbar .nav-container .nav-links { display: none !important; }
-  #menuToggle.menu-toggle { display: inline-flex !important; }
-}
-
-/* Clean hamburger */
-#menuToggle.menu-toggle {
-  appearance: none;
-  background: transparent !important;
-  border: 0 !important;
-  color: #fff;
-  width: 44px; height: 44px; padding: 0;
-  margin-left: 12px;
-  align-items: center; justify-content: center;
-  border-radius: 8px;
-  cursor: pointer;
-}
-#menuToggle.menu-toggle span {
-  display: block;
-  width: 22px; height: 2px; margin: 4px 0;
-  background: currentColor; border-radius: 1px;
-}
-
-/* Mobile panel — now a top-level sibling so it can overlay everything */
-#mobileMenu.mobile-menu[hidden] { display: none !important; }
-
-#mobileMenu.mobile-menu {
-  position: fixed !important;
-  top: var(--nav-height, 64px) !important;
-  left: 0 !important; right: 0 !important; bottom: 0 !important;
-  width: 100% !important;
-  padding: 16px !important;
-  box-sizing: border-box !important;
-  background: rgba(10,10,10,.96) !important;
-  backdrop-filter: blur(6px);
-  z-index: 9999 !important;  /* ensure above everything */
-  overflow-y: auto !important;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-
-#mobileMenu.mobile-menu.is-open {
-  display: block !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Safety: no sideways scroll */
-html, body { overflow-x: hidden; }
-
-/* === Hamburger: morph to X, keep fully visible === */
-
-/* don't clip the toggle */
-.navbar { overflow: visible; }
-
-/* higher than the mobile panel */
-#menuToggle.menu-toggle { z-index: 3000; }
-
-/* smooth transforms on the bars */
-#menuToggle.menu-toggle span {
-  transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
-  transform-origin: 50% 50%;
-}
-
-/* when menu is open (aria-expanded=true), morph to X */
-#menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-#menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-#menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
-/* make sure the icon color stays visible on dark bg */
-#menuToggle.menu-toggle { color: #fff; }
-#menuToggle.menu-toggle:hover { color: #eaeaea; }
-
-/* small touch target safety on tiny phones */
-@media (max-width: 360px) {
-  #menuToggle.menu-toggle { width: 48px; height: 48px; }
-}
-
-/* ===============================
-   PeakCY — Hamburger: even bars + X morph
-   =============================== */
-
-/* don't clip the toggle */
-.navbar { overflow: visible; }
-
-/* toggle button */
-#menuToggle.menu-toggle {
-  /* size/position */
-  width: 44px; height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  /* geometry (tweak if you want different look) */
-  --bar-w: 24px;
-  --bar-h: 2px;
-  --bar-gap: 6px;
-
-  /* visuals */
-  color: #fff;
-  line-height: 0;
-  font-size: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   border: 0;
-  background: transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 3000; /* above panel */
-  gap: var(--bar-gap);
-}
-
-/* three bars, perfectly even */
-#menuToggle.menu-toggle span {
-  width: var(--bar-w);
-  height: var(--bar-h);
-  background: currentColor;
-  border-radius: 1px;
-  margin: 0 !important;            /* normalize old rules */
-  display: block;
-  transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
-  transform-origin: 50% 50%;
-}
-
-/* morph to X when open via aria-expanded */
-#menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(calc(var(--bar-h) + var(--bar-gap))) rotate(45deg);
-}
-#menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-#menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(calc(-1 * (var(--bar-h) + var(--bar-gap)))) rotate(-45deg);
-}
-
-/* hover/focus feedback */
-#menuToggle.menu-toggle:hover { color: #eaeaea; }
-#menuToggle.menu-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* larger tap target on tiny phones (optional) */
-@media (max-width: 360px) {
-  #menuToggle.menu-toggle { width: 48px; height: 48px; }
-}
-
-/* =========================================
-   PeakCY — FINAL mobile nav polish
-   ========================================= */
-
-/* 1) Smaller hamburger with tighter bars */
-#menuToggle.menu-toggle {
-  width: 36px;                 /* smaller touch target */
-  height: 36px;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 12px;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 8px;
-  z-index: 3000;               /* above panel edge */
-}
-#menuToggle.menu-toggle span {
-  display: block;
-  width: 20px;                 /* narrower bar */
-  height: 2px;
-  margin: 3px 0;               /* tighter gap */
-  background: currentColor;
-  border-radius: 1px;
-  transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
-  transform-origin: 50% 50%;
-}
-
-/* Morph to a centered "X" when open */
-#menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(5px) rotate(45deg);
-}
-#menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-#menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-5px) rotate(-45deg);
-}
-
-/* 2) Ensure the toggle never gets clipped by the navbar */
-.navbar { overflow: visible; }
-
-/* 3) Mobile panel: overlay, visible when open, content centered */
-.mobile-menu[hidden] { display: none !important; }
-
-.mobile-menu {
-  position: fixed !important;
-  top: var(--nav-height, 64px) !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
-  padding: 16px !important;
-  box-sizing: border-box !important;
-  background: rgba(10,10,10,.96) !important;
-  backdrop-filter: blur(6px);
-  z-index: 2000 !important;
-  overflow-y: auto !important;
-
-  /* Center everything */
-  text-align: center;
-  display: block;              /* base block (hidden toggles it off) */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-.mobile-menu.is-open {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Center links and make them consistent width */
-.mobile-menu a {
-  display: block;
-  margin: 8px auto;
-  padding: 10px 8px;
-  text-align: center;
-  max-width: 520px;            /* keeps a nice column */
-}
-
-/* Apply button in mobile menu: centered & stronger */
-.mobile-menu .cta-primary {
-  background: #000;
-  color: var(--accent) !important;
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  font-weight: 700;
-  padding: 12px 16px;
-  margin: 12px auto;
-}
-
-/* Social links in mobile menu: center row with left icons */
-.mobile-menu .mobile-social {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-}
-
-/* 4) Enforce mobile/desktop visibility of nav items (safety) */
-@media (max-width: 767.98px) {
-  .navbar .nav-container .nav-links { display: none !important; }
-  .navbar .nav-container #menuToggle.menu-toggle { display: inline-flex !important; }
-}
-@media (min-width: 768px) {
-  .navbar .nav-container .nav-links { display: flex !important; gap: 18px; }
-  .navbar .nav-container #menuToggle.menu-toggle { display: none !important; }
 }
 
 /* ===============================
-   PeakCY — FORCE hamburger + X
+   SCROLLBAR STYLING
    =============================== */
 
-/* Reset size */
-#menuToggle {
-  width: 32px !important;
-  height: 32px !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  margin-left: 12px;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer;
-  z-index: 3000;
+::-webkit-scrollbar { 
+  width: 8px; 
 }
 
-/* The 3 bars */
-#menuToggle span {
-  display: block;
-  width: 20px !important;
-  height: 2px !important;
-  margin: 3px 0 !important;
-  background: #fff !important;
-  border-radius: 1px;
-  transition: transform .25s ease, opacity .25s ease;
+::-webkit-scrollbar-track { 
+  background: var(--bg-primary); 
 }
 
-/* Morph to X when aria-expanded=true */
-#menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(5px) rotate(45deg);
-}
-#menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-#menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-5px) rotate(-45deg);
+::-webkit-scrollbar-thumb { 
+  background: var(--accent); 
+  border-radius: 4px; 
 }
 
-/* =========================================
-   PeakCY — FINAL NAV/HAMBURGER RESET
-   ========================================= */
-
-/* Safety: navbar should not clip the toggle */
-.navbar { overflow: visible; }
-
-/* ---------- Force desktop vs mobile state ---------- */
-@media (max-width: 767.98px) {
-  #navbar .nav-links { display: none !important; }
-  #navbar #menuToggle { display: inline-flex !important; }
-}
-@media (min-width: 768px) {
-  #navbar .nav-links { display: flex !important; gap: 18px; }
-  #navbar #menuToggle { display: none !important; }
+::-webkit-scrollbar-thumb:hover { 
+  background: var(--accent-hover); 
 }
 
-/* ---------- HARD RESET the hamburger size/appearance ---------- */
-#navbar #menuToggle {
-  width: 32px !important;
-  height: 32px !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  margin-left: 12px !important;
+/* ===============================
+   FORM VALIDATION & MESSAGES
+   =============================== */
 
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  color: #fff !important;
-  cursor: pointer;
+.form-message {
+  margin-top: 1rem;
+  padding: 1rem;
   border-radius: 8px;
-  z-index: 3000;
+  font-weight: 600;
 }
 
-/* Three bars: small, tight gaps */
-#navbar #menuToggle span {
-  display: block;
-  width: 20px !important;
-  height: 2px !important;
-  margin: 3px 0 !important;
-  background: currentColor !important;
-  border-radius: 1px;
-
-  /* RESET any old transforms/opacity */
-  transform: none !important;
-  opacity: 1 !important;
-
-  transition: transform .22s ease, opacity .22s ease;
+.form-message.success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
 }
 
-/* Morph to a centered X when open */
-#navbar #menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(5px) rotate(45deg) !important;
-}
-#navbar #menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0 !important;
-}
-#navbar #menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-5px) rotate(-45deg) !important;
+.form-message.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
 }
 
-/* ---------- Mobile panel overlay + centering ---------- */
-#mobileMenu[hidden] { display: none !important; }
+.form-group input:invalid:not(:placeholder-shown) {
+  border-color: var(--red);
+}
 
-#mobileMenu {
-  position: fixed !important;
-  top: var(--nav-height, 64px) !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: rgba(34, 197, 94, 0.5);
+}
 
-  padding: 16px !important;
-  box-sizing: border-box !important;
-  background: rgba(10,10,10,.96) !important;
-  backdrop-filter: blur(6px);
-  z-index: 2000 !important;
-  overflow-y: auto !important;
+/* ===============================
+   LOGO TEXT UTILITY
+   =============================== */
 
-  text-align: center;          /* center everything */
-  opacity: 0;
+.logo-text .peak {
+  color: var(--text-primary);
+}
+
+.logo-text .cy {
+  color: var(--gold);
+}
+
+/* ===============================
+   PARTNERS PAGE SPECIFIC
+   =============================== */
+
+.partners-title {
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+/* ===============================
+   LOADING STATES
+   =============================== */
+
+.loading {
+  opacity: 0.7;
   pointer-events: none;
-  transition: opacity .2s ease;
 }
 
-#mobileMenu.is-open {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  display: block !important;   /* belt & suspenders */
+.loading .submit-btn {
+  position: relative;
+  color: transparent;
 }
 
-#mobileMenu a {
-  display: block;
-  margin: 12px auto;
-  padding: 10px 8px;
-  max-width: 520px;            /* keeps a nice centered column */
-  text-align: center;
+.loading .submit-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top-color: var(--bg-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-#mobileMenu .cta-primary {
-  background: #000;
-  color: var(--accent) !important;
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  font-weight: 700;
-  padding: 12px 16px;
-  margin: 14px auto;
-  display: inline-block;
-}
-
-/* Tiny phones: slightly bigger tap target */
-@media (max-width: 360px) {
-  #navbar #menuToggle { width: 36px !important; height: 36px !important; }
-}
-
-/* =========================================
-   PeakCY — Simple, bulletproof hamburger → X
-   ========================================= */
-
-/* Force-reset the toggle button */
-#menuToggle {
-  width: 32px !important;
-  height: 32px !important;
-  display: inline-flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  margin-left: 12px !important;
-  cursor: pointer;
-  z-index: 3000;
-}
-
-/* The bars */
-#menuToggle span {
-  width: 22px !important;
-  height: 2px !important;
-  background: #fff !important;
-  margin: 4px 0 !important;
-  border-radius: 1px;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-/* Morph to X when aria-expanded=true */
-#menuToggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-#menuToggle[aria-expanded="true"] span:nth-child(2) {
-  opacity: 0;
-}
-#menuToggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
