@@ -1,5 +1,5 @@
 /* ==================================================
-   PeakCY — app.js (robust mobile menu + strict form)
+   PeakCY — app.js (robust mobile menu + strict form) — NO VIDEO
    ================================================== */
 
 function getNavHeight() {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setScrolled();
   window.addEventListener('scroll', setScrolled, { passive: true });
 
-  /* ----------------- Mobile menu (full overlay, bulletproof) ----------------- */
+  /* ----------------- Mobile menu (simple + stable) ----------------- */
   const toggle = document.querySelector('.menu-toggle');
   const menu   = document.querySelector('.mobile-menu');
 
@@ -32,50 +32,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const open = () => {
       if (openState) return;
       openState = true;
-
-      // full overlay mode
       menu.hidden = false;
-      menu.style.display = 'flex';
       document.body.classList.add('menu-open');
       toggle.setAttribute('aria-expanded', 'true');
-
-      // pin X so it never “runs away”
-      toggle.style.position = 'fixed';
-      toggle.style.top = '14px';
-      toggle.style.right = '14px';
-      toggle.style.left = 'auto';
-      toggle.style.zIndex = '5001';
     };
 
     const close = () => {
       if (!openState) return;
       openState = false;
-
       toggle.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('menu-open');
-
       menu.hidden = true;
-      menu.style.display = '';
-
-      // restore toggle positioning
-      toggle.style.position = '';
-      toggle.style.top = '';
-      toggle.style.right = '';
-      toggle.style.left = '';
-      toggle.style.zIndex = '';
     };
 
     toggle.addEventListener('click', () => (openState ? close() : open()));
-    // Close when tapping any link in the menu
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-    // Close on outside click
     document.addEventListener('click', (e) => {
       if (!openState) return;
       if (!menu.contains(e.target) && !toggle.contains(e.target)) close();
     });
-    // ESC closes
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-    // Safety on resize
     window.addEventListener('resize', () => { if (innerWidth > 768) close(); });
   }
 
@@ -109,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lastClickedIsSubmit;
 
       if (!viaBtn) {
-        // Ignore phantom submits (e.g., from labels/overlays)
         lastClickedIsSubmit = false;
         return;
       }
@@ -128,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Footer & mobile socials: never hijack to form */
   document.querySelectorAll('.footer .social-link, .mobile-menu .mobile-social').forEach(a => {
     a.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevent any accidental bubbling to labels/overlays
+      e.stopPropagation();
     });
   });
 });
