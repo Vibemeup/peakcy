@@ -594,3 +594,182 @@ img, svg, video, canvas {
 }
 
 
+/* === Footer mobile fixes: wrap links, center, prevent overflow === */
+.footer { overflow-x: hidden; }
+
+.footer .container {
+  padding-inline: 16px;                /* safe side padding on small screens */
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;                      /* allow wrapping to new lines */
+  justify-content: center;              /* center the row */
+  gap: 10px 20px;                       /* row/column gaps */
+  margin: 0 auto 1rem;
+}
+
+.footer-links a {
+  white-space: nowrap;                  /* keep each link on a single line */
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.social-links-footer {
+  display: flex;
+  flex-wrap: wrap;                      /* icons wrap instead of forcing width */
+  justify-content: center;
+  gap: 14px;
+  margin: 0.25rem 0 1rem;
+}
+
+.social-links-footer .social-link img {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.copyright {
+  text-align: center;
+  padding: 12px 16px 16px;
+  overflow-wrap: anywhere;              /* let long words wrap */
+  word-break: break-word;
+}
+
+/* Slightly smaller footer nav text on tiny screens */
+@media (max-width: 420px) {
+  .footer-links a {
+    font-size: 0.95rem;
+  }
+}
+
+/* === Global safety tweaks === */
+
+/* Kill horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Ensure no element breaks layout */
+*, *::before, *::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Navbar container safe padding */
+.navbar .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;       /* add left/right padding so hamburger isn't glued to screen edge */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===============================
+   PeakCY — Global + Footer + Apply Fixes
+   =============================== */
+
+/* Kill horizontal scrolling */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Prevent elements from pushing layout */
+*, *::before, *::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Navbar container safe padding */
+.navbar .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;       /* safe left/right padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* === Apply button (header + mobile menu) === */
+.nav-links .cta-primary {
+  background: #000;                 /* black background */
+  color: var(--accent) !important;  /* green text */
+  border: 2px solid var(--accent);  /* green outline */
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-left: 0.75rem;
+  transition: all 0.25s ease;
+}
+
+.nav-links .cta-primary:hover {
+  background: var(--accent);  /* hover invert */
+  color: #000 !important;
+}
+
+.mobile-menu .cta-primary {
+  display: block;
+  background: #000;
+  color: var(--accent) !important;
+  border: 2px solid var(--accent);
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 0.75rem 0;
+  font-weight: 600;
+}
+
+.mobile-menu .cta-primary:hover {
+  background: var(--accent);
+  color: #000 !important;
+}
+
+/* --- Footer mobile fixes --- */
+.footer { overflow-x: hidden; }
+
+.footer .container {
+  padding-inline: 16px;  /* safe padding on small screens */
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;       /* allow wrapping to new lines */
+  justify-content: center;
+  gap: 10px 20px;
+  margin: 0 auto 1rem;
+}
+
+.footer-links a {
+  white-space: nowrap;   /* keep each link on one line */
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.social-links-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 0.25rem 0 1rem;
+}
+
+.social-links-footer .social-link img {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.copyright {
+  text-align: center;
+  padding: 12px 16px 16px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Slightly smaller footer nav text on tiny screens */
+@media (max-width: 420px) {
+  .footer-links a {
+    font-size: 0.95rem;
+  }
+}
