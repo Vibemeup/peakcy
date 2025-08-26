@@ -41,8 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (_) {}
 
   // --- Mobile Menu Toggle + a11y niceties
-  const menuToggle = document.querySelector(".menu-toggle");
-  const mobileMenu = document.querySelector(".mobile-menu");
+  const menuToggle = document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
+  const mobileMenu = document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
+
 
   const openMenu = () => {
     if (!mobileMenu) return;
