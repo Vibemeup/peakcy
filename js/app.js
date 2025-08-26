@@ -1,12 +1,10 @@
 // ===============================
-// PeakCY — Final app.js
+// PeakCY — Final app.js (stable)
 // ===============================
 
 /* --- Clean any accidental query (?foo=...) on load, keep hash --- */
 if (location.search) {
-  try {
-    history.replaceState(null, "", location.pathname + location.hash);
-  } catch (_) {}
+  try { history.replaceState(null, "", location.pathname + location.hash); } catch (_) {}
 }
 
 /* --- Helpers --- */
@@ -21,20 +19,22 @@ function smoothScrollTo(el) {
   window.scrollTo({ top: y, behavior: "smooth" });
 }
 
-function lockScroll() {
-  // Lock horizontal & vertical scroll while menu is open
-  document.documentElement.style.overflow = "hidden";
-}
-
-function unlockScroll() {
-  document.documentElement.style.overflow = "";
-}
+function lockScroll() { document.documentElement.style.overflow = "hidden"; }
+function unlockScroll() { document.documentElement.style.overflow = ""; }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Ensure page is visible even if earlier inline script failed
+  // Ensure page visible
   try { document.body.style.opacity = "1"; } catch (_) {}
 
-  // --- Kill accidental horizontal wobble in JS as extra safety
+  // Set CSS var for nav height (used by mobile menu top offset)
+  const navEl = document.getElementById("navbar");
+  const setNavHeightVar = () => {
+    if (navEl) document.documentElement.style.setProperty("--nav-height", navEl.offsetHeight + "px");
+  };
+  setNavHeightVar();
+  window.addEventListener("resize", setNavHeightVar);
+
+  // Kill accidental horizontal wobble
   try {
     document.documentElement.style.overflowX = "hidden";
     document.body.style.overflowX = "hidden";
@@ -44,16 +44,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
   const mobileMenu = document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
 
-
   const openMenu = () => {
     if (!mobileMenu) return;
     mobileMenu.removeAttribute("hidden");
+    mobileMenu.classList.add("is-open");           // force visible via CSS class
+    mobileMenu.style.display = "block";            // hard fallback
     menuToggle?.setAttribute("aria-expanded", "true");
     lockScroll();
   };
 
   const closeMenu = () => {
     if (!mobileMenu) return;
+    mobileMenu.classList.remove("is-open");
     mobileMenu.setAttribute("hidden", "");
     menuToggle?.setAttribute("aria-expanded", "false");
     unlockScroll();
@@ -82,9 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (e) => {
       if (!isMenuOpen()) return;
       const target = e.target;
-      if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
-        closeMenu();
-      }
+      if (!mobileMenu.contains(target) && !menuToggle.contains(target)) closeMenu();
     });
   }
 
@@ -97,9 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
-      closeMenu(); // just in case we’re on mobile
+      if (isMenuOpen()) closeMenu();
       smoothScrollTo(el);
-      // Update the hash without jumping
       history.pushState(null, "", `#${id}`);
     }
   };
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     a.addEventListener("click", (e) => handleAnchorClick(e, a));
   });
 
-  // Also support anchors like "/#about" that live in the header include
+  // Also support anchors like "/#about"
   document.querySelectorAll('a[href^="/#"]').forEach(a => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href");
@@ -117,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const el = document.getElementById(id);
       if (el) {
         e.preventDefault();
-        closeMenu();
+        if (isMenuOpen()) closeMenu();
         smoothScrollTo(el);
         history.pushState(null, "", `#${id}`);
       }
@@ -127,13 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // If page loads with a hash, offset-scroll to it once DOM is ready
   if (location.hash) {
     const el = document.getElementById(location.hash.substring(1));
-    if (el) {
-      // Give the browser a tick to finish layout so nav height is correct
-      setTimeout(() => smoothScrollTo(el), 0);
-    }
+    if (el) setTimeout(() => smoothScrollTo(el), 0);
   }
 
-  // (Optional) Recalculate on resize—helps if navbar height changes on orientation switch
+  // Recalculate on resize—helps if navbar height changes
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);

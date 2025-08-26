@@ -957,3 +957,29 @@ html, body { overflow-x: hidden; }
 /* Nuke any stray styles from earlier */
 .menu-toggle,
 .menu-toggle * { box-shadow: none !important; }
+
+/* === Mobile menu final visibility overrides === */
+.mobile-menu[hidden] { display: none !important; }
+
+.mobile-menu {
+  position: fixed;
+  top: var(--nav-height, 64px);
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  background: rgba(10,10,10,.96);
+  backdrop-filter: blur(6px);
+  z-index: 2000;                 /* above header */
+  overflow-y: auto;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  display: block !important;     /* hard override, in case any older rule persists */
+}
