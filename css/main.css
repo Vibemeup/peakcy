@@ -983,3 +983,78 @@ html, body { overflow-x: hidden; }
   pointer-events: auto;
   display: block !important;     /* hard override, in case any older rule persists */
 }
+
+/* ===============================
+   PeakCY — FORCE mobile nav behavior
+   =============================== */
+
+/* 1) On mobile: hide desktop links, show burger */
+@media (max-width: 767.98px) {
+  .navbar .nav-container .nav-links {
+    display: none !important;   /* hide desktop nav for sure */
+  }
+  .navbar .nav-container #menuToggle.menu-toggle {
+    display: inline-flex !important;  /* show the burger */
+  }
+}
+
+/* 2) On desktop: show desktop links, hide burger */
+@media (min-width: 768px) {
+  .navbar .nav-container .nav-links {
+    display: flex !important;
+    gap: 18px;
+  }
+  .navbar .nav-container #menuToggle.menu-toggle {
+    display: none !important;
+  }
+}
+
+/* 3) Make sure the mobile panel actually overlays and is visible when opened */
+.mobile-menu[hidden] { display: none !important; }
+
+.mobile-menu {
+  position: fixed !important;
+  top: var(--nav-height, 64px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  background: rgba(10,10,10,.96) !important;
+  backdrop-filter: blur(6px);
+  z-index: 2000 !important;         /* above header */
+  overflow-y: auto !important;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+.mobile-menu.is-open {
+  display: block !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* 4) Clean hamburger visuals (ensure it stays as 3 bars) */
+#menuToggle.menu-toggle {
+  appearance: none;
+  background: transparent !important;
+  border: 0 !important;
+  color: #fff;
+  width: 44px; height: 44px; padding: 0;
+  margin-left: 12px;
+  align-items: center; justify-content: center;
+  border-radius: 8px;
+  position: relative; z-index: 2100; /* above panel edge */
+  cursor: pointer;
+}
+#menuToggle.menu-toggle span {
+  display: block;
+  width: 22px; height: 2px; margin: 4px 0;
+  background: currentColor; border-radius: 1px;
+}
+
+/* 5) Safety: no sideways scroll while panel is open */
+html, body { overflow-x: hidden; }

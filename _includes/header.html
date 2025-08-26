@@ -1,5 +1,6 @@
 <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
   <div class="nav-container">
+    <!-- Brand -->
     <a href="/#home" class="logo" aria-label="PeakCY Home">
       <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 20L8 10L12 14L18 4L21 20"/>
@@ -8,7 +9,7 @@
     </a>
 
     <!-- Desktop Navigation -->
-    <div class="nav-links">
+    <div class="nav-links" aria-label="Primary">
       <a href="/#about">About</a>
       <a href="/#edge">Pillars</a>
       <a href="/partners">Partners</a>
@@ -16,13 +17,19 @@
     </div>
 
     <!-- Mobile Menu Toggle -->
-    <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+      type="button">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <!-- Mobile Menu (fixed panel) -->
-  <nav id="mobileMenu" class="mobile-menu" hidden>
+  <!-- Mobile Menu (overlay panel) -->
+  <nav id="mobileMenu" class="mobile-menu" hidden aria-label="Mobile">
     <a href="/#about">About</a>
     <a href="/#edge">Pillars</a>
     <a href="/partners">Partners</a>
