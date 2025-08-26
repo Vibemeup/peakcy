@@ -106,6 +106,7 @@ header, main, section, footer { position: relative; z-index: 1; }
 .peak { color: var(--text-primary); text-shadow: 0 0 8px rgba(255,255,255,.2); transition: var(--transition); }
 .cy { color: var(--gold); text-shadow: 0 0 8px rgba(212,175,55,.3); transition: var(--transition); }
 
+/* ---- nav-links ---- */
 .nav-links { display: flex; gap: 2rem; align-items: center; }
 .nav-links a {
   color: var(--text-secondary); text-decoration: none; font-weight: 600;
@@ -220,7 +221,6 @@ body.menu-open { overflow: hidden !important; }
 @keyframes heroGlow { 0% { opacity: .6; } 100% { opacity: 1; } }
 .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 2rem; }
 
-/* Remove underline under hero H1 only */
 .hero h1::after{ content: none !important; }
 
 .badge {
@@ -242,6 +242,7 @@ body.menu-open { overflow: hidden !important; }
   display: inline-block; background: var(--gradient); color: var(--bg-primary);
   padding: 1.2rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 1.1rem;
   box-shadow: 0 14px 36px rgba(10,223,131,.32); transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  position: relative;
 }
 .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(10,223,131,.34); filter: saturate(110%); }
 .cta-primary::before { content:""; position:absolute; inset:0; border-radius:inherit; background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0)); opacity:.25; pointer-events:none; }
@@ -324,10 +325,9 @@ section { padding-block: 4rem; position: relative; z-index: 2; }
 .identity-badge.yes { background: var(--accent-subtle); color: var(--accent); border: 2px solid var(--accent); }
 .identity-badge.no  { background: var(--red-subtle); color: var(--red); border: 2px solid var(--red); }
 
-/* Stack label + text (title on its own line, text below) */
 .identity-list { list-style:none; text-align:left; max-width:360px; margin:0 auto; }
 .identity-list li { display:block; margin-bottom:1rem; color:var(--text-secondary); line-height:1.55; }
-.identity-list li strong { display:block; color: var(--text-primary); font-weight: 700; min-width: 0; margin-bottom: .25rem; }
+.identity-list li strong { display:block; color: var(--text-primary); font-weight: 700; margin-bottom: .25rem; }
 
 /* ---- Pillars ---- */
 .pillars-lead {
@@ -353,7 +353,6 @@ section { padding-block: 4rem; position: relative; z-index: 2; }
 }
 .pillar-icon svg { width: 36px; height: 36px; stroke: var(--accent); }
 
-/* Center icon + title; keep description left */
 .pillar-card h3{ text-align:center; }
 .pillar-card p{ text-align:left; }
 
@@ -380,9 +379,10 @@ section { padding-block: 4rem; position: relative; z-index: 2; }
 .quote { font-style: italic; font-size: 1.3rem; line-height: 1.7; color: #c8c8c8; margin-bottom: 1rem; }
 .quote-author { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
 
+
 /* ---- Apply ---- */
 .apply { background: var(--bg-secondary); padding: 3.8rem 2rem; }
-.form-container { max-width: 700px; margin: 0 auto; } /* match about card width */
+.form-container { max-width: 700px; margin: 0 auto; }
 .form-wrap {
   background:
     radial-gradient(120% 120% at 0% 0%, rgba(255,255,255,.07), rgba(255,255,255,.03) 40%, transparent 70%),
@@ -479,38 +479,29 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (max-width: 768px){
   .nav-container { padding: 1rem 1.5rem; }
-
   .hero { padding-top: 68px; min-height: calc(100vh - 68px); }
   .section-title { font-size: 1.85rem; }
   .section-lead  { margin-bottom: 1.4rem; }
-
   .identity-grid { grid-template-columns: 1fr; gap: 1rem; }
   .identity-card { padding: 1.2rem; text-align:left; }
   .identity-header { justify-content:flex-start; font-size:1.1rem; }
-
   .pillars-grid { grid-template-columns: 1fr 1fr; gap: .9rem; }
   .pillar-card  { padding: 1.2rem; }
   .pillar-icon  { width: 64px; height: 64px; margin-bottom: .9rem; }
   .pillar-icon svg { width: 28px; height: 28px; }
-
   .about-hero { font-size: 1.1rem; line-height: 1.6; }
   .about-unified-card { padding: 1.2rem; margin-bottom: 1.1rem; }
   .about-finale { padding: 1.1rem; margin: 1.1rem auto; }
   .about-mission { font-size: 1.1rem; }
-
-  /* Apply full width on phones (edge gutters stay) */
   .apply { padding-left: 0; padding-right: 0; }
   .apply .container { max-width:none; padding-left: 0; padding-right: 0; }
   .apply .form-container, .apply .form-wrap{
     max-width: none; width: 100%; margin: 0; border-radius: 0;
     padding-left: .75rem; padding-right: .75rem;
   }
-  .apply .form-group input, .apply .form-group textarea{
-    width: 100%; font-size: 16px; border-radius: 8px;
-  }
+  .apply .form-group input, .apply .form-group textarea{ width: 100%; font-size: 16px; border-radius: 8px; }
   .apply .submit-btn{ width: 100%; margin-top: 1rem; border-radius: 50px; }
 }
-
 @media (max-width: 480px){
   .hero h1 { font-size: 2.05rem; }
   .cta-primary { padding: 0.9rem 1.6rem; }
@@ -519,159 +510,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .apply .form-wrap{ padding-left: .5rem; padding-right: .5rem; }
 }
 
-/* ---- HARD CENTER SECTION TITLES (any layout) ---- */
-:where(body) :where(.section-title){
-  display:block; width:100%; margin-left:auto; margin-right:auto; text-align:center !important;
-  float:none; align-self:center; justify-self:center;
-}
-:where(body) :where(.section-title)::after{ left:50% !important; transform:translateX(-50%) !important; }
 
-/* ---- Reduced Motion ---- */
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-  .hero{ background-attachment: scroll !important; }
-}
 
-/* ================================
-   MOBILE POLISH & EDGE-TO-EDGE
-   ================================ */
-@media (max-width: 768px){
-  /* Wider readable gutters */
-  .container{ padding-left: 1rem !important; padding-right: 1rem !important; }
-
-  /* Pillars: single column, compact */
-  .pillars-grid{
-    grid-template-columns: 1fr !important;
-    gap: 0.75rem !important;
-    margin-left: -0.75rem !important;
-    margin-right: -0.75rem !important;
-  }
-  .pillar-card{
-    padding: 1rem !important;
-    border-radius: 14px !important;
-    text-align: left !important;
-  }
-  .pillar-icon{ margin: 0 0 .75rem 0 !important; width: 60px !important; height: 60px !important; }
-  .pillar-icon svg{ width: 26px !important; height: 26px !important; }
-  .pillar-card h3{ font-size: 1.25rem !important; }
-  .pillar-card p{ font-size: 1.05rem !important; line-height: 1.55 !important; max-width: none !important; }
-
-  /* Quote full width feel */
-  .quote-section .container{ padding-left: .5rem !important; padding-right: .5rem !important; }
-  .quote-box{ max-width: none !important; width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; border-radius: 14px !important; padding: 1.2rem !important; }
-  .quote{ font-size: 1.18rem !important; }
-}
-
-/* =========================================
-   FINAL MOBILE HERO TWEAKS (shine + spacing)
-   ========================================= */
-@media (max-width: 768px){
-  /* Disable moving shine/aurora on phones */
-  .hero::after, body::after{ display: none !important; }
-
-  /* Make the background image more visible under header */
-  .hero::before{
-    background: linear-gradient(
-      180deg,
-      rgba(5,5,7,0.78) 0%,
-      rgba(5,5,7,0.58) 48%,
-      rgba(5,5,7,0.78) 100%
-    ) !important;
-  }
-
-  /* Pull CTA up slightly */
-  .hero p{ margin-bottom: 1rem !important; }
-  .hero{ padding-bottom: 10px !important; min-height: calc(100vh - 68px) !important; }
-}
-
-/* =========================================
-   MOBILE PILLAR COLOR STABILIZATION (banding)
-   ========================================= */
-@media (max-width: 1024px){
-  .pillars{ background:#070707; }
-  .pillar-card{
-    background: rgba(18,18,18,0.95) !important;
-    border: 1px solid rgba(255,255,255,0.10) !important;
-    backdrop-filter: none !important;
-    background-clip: padding-box;
-  }
-  .pillar-icon{
-    background: rgba(10,223,131,0.10) !important;
-    border-color: rgba(10,223,131,0.30) !important;
-  }
-}
-
-/* ====== MOBILE MENU (overlay, pinned X, no overflow/highlight) ====== */
-@media (max-width: 768px){
-  .mobile-menu{
-    position: fixed !important;
-    top: 68px !important; left: 0 !important; right: 0 !important;
-    width: 100vw !important; max-width: 100vw !important;
-    margin: 0 !important; padding: .75rem !important;
-    display: flex; flex-direction: column; gap: .35rem;
-    background: rgba(5,5,7,.96) !important; backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,.08); border-radius: 14px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.45);
-    z-index: 5000 !important;
-  }
-  .menu-toggle[aria-expanded="true"]{
-    position: fixed !important; top: 14px !important; right: 14px !important;
-    left: auto !important; z-index: 5001 !important;
-  }
-  body.menu-open{ overflow: hidden !important; }
-}
-.mobile-menu[hidden]{ display: none !important; }
-.nav-container{ overflow: visible; }
-.mobile-menu a[href="#apply"]{
-  background: transparent !important; color: var(--text-primary) !important;
-  font-weight: 700 !important; box-shadow: none !important; border-radius: 10px !important;
-}
-
-/* ====== PILLARS (icon centered, text left) ====== */
-.pillars-grid .pillar-card{ text-align: left !important; }
-.pillars-grid .pillar-icon{ margin: 0 auto .9rem auto !important; }
-
-/* ====== WIDTH CONSISTENCY (Quote + Apply = container/pillars width) ====== */
-.quote-section .container,
-.apply .container{
-  max-width: 1200px !important;
-  padding-left: 2rem !important; padding-right: 2rem !important;
-}
-.quote-box,
-.apply .form-wrap{
-  width: 100% !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important;
-  border-radius: var(--radius);
-}
-
-/* Remove only the outer border on the quote, keep the top accent */
-.quote-box{ border: none !important; border-top: 4px solid var(--accent) !important; }
-
-/* ====== FOOTER SOCIALS never hijack clicks ====== */
-.footer{ position: relative; z-index: 20; }
-.apply{ position: relative; z-index: 1; }
-.apply .form-wrap{ position: relative; z-index: 1; }
-.apply *::before, .apply *::after{ pointer-events: none; }
-.footer .social-link{ pointer-events: auto; }
-
-/* ====== HERO (mobile): no moving shine, keep glow, show more image ====== */
-@media (max-width: 768px){
-  .hero::after, body::after{ display: none !important; }
-  .hero::before{
-    background: linear-gradient(180deg, rgba(5,5,7,.78) 0%, rgba(5,5,7,.58) 48%, rgba(5,5,7,.78) 100%) !important;
-  }
-  .cta-primary{ box-shadow: 0 14px 36px rgba(10,223,131,.32) !important; }
-  .hero{ padding-bottom: 0 !important; min-height: calc(100vh - 68px) !important; }
-  .hero p{ margin-bottom: 1rem !important; }
-}
-
-/* ====== Mid‑page mountain accent behind Quote (one source of truth) ====== */
-.quote-section{ position: relative; overflow: hidden; padding-top: 3rem; padding-bottom: 3rem; }
-.quote-section::before{
-  content: ""; position: absolute; inset: 0; z-index: 0;
-  background:
-    linear-gradient(180deg, rgba(5,5,7,.65) 0%, rgba(5,5,7,.85) 100%),
-    url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
-  opacity: .28;
-}
-.quote-section .container, .quote-box{ position: relative; z-index: 1; }
 
