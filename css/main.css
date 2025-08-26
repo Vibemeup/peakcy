@@ -519,3 +519,78 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font-weight: 600;
 }
 
+/* === Fix horizontal wobble & overflow === */
+html, body {
+  overflow-x: hidden; /* kill sideways scroll */
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Some components/sites use 100vw which causes overflow on mobile due to scrollbar */
+*[style*="100vw"] {
+  width: 100% !important;
+}
+
+/* === Navbar container & hamburger alignment === */
+.navbar .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;            /* add safe-side padding so burger isn't glued to edge */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;     /* prevent accidental overflow */
+}
+
+.menu-toggle {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  margin-left: 12px;          /* tiny gap from last nav link */
+}
+
+/* Make sure the three bars don't overflow */
+.menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 3px 0;
+  background: currentColor;
+}
+
+/* === Mobile menu panel should not create horizontal scroll === */
+.mobile-menu {
+  position: fixed;
+  top: var(--nav-height, 64px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;                /* not 100vw to avoid overflow on some browsers */
+  box-sizing: border-box;
+  padding: 16px;
+  background: rgba(10,10,10,.96);
+  backdrop-filter: blur(6px);
+  overflow-y: auto;
+}
+
+/* Mobile Apply button stays readable */
+.mobile-menu .cta-primary {
+  display: block;
+  background: var(--accent);
+  color: #fff !important;
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 0.75rem 0;
+  font-weight: 600;
+}
+
+

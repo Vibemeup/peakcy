@@ -1,110 +1,146 @@
-/* ===============================
-   PeakCY – app.js (mobile fixes + fade-in)
-   =============================== */
+// ===============================
+// PeakCY — Final app.js
+// ===============================
 
-// Fade-in on load (fix black page if CSS starts at opacity:0)
-document.addEventListener('DOMContentLoaded', () => {
-  document.body.style.opacity = '1';
-});
+/* --- Clean any accidental query (?foo=...) on load, keep hash --- */
+if (location.search) {
+  try {
+    history.replaceState(null, "", location.pathname + location.hash);
+  } catch (_) {}
+}
 
-/* ---------- Helpers ---------- */
+/* --- Helpers --- */
 function getNavHeight() {
-  const nav = document.querySelector('.navbar');
+  const nav = document.getElementById("navbar");
   return nav ? nav.offsetHeight : 0;
 }
 
-function scrollToApplyForm() {
-  const formWrap = document.querySelector('#apply .form-wrap') || document.querySelector('#apply');
-  if (!formWrap) return;
-  const top = formWrap.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
-  window.scrollTo({ top, behavior: 'smooth' });
+function smoothScrollTo(el) {
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
+  window.scrollTo({ top: y, behavior: "smooth" });
 }
 
-function isMobile() {
-  return window.innerWidth <= 768;
+function lockScroll() {
+  // Lock horizontal & vertical scroll while menu is open
+  document.documentElement.style.overflow = "hidden";
 }
 
-/* ---------- Mobile Menu Toggle ---------- */
-const menuToggle = document.querySelector('.menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
+function unlockScroll() {
+  document.documentElement.style.overflow = "";
+}
 
-if (menuToggle && mobileMenu) {
-  menuToggle.addEventListener('click', () => {
-    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', String(!isExpanded));
-    if (!isExpanded) {
-      mobileMenu.removeAttribute('hidden');
-    } else {
-      mobileMenu.setAttribute('hidden', '');
+document.addEventListener("DOMContentLoaded", () => {
+  // --- Ensure page is visible even if earlier inline script failed
+  try { document.body.style.opacity = "1"; } catch (_) {}
+
+  // --- Kill accidental horizontal wobble in JS as extra safety
+  try {
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowX = "hidden";
+  } catch (_) {}
+
+  // --- Mobile Menu Toggle + a11y niceties
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  const openMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.removeAttribute("hidden");
+    menuToggle?.setAttribute("aria-expanded", "true");
+    lockScroll();
+  };
+
+  const closeMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.setAttribute("hidden", "");
+    menuToggle?.setAttribute("aria-expanded", "false");
+    unlockScroll();
+  };
+
+  const isMenuOpen = () => menuToggle?.getAttribute("aria-expanded") === "true";
+
+  if (menuToggle && mobileMenu) {
+    // Toggle on button click
+    menuToggle.addEventListener("click", () => {
+      if (isMenuOpen()) closeMenu();
+      else openMenu();
+    });
+
+    // Close when any link inside mobile menu is clicked
+    mobileMenu.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => closeMenu());
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMenuOpen()) closeMenu();
+    });
+
+    // Close when clicking outside the menu (but not the toggle)
+    document.addEventListener("click", (e) => {
+      if (!isMenuOpen()) return;
+      const target = e.target;
+      if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
+        closeMenu();
+      }
+    });
+  }
+
+  // --- Smooth-scroll for in-page anchors (desktop & mobile)
+  const handleAnchorClick = (e, anchor) => {
+    const href = anchor.getAttribute("href");
+    if (!href || !href.startsWith("#")) return;
+
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      e.preventDefault();
+      closeMenu(); // just in case we’re on mobile
+      smoothScrollTo(el);
+      // Update the hash without jumping
+      history.pushState(null, "", `#${id}`);
     }
-    // remove tap focus glow on mobile
-    menuToggle.blur();
+  };
+
+  // All same-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener("click", (e) => handleAnchorClick(e, a));
   });
 
-  // Close menu when any link inside the menu is clicked
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
+  // Also support anchors like "/#about" that live in the header include
+  document.querySelectorAll('a[href^="/#"]').forEach(a => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      const id = href.replace("/#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        closeMenu();
+        smoothScrollTo(el);
+        history.pushState(null, "", `#${id}`);
+      }
     });
   });
 
-  // Close on ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mobileMenu.hasAttribute('hidden')) {
-      mobileMenu.setAttribute('hidden', '');
-      menuToggle.setAttribute('aria-expanded', 'false');
+  // If page loads with a hash, offset-scroll to it once DOM is ready
+  if (location.hash) {
+    const el = document.getElementById(location.hash.substring(1));
+    if (el) {
+      // Give the browser a tick to finish layout so nav height is correct
+      setTimeout(() => smoothScrollTo(el), 0);
     }
-  });
-}
-
-/* ---------- Smooth scrolling (with mobile #apply special case) ---------- */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const href = this.getAttribute('href');
-    if (!href || href === '#') return;
-
-    // If it's the Apply link on mobile, scroll to the form card specifically
-    if (isMobile() && href === '#apply') {
-      e.preventDefault();
-      scrollToApplyForm();
-      return;
-    }
-
-    // Normal smooth scroll for other anchors
-    const target = document.querySelector(href);
-    if (!target) return;
-    e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.scrollY - getNavHeight() - 20;
-    window.scrollTo({ top, behavior: 'smooth' });
-  });
-});
-
-// If a user lands on /#apply directly on mobile, adjust scroll after load
-document.addEventListener('DOMContentLoaded', () => {
-  if (isMobile() && location.hash === '#apply') {
-    // allow layout to settle first
-    setTimeout(scrollToApplyForm, 0);
   }
+
+  // (Optional) Recalculate on resize—helps if navbar height changes on orientation switch
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (location.hash) {
+        const el = document.getElementById(location.hash.substring(1));
+        if (el) smoothScrollTo(el);
+      }
+    }, 120);
+  });
 });
-
-/* ---------- Navbar scroll effect ---------- */
-const navbar = document.getElementById('navbar');
-if (navbar) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  }, { passive: true });
-}
-
-/* ---------- Mobile-only: shorten submit button label ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  if (!isMobile()) return;
-  const btn = document.querySelector('#applicationForm .submit-btn');
-  if (btn) btn.textContent = 'Submit Application';
-});
-
-// (Form handling placeholder – add your own if needed)
