@@ -1058,3 +1058,65 @@ html, body { overflow-x: hidden; }
 
 /* 5) Safety: no sideways scroll while panel is open */
 html, body { overflow-x: hidden; }
+
+/* ===============================
+   PeakCY — Mobile nav FINAL
+   =============================== */
+
+/* Desktop vs Mobile visibility */
+@media (min-width: 768px) {
+  .navbar .nav-container .nav-links { display: flex !important; gap: 18px; }
+  #menuToggle.menu-toggle { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  .navbar .nav-container .nav-links { display: none !important; }
+  #menuToggle.menu-toggle { display: inline-flex !important; }
+}
+
+/* Clean hamburger */
+#menuToggle.menu-toggle {
+  appearance: none;
+  background: transparent !important;
+  border: 0 !important;
+  color: #fff;
+  width: 44px; height: 44px; padding: 0;
+  margin-left: 12px;
+  align-items: center; justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#menuToggle.menu-toggle span {
+  display: block;
+  width: 22px; height: 2px; margin: 4px 0;
+  background: currentColor; border-radius: 1px;
+}
+
+/* Mobile panel — now a top-level sibling so it can overlay everything */
+#mobileMenu.mobile-menu[hidden] { display: none !important; }
+
+#mobileMenu.mobile-menu {
+  position: fixed !important;
+  top: var(--nav-height, 64px) !important;
+  left: 0 !important; right: 0 !important; bottom: 0 !important;
+  width: 100% !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  background: rgba(10,10,10,.96) !important;
+  backdrop-filter: blur(6px);
+  z-index: 9999 !important;  /* ensure above everything */
+  overflow-y: auto !important;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+#mobileMenu.mobile-menu.is-open {
+  display: block !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Safety: no sideways scroll */
+html, body { overflow-x: hidden; }
+

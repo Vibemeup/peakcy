@@ -1,5 +1,5 @@
 // ===============================
-// PeakCY — Final app.js (stable)
+// PeakCY — FINAL app.js (mobile menu + smooth scroll + safety)
 // ===============================
 
 /* --- Clean any accidental query (?foo=...) on load, keep hash --- */
@@ -23,10 +23,10 @@ function lockScroll() { document.documentElement.style.overflow = "hidden"; }
 function unlockScroll() { document.documentElement.style.overflow = ""; }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Ensure page visible
+  // Ensure page visible even if inline script didn't run
   try { document.body.style.opacity = "1"; } catch (_) {}
 
-  // Set CSS var for nav height (used by mobile menu top offset)
+  // Set CSS var for nav height (for mobile menu top offset) and keep updated
   const navEl = document.getElementById("navbar");
   const setNavHeightVar = () => {
     if (navEl) document.documentElement.style.setProperty("--nav-height", navEl.offsetHeight + "px");
@@ -34,21 +34,21 @@ document.addEventListener("DOMContentLoaded", () => {
   setNavHeightVar();
   window.addEventListener("resize", setNavHeightVar);
 
-  // Kill accidental horizontal wobble
+  // Extra safety: prevent horizontal wobble
   try {
     document.documentElement.style.overflowX = "hidden";
     document.body.style.overflowX = "hidden";
   } catch (_) {}
 
-  // --- Mobile Menu Toggle + a11y niceties
+  // --- Mobile Menu Toggle + a11y
   const menuToggle = document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
   const mobileMenu = document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
 
   const openMenu = () => {
     if (!mobileMenu) return;
     mobileMenu.removeAttribute("hidden");
-    mobileMenu.classList.add("is-open");           // force visible via CSS class
-    mobileMenu.style.display = "block";            // hard fallback
+    mobileMenu.classList.add("is-open");  // CSS makes it visible
+    mobileMenu.style.display = "block";   // hard fallback in case of CSS caching
     menuToggle?.setAttribute("aria-expanded", "true");
     lockScroll();
   };
@@ -83,17 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close when clicking outside the menu (but not the toggle)
     document.addEventListener("click", (e) => {
       if (!isMenuOpen()) return;
-      const target = e.target;
-      if (!mobileMenu.contains(target) && !menuToggle.contains(target)) closeMenu();
+      const t = e.target;
+      if (!mobileMenu.contains(t) && !menuToggle.contains(t)) closeMenu();
     });
   }
 
   // --- Smooth-scroll for in-page anchors (desktop & mobile)
   const handleAnchorClick = (e, anchor) => {
     const href = anchor.getAttribute("href");
-    if (!href || !href.startsWith("#")) return;
+    if (!href) return;
 
-    const id = href.slice(1);
+    // Support "#about" and "/#about"
+    const isHash = href.startsWith("#");
+    const isRootHash = href.startsWith("/#");
+    if (!isHash && !isRootHash) return;
+
+    const id = isHash ? href.slice(1) : href.replace("/#", "");
     const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
@@ -104,23 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // All same-page anchors
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(a => {
     a.addEventListener("click", (e) => handleAnchorClick(e, a));
-  });
-
-  // Also support anchors like "/#about"
-  document.querySelectorAll('a[href^="/#"]').forEach(a => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      const id = href.replace("/#", "");
-      const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        if (isMenuOpen()) closeMenu();
-        smoothScrollTo(el);
-        history.pushState(null, "", `#${id}`);
-      }
-    });
   });
 
   // If page loads with a hash, offset-scroll to it once DOM is ready
@@ -134,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
+      setNavHeightVar();
       if (location.hash) {
         const el = document.getElementById(location.hash.substring(1));
         if (el) smoothScrollTo(el);
