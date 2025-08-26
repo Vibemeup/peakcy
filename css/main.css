@@ -1487,3 +1487,44 @@ html, body { overflow-x: hidden; }
 @media (max-width: 360px) {
   #navbar #menuToggle { width: 36px !important; height: 36px !important; }
 }
+
+/* =========================================
+   PeakCY — Simple, bulletproof hamburger → X
+   ========================================= */
+
+/* Force-reset the toggle button */
+#menuToggle {
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-left: 12px !important;
+  cursor: pointer;
+  z-index: 3000;
+}
+
+/* The bars */
+#menuToggle span {
+  width: 22px !important;
+  height: 2px !important;
+  background: #fff !important;
+  margin: 4px 0 !important;
+  border-radius: 1px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Morph to X when aria-expanded=true */
+#menuToggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+#menuToggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+#menuToggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
