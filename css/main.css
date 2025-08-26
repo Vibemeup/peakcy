@@ -1120,3 +1120,104 @@ html, body { overflow-x: hidden; }
 /* Safety: no sideways scroll */
 html, body { overflow-x: hidden; }
 
+/* === Hamburger: morph to X, keep fully visible === */
+
+/* don't clip the toggle */
+.navbar { overflow: visible; }
+
+/* higher than the mobile panel */
+#menuToggle.menu-toggle { z-index: 3000; }
+
+/* smooth transforms on the bars */
+#menuToggle.menu-toggle span {
+  transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
+  transform-origin: 50% 50%;
+}
+
+/* when menu is open (aria-expanded=true), morph to X */
+#menuToggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+#menuToggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+#menuToggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* make sure the icon color stays visible on dark bg */
+#menuToggle.menu-toggle { color: #fff; }
+#menuToggle.menu-toggle:hover { color: #eaeaea; }
+
+/* small touch target safety on tiny phones */
+@media (max-width: 360px) {
+  #menuToggle.menu-toggle { width: 48px; height: 48px; }
+}
+
+/* ===============================
+   PeakCY — Hamburger: even bars + X morph
+   =============================== */
+
+/* don't clip the toggle */
+.navbar { overflow: visible; }
+
+/* toggle button */
+#menuToggle.menu-toggle {
+  /* size/position */
+  width: 44px; height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  /* geometry (tweak if you want different look) */
+  --bar-w: 24px;
+  --bar-h: 2px;
+  --bar-gap: 6px;
+
+  /* visuals */
+  color: #fff;
+  line-height: 0;
+  font-size: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 3000; /* above panel */
+  gap: var(--bar-gap);
+}
+
+/* three bars, perfectly even */
+#menuToggle.menu-toggle span {
+  width: var(--bar-w);
+  height: var(--bar-h);
+  background: currentColor;
+  border-radius: 1px;
+  margin: 0 !important;            /* normalize old rules */
+  display: block;
+  transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
+  transform-origin: 50% 50%;
+}
+
+/* morph to X when open via aria-expanded */
+#menuToggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(calc(var(--bar-h) + var(--bar-gap))) rotate(45deg);
+}
+#menuToggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+#menuToggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(calc(-1 * (var(--bar-h) + var(--bar-gap)))) rotate(-45deg);
+}
+
+/* hover/focus feedback */
+#menuToggle.menu-toggle:hover { color: #eaeaea; }
+#menuToggle.menu-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* larger tap target on tiny phones (optional) */
+@media (max-width: 360px) {
+  #menuToggle.menu-toggle { width: 48px; height: 48px; }
+}
