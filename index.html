@@ -12,8 +12,22 @@ twitter_description: "Join PeakCY - Cyprus's exclusive community for ambitious i
 twitter_image: "https://peakcy.com/og-image.jpg"
 ---
 
-<!-- Hero Section -->
-<section id="home" class="hero">
+<!-- Hero Section with Background Video -->
+<section id="home" class="hero">\n  <noscript><style>.hero{background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop')!important}</style></noscript>
+  <!-- Background Video -->
+  <div class="hero-video-container">
+    \1 preload="auto" playsinline muted autoplay loop>
+      <source src="/assets/videos/promo.mp4" type="video/mp4">
+      <source src="/assets/videos/promo.webm" type="video/webm">
+      <!-- Fallback for browsers that don't support video -->
+      Your browser does not support the video tag.
+    </video>
+    
+    <!-- Video Overlay -->
+    <div class="hero-video-overlay"></div>
+  </div>
+
+  <!-- Hero Content -->
   <div class="hero-content">
     <div class="badge">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -26,12 +40,36 @@ twitter_image: "https://peakcy.com/og-image.jpg"
     <p>A private community for those committed to growth - in body, mind, and life. Together, we rise to the peak.</p>
     <a href="#apply" class="cta-primary">Apply to Join</a>
   </div>
+
+  <!-- Video Controls -->
+  <div class="hero-video-controls">
+    <button class="video-toggle" aria-label="Play/Pause video">
+      <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+        <rect x="6" y="4" width="4" height="16"/>
+        <rect x="14" y="4" width="4" height="16"/>
+      </svg>
+    </button>
+    <button class="video-mute" aria-label="Mute/Unmute video">
+      <svg class="volume-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      </svg>
+      <svg class="volume-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+    </button>
+  </div>
 </section>
 
 <!-- About Section -->
 <section id="about" class="about">
   <div class="container">
-    <h2 class="section-title">The Peak Awaits - And We’re Rising Together.</h2>
+    <h2 class="section-title">The Peak Awaits - And We're Rising Together.</h2>
     <div class="about-content">
       <p class="about-hero green-text">
         We are dreamers, builders, and go-getters - diverse in journey, united in purpose. From every city, every background, and every walk of life, we come together to push further, grow stronger, and climb higher.
@@ -40,13 +78,13 @@ twitter_image: "https://peakcy.com/og-image.jpg"
       <div class="about-unified-card">
         <div class="about-unified-text">
           We share knowledge. We celebrate progress. We lift each other when the path gets tough.<br><br>
-          Because the best life isn’t lived in comfort - it’s lived at the Peak - together.
+          Because the best life isn't lived in comfort - it's lived at the Peak - together.
         </div>
       </div>
 
       <div class="about-finale">
-        When the right people unite, with fire in their hearts and purpose in their steps, reaching the top isn’t just possible…<br>
-        It’s inevitable.
+        When the right people unite, with fire in their hearts and purpose in their steps, reaching the top isn't just possible…<br>
+        It's inevitable.
       </div>
 
       <div class="about-mission">

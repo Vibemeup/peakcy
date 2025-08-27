@@ -191,6 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const muteBtn   = document.querySelector(".hero-video-controls .video-mute");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// If user prefers reduced motion, immediately show fallback and stop further video handling
+if (prefersReducedMotion) {
+  showFallback();
+  return;
+}
+
   function ensureMutedAttribute(el) {
     if (!el) return;
     if (!el.hasAttribute("muted")) el.setAttribute("muted", "");
