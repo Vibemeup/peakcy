@@ -159,7 +159,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===============================
-  // Extra block you asked to add:
-  // (Merged to avoid double-binding; it now calls the same state toggles)
+  // NAVBAR SCROLL EFFECT
   // ===============================
-  // If your HTML only has class-based selectors
+  const navbar = navEl();
+  if (navbar) {
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  }
+});
