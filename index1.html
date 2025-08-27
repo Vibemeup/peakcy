@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>PeakCY — Rise With Us</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="PeakCY — A community of like-minded people together rising to the peak." />
-  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg">
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg" />
 
   <!-- Primary CSS (unchanged path) -->
-  <link rel="preload" as="style" href="/css/main.css?v=20250827">
-  <link rel="stylesheet" href="/css/main.css?v=20250827">
+  <link rel="preload" as="style" href="/css/main.css?v=20250827" />
+  <link rel="stylesheet" href="/css/main.css?v=20250827" />
 
   <!-- Preload media -->
-  <link rel="preload" as="video" href="/assets/videos/promo.mp4" type="video/mp4">
-  <link rel="preload" as="image" href="/assets/images/hero-fallback.jpg">
+  <link rel="preload" as="video" href="/assets/videos/promo.mp4" type="video/mp4" />
+  <link rel="preload" as="image" href="/assets/images/hero-fallback.jpg" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="PeakCY — Rise With Us">
-  <meta property="og:description" content="A community of like-minded people together rising to the peak.">
-  <meta property="og:image" content="/assets/images/logo.jpeg">
-  <meta property="og:type" content="website">
+  <meta property="og:title" content="PeakCY — Rise With Us" />
+  <meta property="og:description" content="A community of like-minded people together rising to the peak." />
+  <meta property="og:image" content="/assets/images/logo.jpeg" />
+  <meta property="og:type" content="website" />
 
-  <!-- Critical CSS shim (namespaced, no color/font edits). 
-       Purpose: ensure layout isn’t broken even if some selectors aren’t present in main.css. -->
+  <!-- Critical CSS shim (namespaced, non-invasive). 
+       Ensures polished layout even if main.css is stale. No color/font changes. -->
   <style>
     :root { --nav-height: 64px; }
+    /* layout primitives */
     .pc-wrap { max-width: 1200px; margin-inline: auto; padding: 0 16px; }
     .pc-flex { display:flex; align-items:center; justify-content:space-between; gap:16px; }
     .pc-grid { display:grid; gap:16px; }
+    .pc-center { text-align:center; }
+    /* buttons & badges */
     .pc-btn { display:inline-block; padding:12px 18px; border:1px solid var(--border, rgba(255,255,255,0.1)); border-radius:10px; text-decoration:none; }
     .pc-btn-primary { border-color: var(--accent, #0adf83); }
+    .pc-cta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
     .pc-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
     .pc-badge { display:inline-block; padding:6px 10px; border:1px solid var(--border, rgba(255,255,255,0.1)); border-radius:999px; font-size:0.9rem; }
+    /* navbar */
     .navbar { position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(6px); }
     .nav-desktop a { margin-left:18px; text-decoration:none; }
     .nav-toggle { display:none; background:none; border:0; width:40px; height:40px; position:relative; }
-    .nav-toggle .bar { position:absolute; left:8px; right:8px; height:2px; top:12px; }
+    .nav-toggle .bar { position:absolute; left:8px; right:8px; height:2px; top:12px; background: currentColor; }
     .nav-toggle .bar:nth-child(2){ top:19px; }
     .nav-toggle .bar:nth-child(3){ top:26px; }
     @media (max-width: 900px){
@@ -45,6 +50,21 @@
       .mobile-menu.open{ display:block; }
       .mobile-link{ display:block; padding:14px 8px; border-bottom:1px solid var(--border, rgba(255,255,255,0.08)); text-decoration:none; }
     }
+    /* sections & cards */
+    .section{ padding:72px 0; }
+    .section-head{ margin-bottom:24px; }
+    .section-title{ font-size: clamp(24px, 4.5vw, 36px); margin:0 0 6px; }
+    .section-kicker{ opacity:.85; margin:0; }
+    .card{ border:1px solid var(--border, rgba(255,255,255,0.08)); border-radius:16px; padding:20px; background: var(--bg-card, rgba(255,255,255,0.04)); }
+    .card-elevated{ box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+    .card-glow{ box-shadow: 0 0 0 1px var(--accent-subtle, rgba(10,223,131,0.08)), 0 12px 48px rgba(0,0,0,0.35); }
+    .about-grid, .pillars-grid{ grid-template-columns: repeat(12, 1fr); }
+    .about-grid > *{ grid-column: span 4; }
+    .pillars-grid > *{ grid-column: span 3; }
+    @media (max-width: 900px){
+      .about-grid > *, .pillars-grid > *{ grid-column: 1 / -1; }
+    }
+    /* hero */
     .hero { position:relative; min-height: min(92vh, 1080px); display:flex; align-items:center; }
     .hero-media{ position:absolute; inset:0; overflow:hidden; }
     .hero-video{ width:100%; height:100%; object-fit:cover; }
@@ -52,27 +72,21 @@
     .hero-content{ position:relative; z-index:2; padding-top: calc(var(--nav-height) + 32px); padding-bottom: 48px; }
     .hero-title{ font-size: clamp(28px, 6vw, 56px); line-height:1.08; margin:0 0 12px; }
     .hero-subtitle{ font-size: clamp(16px, 2.8vw, 20px); margin:0 0 18px; }
-    .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
-    .section{ padding:72px 0; }
-    .section-head{ margin-bottom:24px; }
-    .section-title{ font-size: clamp(24px, 4.5vw, 36px); margin:0 0 6px; }
-    .section-kicker{ opacity:.85; margin:0; }
-    .about-grid, .pillars-grid{ grid-template-columns: repeat(12, 1fr); }
-    .card{ border:1px solid var(--border, rgba(255,255,255,0.08)); border-radius:16px; padding:20px; background: var(--bg-card, rgba(255,255,255,0.04)); }
-    .card-elevated{ box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
-    .card-glow{ box-shadow: 0 0 0 1px var(--accent-subtle, rgba(10,223,131,0.08)), 0 12px 48px rgba(0,0,0,0.35); }
-    .about-grid > *{ grid-column: span 4; }
-    .pillars-grid > *{ grid-column: span 3; }
-    @media (max-width: 900px){
-      .about-grid > *, .pillars-grid > *{ grid-column: 1 / -1; }
-    }
+    /* micro-benefits under hero CTAs */
+    .micro-benefits{ display:grid; grid-template-columns: repeat(12, 1fr); gap:10px; margin-top:14px; }
+    .micro-benefits li{ grid-column: span 3; list-style:none; border:1px solid var(--border, rgba(255,255,255,0.1)); border-radius:10px; padding:10px 12px; font-size:0.95rem; }
+    @media (max-width: 900px){ .micro-benefits li{ grid-column: 1 / -1; } }
+    /* form */
     .form-card .form-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:14px; }
     .form-field{ grid-column: span 6; display:flex; flex-direction:column; gap:6px; }
     .form-field--full{ grid-column: 1 / -1; }
     .form-label{ font-size:0.95rem; opacity:.9; }
     .form-field input, .form-field textarea{ width:100%; border:1px solid var(--border, rgba(255,255,255,0.1)); border-radius:10px; padding:12px 12px; background: transparent; color: var(--text-primary, #fff); }
     .form-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:12px; }
+    /* utility bands */
     .partners-band{ display:flex; align-items:center; justify-content:center; }
+    .section-cta-band{ padding-top: 0; }
+    /* footer */
     .footer-wrap{ display:grid; gap:16px; align-items:center; justify-items:center; padding:16px 0; }
     .footer-links a{ margin:0 10px; text-decoration:none; }
     .footer-brand{ display:flex; align-items:center; gap:10px; }
@@ -87,7 +101,7 @@
   <header id="navbar" class="navbar" role="banner" aria-label="Primary">
     <div class="pc-wrap pc-flex">
       <a href="/" class="brand" aria-label="PeakCY Home" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-        <img src="/assets/images/logo.jpeg" alt="PeakCY" class="brand-logo" width="36" height="36" decoding="async" loading="eager">
+        <img src="/assets/images/logo.jpeg" alt="PeakCY" class="brand-logo" width="36" height="36" decoding="async" loading="eager" />
         <span class="brand-wordmark">
           <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
         </span>
@@ -119,7 +133,7 @@
   </header>
 
   <!-- =========================
-       HERO (video + safe fallback)
+       HERO (video + overlay + micro-benefits)
        ========================= -->
   <section class="hero" id="home" aria-label="Hero">
     <div class="hero-media">
@@ -131,8 +145,8 @@
              playsinline
              preload="auto"
              poster="/assets/images/hero-fallback.jpg">
-        <source src="/assets/videos/promo.webm" type="video/webm">
-        <source src="/assets/videos/promo.mp4" type="video/mp4">
+        <source src="/assets/videos/promo.webm" type="video/webm" />
+        <source src="/assets/videos/promo.mp4" type="video/mp4" />
       </video>
       <div class="hero-overlay" aria-hidden="true"></div>
     </div>
@@ -141,11 +155,20 @@
       <h1 class="hero-title">The Peak Awaits — And We’re Rising Together.</h1>
       <p class="hero-subtitle">A community of like-minded people together rising to the peak.</p>
 
-      <div class="hero-ctas" role="group" aria-label="Primary actions">
+      <div class="pc-cta-row" role="group" aria-label="Primary actions">
         <a href="/#apply" class="pc-btn pc-btn-primary" data-cta="apply-hero">Apply Now</a>
         <a href="/#about" class="pc-btn">Learn More</a>
       </div>
 
+      <!-- Micro-benefits strip (no copy changes, just surfaced benefits) -->
+      <ul class="micro-benefits" aria-label="What you get">
+        <li>Accountability & consistency</li>
+        <li>Training & longevity</li>
+        <li>Build, scale & invest</li>
+        <li>Real community & events</li>
+      </ul>
+
+      <!-- Trust badges (same idea as your pillars, visible above the fold) -->
       <div class="pc-badges" aria-label="Highlights">
         <span class="pc-badge">Mindset</span>
         <span class="pc-badge">Health</span>
@@ -160,7 +183,7 @@
        ========================= -->
   <section id="about" class="section section-about" aria-labelledby="about-title">
     <div class="pc-wrap">
-      <div class="section-head">
+      <div class="section-head pc-center">
         <h2 id="about-title" class="section-title">About PeakCY</h2>
         <p class="section-kicker">Who we are & how we move</p>
       </div>
@@ -179,6 +202,11 @@
           <p class="card-text">Born in Cyprus — open to the world. We’re building the island’s most driven tribe of doers.</p>
         </div>
       </div>
+
+      <!-- Section-level CTA (reinforced, same copy) -->
+      <div class="pc-center" style="margin-top:20px;">
+        <a href="/#apply" class="pc-btn pc-btn-primary" data-cta="apply-about">Apply Now</a>
+      </div>
     </div>
   </section>
 
@@ -187,7 +215,7 @@
        ========================= -->
   <section id="edge" class="section section-pillars" aria-labelledby="pillars-title">
     <div class="pc-wrap">
-      <div class="section-head">
+      <div class="section-head pc-center">
         <h2 id="pillars-title" class="section-title">Our Pillars</h2>
         <p class="section-kicker">The Edge we sharpen daily</p>
       </div>
@@ -198,31 +226,46 @@
           <h3 class="card-title">Mindset</h3>
           <p class="card-text">Accountability, clarity, consistency. We put in the reps.</p>
         </article>
+
         <article class="pillar card card-glow">
           <div class="pillar-icon" aria-hidden="true"></div>
           <h3 class="card-title">Health</h3>
           <p class="card-text">Strength, recovery, longevity. Look good, feel better, perform best.</p>
         </article>
+
         <article class="pillar card card-glow">
           <div class="pillar-icon" aria-hidden="true"></div>
           <h3 class="card-title">Wealth</h3>
           <p class="card-text">Build, scale, invest. Surround yourself with winners.</p>
         </article>
+
         <article class="pillar card card-glow">
           <div class="pillar-icon" aria-hidden="true"></div>
           <h3 class="card-title">Community</h3>
           <p class="card-text">Iron sharpens iron. We grow faster together.</p>
         </article>
       </div>
+
+      <!-- Section-level CTA -->
+      <div class="pc-center" style="margin-top:20px;">
+        <a href="/#apply" class="pc-btn pc-btn-primary" data-cta="apply-pillars">Apply Now</a>
+      </div>
     </div>
   </section>
 
   <!-- =========================
-       PARTNERS
+       PARTNERS (unchanged path)
        ========================= -->
   <section class="section section-partners" aria-label="Partners">
     <div class="pc-wrap partners-band">
       <a class="pc-btn" href="/partners">See Partners</a>
+    </div>
+  </section>
+
+  <!-- Optional CTA band right before Apply (same copy, no new text) -->
+  <section class="section section-cta-band pc-center" aria-hidden="true">
+    <div class="pc-wrap">
+      <a href="/#apply" class="pc-btn pc-btn-primary" data-cta="apply-preform">Apply Now</a>
     </div>
   </section>
 
@@ -231,7 +274,7 @@
        ========================= -->
   <section id="apply" class="section section-apply" aria-labelledby="apply-title">
     <div class="pc-wrap">
-      <div class="section-head">
+      <div class="section-head pc-center">
         <h2 id="apply-title" class="section-title">Apply to PeakCY</h2>
         <p class="section-kicker">Serious about growth? Let’s talk.</p>
       </div>
@@ -240,17 +283,17 @@
         <div class="form-grid">
           <label class="form-field">
             <span class="form-label">Full Name</span>
-            <input type="text" name="name" autocomplete="name" required>
+            <input type="text" name="name" autocomplete="name" required />
           </label>
 
           <label class="form-field">
             <span class="form-label">Email</span>
-            <input type="email" name="email" autocomplete="email" required>
+            <input type="email" name="email" autocomplete="email" required />
           </label>
 
           <label class="form-field">
             <span class="form-label">Phone</span>
-            <input type="tel" name="phone" autocomplete="tel">
+            <input type="tel" name="phone" autocomplete="tel" />
           </label>
 
           <label class="form-field form-field--full">
@@ -281,7 +324,7 @@
       </nav>
 
       <div class="footer-brand">
-        <img src="/assets/images/logo.jpeg" alt="" width="28" height="28" loading="lazy" decoding="async">
+        <img src="/assets/images/logo.jpeg" alt="" width="28" height="28" loading="lazy" decoding="async" />
         <span class="brand-wordmark">
           <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
         </span>
@@ -291,22 +334,22 @@
 
       <div class="footer-socials" aria-label="Social links">
         <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
-          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="20" height="20" loading="lazy">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="20" height="20" loading="lazy" />
         </a>
         <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
-          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="20" height="20" loading="lazy">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="20" height="20" loading="lazy" />
         </a>
         <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
-          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="20" height="20" loading="lazy">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="20" height="20" loading="lazy" />
         </a>
       </div>
     </div>
   </footer>
 
-  <!-- Minimal inline util (no conflict with /js/app.js) -->
+  <!-- Minimal inline utilities (non-conflicting with /js/app.js) -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Mobile menu: rely on your app.js if present; add safe fallback toggler
+    // Safe mobile-menu fallback if your app.js doesn't run for any reason
     (function(){
       var t = document.getElementById('menuToggle');
       var m = document.getElementById('mobileMenu');
@@ -316,7 +359,6 @@
           t.setAttribute('aria-expanded', open ? 'true' : 'false');
           document.body.style.overflow = open ? 'hidden' : '';
         });
-        // close on link tap
         m.addEventListener('click', function(e){
           if(e.target.closest('a')){ m.classList.remove('open'); t.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
         });
