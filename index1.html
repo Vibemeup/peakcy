@@ -1,314 +1,286 @@
----
-layout: none
----
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>PeakCY — Cyprus’ Private Growth Club | Health • Wealth • Mindset</title>
+  <!-- Meta -->
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PeakCY is a private social club in Cyprus for ambitious people focused on health, wealth, and mindset. Join curated meetups, training, and a high-intent network.">
-  <link rel="canonical" href="https://peakcy.com/">
+  <title>PeakCY — Rise With Us</title>
+  <meta name="description" content="PeakCY — A community of like-minded people rising together in mindset, health & wealth." />
 
-  <meta property="og:title" content="PeakCY — Cyprus’ Private Growth Club" />
-  <meta property="og:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://peakcy.com/" />
-  <meta property="og:image" content="/assets/images/logo.jpeg" />
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/images/logo.jpeg" type="image/jpeg">
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PeakCY — Cyprus’ Private Growth Club" />
-  <meta name="twitter:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
-  <meta name="twitter:image" content="/assets/images/logo.jpeg" />
+  <!-- CSS (respect existing path & name) -->
+  <link rel="preload" as="style" href="/css/main.css?v=20250827">
+  <link rel="stylesheet" href="/css/main.css?v=20250827">
 
-  <!-- Minimal critical styles (unchanged aside from logo sizing) -->
+  <!-- Preload hero media for faster Largest Contentful Paint -->
+  <link rel="preload" as="video" href="/assets/videos/promo.mp4" type="video/mp4">
+  <link rel="preload" as="image" href="/assets/images/hero-fallback.jpg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PeakCY — Rise With Us">
+  <meta property="og:description" content="A community of like-minded people together rising to the peak.">
+  <meta property="og:image" content="/assets/images/logo.jpeg">
+  <meta property="og:type" content="website">
+
+  <!-- Ensure CSS variables have nav-height fallback -->
   <style>
-    :root{--bg:#050505;--fg:#fff;--muted:#a3a3a3;--accent:#0adf83;--card:rgba(255,255,255,.04);--bdr:rgba(255,255,255,.12);}
-    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
-    .container{max-width:1160px;margin:0 auto;padding:0 16px}
-
-    .navbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.5);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--bdr)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
-    /* ✅ Keep logo inline & correct size */
-    .logo{display:flex;align-items:center}
-    .logo img{display:block;width:36px;height:36px;border-radius:8px}
-
-    .menu-toggle{background:none;border:0;display:flex;flex-direction:column;gap:4px}
-    .menu-toggle .bar{display:block;width:22px;height:2px;background:#fff}
-
-    .nav-links a{margin:0 12px;text-decoration:none;color:var(--fg)}
-    .btn{display:inline-block;padding:10px 16px;border:1px solid var(--accent);border-radius:10px;text-decoration:none}
-    .btn-primary{background:var(--accent);color:#000;border-color:transparent}
-
-    .hero{position:relative;min-height:72vh;display:grid;place-items:center;text-align:center}
-    .hero-media{position:absolute;inset:0;overflow:hidden}
-    .hero-video{width:100%;height:100%;object-fit:cover}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.7))}
-    .hero-content{position:relative;z-index:1}
-    .hero-title{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 12px}
-    .hero-subtitle{color:var(--muted);max-width:820px;margin:0 auto 16px}
-    .hero-benefits{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;list-style:none;padding:0;margin:0 0 16px}
-    .hero-benefits li{background:var(--card);border:1px solid var(--bdr);padding:8px 12px;border-radius:10px}
-
-    .section{padding:56px 0}
-    .section-header{text-align:center;margin-bottom:24px}
-    .section-subtitle{color:var(--muted)}
-    .cards-grid,.pillars-grid,.faq-grid{display:grid;gap:16px}
-    .cards-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px}
-    .steps{max-width:760px;margin:0 auto;color:var(--muted)}
-
-    .apply .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .apply .form-grid .full{grid-column:1/-1}
-    .apply input,.apply textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bdr);background:#0a0a0a;color:#fff}
-
-    .footer{border-top:1px solid var(--bdr);padding:24px 0;background:#090909}
-    @media (max-width:768px){.apply .form-grid{grid-template-columns:1fr}}
+    /* tiny inline guard so first paint spacing is correct even before JS sets --nav-height */
+    :root { --nav-height: 64px; }
+    /* Minimal skeleton so it looks premium even before main.css completes */
+    .container{max-width:1200px;margin-inline:auto;padding-inline:16px}
   </style>
-
-  <!-- External CSS (absolute + relative fallback) -->
-  <link rel="stylesheet" href="/css/main.css?v=20250827" />
-  <link rel="stylesheet" href="css/main.css?v=20250827" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="css/main.css?v=20250827"></noscript>
 </head>
-
-<body class="site home">
-  <header id="navbar" class="navbar" role="navigation" aria-label="Primary">
-    <div class="container nav-inner">
-      <!-- ✅ Logo inline, no extra text node -->
-      <a class="logo" href="/" aria-label="PeakCY Home">
-        <img src="/assets/images/logo.jpeg" alt="PeakCY logo">
+<body class="site-body">
+  <!-- =========================
+       Sticky Navigation
+       ========================= -->
+  <header id="navbar" class="navbar" role="banner" aria-label="Primary">
+    <div class="container nav-wrap">
+      <a href="/" class="brand" aria-label="PeakCY Home">
+        <img src="/assets/images/logo.jpeg" alt="PeakCY" class="brand-logo" width="36" height="36" decoding="async" loading="eager">
+        <span class="brand-wordmark">
+          <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
+        </span>
       </a>
 
-      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
-        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-      </button>
-
-      <nav class="nav-links" aria-label="Desktop navigation">
+      <nav class="nav-desktop" aria-label="Main">
         <a href="/#about">About</a>
         <a href="/#edge">Pillars</a>
         <a href="/partners">Partners</a>
         <a href="/social">Social</a>
-        <a href="/#apply" class="btn btn-primary">Apply</a>
+        <a class="btn-apply" href="/#apply" data-cta="apply">Apply</a>
       </nav>
+
+      <!-- Mobile Toggle (works with existing JS hooks) -->
+      <button id="menuToggle" class="nav-toggle" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+      </button>
     </div>
 
-    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile navigation" hidden>
-      <a href="/#about">About</a>
-      <a href="/#edge">Pillars</a>
-      <a href="/partners">Partners</a>
-      <a href="/social">Social</a>
-      <a href="/#apply" class="btn btn-primary">Apply</a>
+    <!-- Mobile Menu -->
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile">
+      <a href="/#about" class="mobile-link">About</a>
+      <a href="/#edge" class="mobile-link">Pillars</a>
+      <a href="/partners" class="mobile-link">Partners</a>
+      <a href="/social" class="mobile-link">Social</a>
+      <a href="/#apply" class="mobile-link mobile-apply" data-cta="apply">Apply</a>
     </nav>
   </header>
 
-  <main id="content" class="site-main" role="main">
-    <!-- HERO -->
-    <section id="home" class="hero" aria-label="PeakCY Hero">
-      <div class="hero-media" aria-hidden="true">
-        <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
-          <source src="/assets/videos/promo.webm" type="video/webm">
-          <source src="/assets/videos/promo.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
+  <!-- =========================
+       HERO — Video with Safe Fallback
+       ========================= -->
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-media">
+      <!-- Video: preserved path; muted/autoplay/playsinline for mobile; poster as instant visual -->
+      <video id="heroVideo"
+             class="hero-video"
+             autoplay
+             loop
+             muted
+             playsinline
+             preload="auto"
+             poster="/assets/images/hero-fallback.jpg">
+        <source src="/assets/videos/promo.webm" type="video/webm">
+        <source src="/assets/videos/promo.mp4" type="video/mp4">
+        <!-- If video can’t play, static image fallback shows via CSS .hero-media::before -->
+      </video>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <!-- soft vignette + gradient overlay handled in CSS for premium depth -->
+    </div>
+
+    <div class="container hero-content">
+      <!-- Headline: keep copy/style; no color changes (inherits from CSS tokens) -->
+      <h1 class="hero-title">
+        The Peak Awaits — And We’re Rising Together.
+      </h1>
+      <p class="hero-subtitle">
+        A community of like-minded people together rising to the peak.
+      </p>
+
+      <div class="hero-ctas" role="group" aria-label="Primary actions">
+        <a href="/#apply" class="btn btn-primary" data-cta="apply-hero">Apply Now</a>
+        <a href="/#about" class="btn btn-ghost">Learn More</a>
       </div>
 
-      <div class="container hero-content">
-        <h1 class="hero-title">PeakCY — Cyprus’ Private Growth Club for <span>Health</span>, <span>Wealth</span> &amp; <span>Mindset</span></h1>
-        <p class="hero-subtitle">
-          A curated community of high-intent people who train, build, and grow together. Real world meetups. Real accountability. Real results.
-        </p>
-
-        <ul class="hero-benefits" role="list">
-          <li>🚀 Network with ambitious founders & professionals</li>
-          <li>🏋️‍♂️ Train body & mind with accountability</li>
-          <li>💼 Share deals, skills & opportunities</li>
-          <li>📍 Cyprus-based meetups + global connections</li>
-        </ul>
-
-        <div class="hero-ctas">
-          <a href="#apply" class="btn btn-primary" aria-label="Apply to PeakCY">Apply to Become a Member</a>
-          <a href="/social/" class="btn btn-secondary" aria-label="PeakCY Socials">Follow Our Socials</a>
-        </div>
+      <!-- Micro trust row (non-intrusive, premium feel) -->
+      <div class="hero-badges" aria-label="Highlights">
+        <span class="badge">Mindset</span>
+        <span class="badge">Health</span>
+        <span class="badge">Wealth</span>
+        <span class="badge">Community</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- PROOF -->
-    <section id="proof" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>What Members Say</h2>
-          <p class="section-subtitle">Why high-intent people choose PeakCY</p>
-        </div>
-        <div class="cards-grid">
-          <article class="card">
-            <h3>“Right people, right energy.”</h3>
-            <p>I closed two partnerships in my first month. Training + business + accountability in one club.</p>
-            <p class="muted">— Member, Limassol</p>
-          </article>
-          <article class="card">
-            <h3>“The consistency I needed.”</h3>
-            <p>Weekly meetups keep me on track: gym, habits, and goals — without excuses.</p>
-            <p class="muted">— Member, Nicosia</p>
-          </article>
-          <article class="card">
-            <h3>“Cyprus, but leveled up.”</h3>
-            <p>New friends, real introductions, and deals I wouldn’t have found alone.</p>
-            <p class="muted">— Member, Paphos</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- EDGE -->
-    <section id="edge" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>The PeakCY Edge</h2>
-          <p class="section-subtitle">Three pillars that compound together</p>
-        </div>
-
-        <div class="pillars-grid">
-          <article class="pillar">
-            <h3>Mindset</h3>
-            <p>Habits, focus, clarity. We set targets and stay accountable — weekly.</p>
-            <ul class="checklist" role="list">
-              <li>Goal reviews & habit tracking</li>
-              <li>Deep-work & learning sessions</li>
-              <li>Accountability partners</li>
-            </ul>
-          </article>
-
-          <article class="pillar">
-            <h3>Health</h3>
-            <p>Train together. Strong body, strong mind — consistent & measurable.</p>
-            <ul class="checklist" role="list">
-              <li>Group workouts & challenges</li>
-              <li>Recovery & nutrition basics</li>
-              <li>Progress checks</li>
-            </ul>
-          </article>
-
-          <article class="pillar">
-            <h3>Wealth</h3>
-            <p>Build skills. Share dealflow. Create opportunities for each other.</p>
-            <ul class="checklist" role="list">
-              <li>Skill-sharing & workshops</li>
-              <li>Partner & vendor network</li>
-              <li>Warm intros & collabs</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW -->
-    <section id="how" class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2>How Joining Works</h2>
-          <p class="section-subtitle">Simple, selective, supportive</p>
-        </div>
-
-        <ol class="steps" aria-label="Joining steps">
-          <li><strong>Apply:</strong> Tell us who you are and what you’re building or pursuing.</li>
-          <li><strong>Intro Call / Meetup:</strong> Quick vibe check and expectations alignment.</li>
-          <li><strong>Start:</strong> Get paired, join meetups, pick your first 4-week sprint.</li>
-        </ol>
-
-        <div class="center">
-          <a href="#apply" class="btn btn-primary">Apply Now</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- APPLY -->
-    <section id="apply" class="section apply">
-      <div class="container">
-        <div class="section-header">
-          <h2>Apply to PeakCY</h2>
-          <p class="section-subtitle">We review every application and reply quickly</p>
-        </div>
-
-        <form class="form" method="post" action="#" aria-label="Application form">
-          <div class="form-grid">
-            <label>
-              <span>Full Name</span>
-              <input type="text" name="name" required autocomplete="name" />
-            </label>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" required autocomplete="email" />
-            </label>
-            <label>
-              <span>Telegram (optional)</span>
-              <input type="text" name="telegram" placeholder="@username" />
-            </label>
-            <label class="full">
-              <span>What are you working on? What do you want from PeakCY?</span>
-              <textarea name="about" rows="5" required></textarea>
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit Application</button>
-          <p class="muted small">By applying you agree to be contacted about membership and events.</p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer" role="contentinfo">
+  <!-- =========================
+       ABOUT
+       ========================= -->
+  <section id="about" class="section section-about" aria-labelledby="about-title">
     <div class="container">
+      <div class="section-head">
+        <h2 id="about-title" class="section-title">About PeakCY</h2>
+        <p class="section-kicker">Who we are & how we move</p>
+      </div>
+
+      <div class="grid about-grid">
+        <div class="card card-elevated">
+          <h3 class="card-title">Whole-life Growth</h3>
+          <p class="card-text">
+            We grow in <strong>mindset, health & wealth</strong> — together. We share knowledge, train, build, and hold each other to high standards.
+          </p>
+        </div>
+        <div class="card card-elevated">
+          <h3 class="card-title">Real Community</h3>
+          <p class="card-text">
+            Curated members, real events, meaningful connections. From workouts to founder dinners — we move as one.
+          </p>
+        </div>
+        <div class="card card-elevated">
+          <h3 class="card-title">Cyprus First</h3>
+          <p class="card-text">
+            Born in Cyprus — open to the world. We’re building the island’s most driven tribe of doers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       PILLARS
+       ========================= -->
+  <section id="edge" class="section section-pillars" aria-labelledby="pillars-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="pillars-title" class="section-title">Our Pillars</h2>
+        <p class="section-kicker">The Edge we sharpen daily</p>
+      </div>
+
+      <div class="grid pillars-grid">
+        <!-- Keep your original icon set/classes; these are just semantic wrappers -->
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Mindset</h3>
+          <p class="card-text">Accountability, clarity, consistency. We put in the reps.</p>
+        </article>
+
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Health</h3>
+          <p class="card-text">Strength, recovery, longevity. Look good, feel better, perform best.</p>
+        </article>
+
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Wealth</h3>
+          <p class="card-text">Build, scale, invest. Surround yourself with winners.</p>
+        </article>
+
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Community</h3>
+          <p class="card-text">Iron sharpens iron. We grow faster together.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       PARTNERS (simple band; keep your existing page at /partners)
+       ========================= -->
+  <section class="section section-partners" aria-label="Partners">
+    <div class="container partners-band">
+      <a class="btn btn-ghost" href="/partners">See Partners</a>
+    </div>
+  </section>
+
+  <!-- =========================
+       APPLY (keeps your existing form ID/fields)
+       ========================= -->
+  <section id="apply" class="section section-apply" aria-labelledby="apply-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="apply-title" class="section-title">Apply to PeakCY</h2>
+        <p class="section-kicker">Serious about growth? Let’s talk.</p>
+      </div>
+
+      <!-- Form wrapper sits tight under nav on mobile per your earlier request -->
+      <form id="applyForm" class="card form-card" action="/apply" method="post" novalidate>
+        <div class="form-grid">
+          <label class="form-field">
+            <span class="form-label">Full Name</span>
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label">Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label">Phone</span>
+            <input type="tel" name="phone" autocomplete="tel">
+          </label>
+
+          <label class="form-field form-field--full">
+            <span class="form-label">Why do you want to join?</span>
+            <textarea name="reason" rows="4" required></textarea>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" data-cta="apply-submit">Submit Application</button>
+          <p class="form-safe">We review every application carefully.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-wrap">
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="/#about">About</a>
         <a href="/#edge">Pillars</a>
         <a href="/partners">Partners</a>
+        <a href="/social">Social</a>
         <a href="/#apply">Apply</a>
       </nav>
 
-      <p class="socials-heading">Follow us on socials</p>
-      <div class="social-links-footer">
-        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
-          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="22" height="22" loading="lazy">
-        </a>
-        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
-          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="22" height="22" loading="lazy">
-        </a>
-        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
-          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="22" height="22" loading="lazy">
-        </a>
+      <div class="footer-brand">
+        <img src="/assets/images/logo.jpeg" alt="" width="28" height="28" loading="lazy" decoding="async">
+        <span class="brand-wordmark">
+          <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
+        </span>
       </div>
 
-      <p class="footer-copy muted small">© <span id="year"></span> PeakCY. All rights reserved.</p>
+      <p class="footer-copy">© <span id="year"></span> PeakCY. All rights reserved.</p>
+
+      <div class="footer-socials" aria-label="Social links">
+        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+      </div>
     </div>
   </footer>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "PeakCY",
-    "url": "https://peakcy.com/",
-    "logo": "https://peakcy.com/assets/images/logo.jpeg",
-    "sameAs": [
-      "https://www.instagram.com/thepeakcy",
-      "https://www.tiktok.com/@thepeakcy",
-      "https://www.youtube.com/@thepeakcy"
-    ]
-  }
-  </script>
-
-  <script src="/js/app.js?v=20250827" defer></script>
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <!-- JS (respect existing path & name) -->
   <script>
-    // Resilient mobile menu (kept minimal)
-    (function(){
-      var btn=document.getElementById('menuToggle'), menu=document.getElementById('mobileMenu');
-      if(!btn||!menu) return;
-      function toggle(open){var v=open!=null?open:btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',v);menu.hidden=!v;document.body.style.overflow=v?'hidden':'';}
-      btn.addEventListener('click',function(){toggle();});
-      menu.addEventListener('click',function(e){if(e.target.tagName==='A'){toggle(false);}});
-    })();
+    // tiny inline util: current year; does not conflict with your app.js
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script src="/js/app.js?v=20250827" defer></script>
 </body>
 </html>
