@@ -139,25 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     anchor.addEventListener("click", (e) => handleAnchorClick(e, anchor));
   });
 
-  // Handle hash on page load
-  if (location.hash) {
-    const el = document.getElementById(location.hash.substring(1));
-    if (el) setTimeout(() => smoothScrollTo(el), 100);
-  }
-
-  // Re-adjust scroll target on resize if hash present (with light debounce)
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      setNavHeightVar();
-      if (location.hash) {
-        const el = document.getElementById(location.hash.substring(1));
-        if (el) smoothScrollTo(el);
-      }
-    }, 150);
-  });
-
+  
   // ===============================
   // NAVBAR SCROLL EFFECT
   // ===============================
@@ -181,17 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ===== Hero Background Video + Fallback (added) =====
 document.addEventListener("DOMContentLoaded", () => {
-  const heroSection = document.querySelector(".hero");
+  const hero = document.querySelector(".hero");
   const video = document.getElementById("heroVideo");
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!video) return;
 
-  const showFallback = () => {
-    try { heroSection && heroSection.classList.add("video-fallback"); } catch (_) {}
-  };
-
-  if (!video) { showFallback(); return; }
-
-  // Ensure autoplay-friendly flags (esp. iOS)
+  // Minimal: make sure the element has the right flags for mobile autoplay
   try {
     video.muted = true;
     video.setAttribute("muted","");
@@ -201,99 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
     video.loop = true;
   } catch (_) {}
 
-  // Safe diagnostics (won't throw if console disabled)
-  const log = (...args) => { try { console.debug("[heroVideo]", ...args); } catch(_) {} };
-
-  // Attach error handlers
-  const onErr = (e) => { log("video error", e && (e.message || e.type)); showFallback(); };
-  video.addEventListener("error", onErr);
-  Array.from(video.querySelectorAll("source")).forEach(s => s.addEventListener("error", onErr));
-
-  if (prefersReduced) { showFallback(); return; }
-
-  let attempts = 0, played = false;
-  const MAX = 5;
-
-  const tryPlay = () => {
-    attempts++;
-    log("play attempt", attempts, "readyState", video.readyState, "networkState", video.networkState);
-    let p;
-    try { p = video.play(); } catch (err) { log("play() threw", err && err.message); p = null; }
+  // Try a single play() and silently fall back to static if blocked
+  try {
+    const p = video.play();
     if (p && typeof p.then === "function") {
-      p.then(() => { played = True; log("autoplay success"); heroSection && heroSection.classList.remove("video-fallback"); })
-       .catch((err) => {
-         log("autoplay blocked", err && err.message);
-         if (attempts < MAX) {
-           try { video.currentTime = 0.01; } catch(_) {}
-           setTimeout(tryPlay, 250 * attempts);
-         } else {
-           // User gesture fallback
-           const once = () => {
-             try { video.muted = true; } catch(_) {}
-             video.play().then(() => {
-               played = true; heroSection && heroSection.classList.remove("video-fallback");
-             }).catch(onErr);
-             window.removeEventListener("touchend", once);
-             window.removeEventListener("click", once);
-           };
-           window.addEventListener("touchend", once, { once: true, passive: true });
-           window.addEventListener("click", once, { once: true });
-           showFallback();
-         }
-       });
-    } else {
-      // play() didn't return a promise; assume success or retry
-      if (!played && attempts < MAX) setTimeout(tryPlay, 200);
+      p.catch(() => { if (hero) hero.classList.add("video-fallback"); });
     }
-  };
-
-  if (document.visibilityState === "hidden") {
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && !played) tryPlay();
-    }, { once: true });
+  } catch (_) {
+    if (hero) hero.classList.add("video-fallback");
   }
-
-  if (video.readyState >= 2) tryPlay();
-  else {
-    const onReady = () => { video.removeEventListener("loadeddata", onReady); tryPlay(); };
-    video.addEventListener("loadeddata", onReady);
-    setTimeout(() => { if (!played) tryPlay(); }, 1200);
-  }
-
-  // Controls (safe-guarded)
-  const playIcon  = document.querySelector(".hero-video-controls .play-icon");
-  const pauseIcon = document.querySelector(".hero-video-controls .pause-icon");
-  const volOnIcon = document.querySelector(".hero-video-controls .volume-on");
-  const volOffIcon= document.querySelector(".hero-video-controls .volume-off");
-  const toggleBtn = document.querySelector(".hero-video-controls .video-toggle");
-  const muteBtn   = document.querySelector(".hero-video-controls .video-mute");
-
-  const updateIcons = () => {
-    try {
-      if (video.paused) { if (pauseIcon) pauseIcon.style.display = "none"; if (playIcon) playIcon.style.display = ""; }
-      else { if (pauseIcon) pauseIcon.style.display = ""; if (playIcon) playIcon.style.display = "none"; }
-      if (video.muted) { if (volOnIcon) volOnIcon.style.display = "none"; if (volOffIcon) volOffIcon.style.display = ""; }
-      else { if (volOnIcon) volOnIcon.style.display = ""; if (volOffIcon) volOffIcon.style.display = "none"; }
-    } catch (_) {}
-  };
-
-  if (toggleBtn) toggleBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (video.paused) {
-      try { video.muted = true; } catch(_) {}
-      video.play().then(updateIcons).catch(onErr);
-    } else {
-      try { video.pause(); } catch(_) {}
-      updateIcons();
-    }
-  });
-
-  if (muteBtn) muteBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    try { video.muted = !video.muted; } catch(_) {}
-    try { if (!video.muted && video.volume === 0) video.volume = 0.5; } catch(_) {}
-    updateIcons();
-  });
-
-  updateIcons();
 });
