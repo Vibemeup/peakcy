@@ -1326,7 +1326,47 @@ textarea:focus-visible {
 .hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease; }
 .hero.video-paused { background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center; }
 
-/* ===== Anchor offset for fixed navbar (added) ===== */
+
+/* ===== Anchor offset for fixed navbar ===== */
 #apply, #about, #edge {
   scroll-margin-top: calc(var(--nav-height, 80px) + 12px);
+}
+
+
+/* ================================================
+   Mobile Section Backgrounds — Visual Upgrade
+   ================================================ */
+@media (max-width: 768px) {
+  .hero {
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(10,223,131, 0.12) 0%, rgba(5,5,5,0.0) 45%),
+      linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.55) 100%);
+  }
+  #about {
+    background:
+      radial-gradient(80% 50% at 0% 0%, rgba(10,223,131, 0.12) 0%, rgba(0,0,0,0) 60%),
+      radial-gradient(80% 50% at 100% 20%, rgba(212,175,55,0.10) 0%, rgba(0,0,0,0) 55%),
+      linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%);
+  }
+  #edge {
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(10,223,131, 0.12) 0%, rgba(0,0,0,0) 55%),
+      linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));
+  }
+  .quote-section {
+    background:
+      radial-gradient(100% 60% at 100% 0%, rgba(212,175,55,0.10) 0%, rgba(0,0,0,0) 60%),
+      radial-gradient(120% 80% at 0% 100%, rgba(10,223,131, 0.12) 0%, rgba(0,0,0,0) 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.55));
+  }
+  #apply {
+    background:
+      radial-gradient(100% 80% at 50% 0%, rgba(10,223,131, 0.12) 0%, rgba(0,0,0,0) 60%),
+      linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65));
+  }
+  .footer {
+    background:
+      radial-gradient(120% 120% at 50% 120%, rgba(10,223,131, 0.12) 0%, rgba(0,0,0,0) 65%),
+      linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
+  }
 }
