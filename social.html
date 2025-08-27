@@ -8,7 +8,7 @@ permalink: /social/
   <meta charset="utf-8">
   <title>PeakCY — Socials</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="PeakCY — a community of like-minded people together rising to the peak. Official links: website, Instagram, TikTok, YouTube, Telegram.">
+  <meta name="description" content="PeakCY – We are a community of like-minded people, together rising to the peak — and we want YOU. Official links: website, Instagram, TikTok, YouTube, Telegram.">
   <link rel="canonical" href="https://peakcy.com/social/">
 
   <!-- Open Graph -->
@@ -45,7 +45,7 @@ permalink: /social/
       text-align: center;
     }
 
-    /* Round logo above text */
+    /* Round logo above copy */
     .brand-round {
       width: 100px;
       height: 100px;
@@ -63,21 +63,16 @@ permalink: /social/
       display: block;
     }
 
-    .social-title {
+    /* Merged headline */
+    .headline {
       margin: 0;
-      font-size: 1.35rem;
-      font-weight: 600;
+      font-size: 1.15rem;
+      line-height: 1.5;
       color: var(--text-primary);
     }
-    .social-title .peak { color: #fff; font-weight: 700; }
-    .social-title .cy { color: var(--gold); font-weight: 700; }
-
-    .social-sub {
-      margin: 8px 0 0 0;
-      color: #fff;
-      font-size: 1rem;
-      line-height: 1.4;
-    }
+    .headline .peak { color: #fff; font-weight: 800; }
+    .headline .cy { color: var(--gold); font-weight: 800; }
+    .headline strong { font-weight: 800; }
 
     /* Links list */
     .links-list { display: grid; gap: 12px; margin-top: 24px; }
@@ -104,7 +99,30 @@ permalink: /social/
 
     .link-label { font-size: 1rem; }
     .note { margin-top: 16px; color: var(--text-muted); font-size: 0.9rem; }
+
+    @media (min-width: 768px) {
+      .social-card { padding: 36px 28px; }
+      .headline { font-size: 1.2rem; }
+      .brand-round { width: 110px; height: 110px; }
+    }
   </style>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PeakCY",
+    "url": "https://peakcy.com/",
+    "logo": "https://peakcy.com/favicon.ico",
+    "sameAs": [
+      "https://www.instagram.com/thepeakcy",
+      "https://www.tiktok.com/@thepeakcy",
+      "https://www.youtube.com/@thepeakcy",
+      "https://t.me/+cnJJEOWLfGU1ZDA8"
+    ]
+  }
+  </script>
 </head>
 <body>
   {% include header.html %}
@@ -116,13 +134,10 @@ permalink: /social/
         <img src="/assets/images/logo.jpeg" alt="PeakCY logo" onerror="this.onerror=null;this.src='/favicon.ico'">
       </div>
 
-      <!-- Heading + bio -->
-      <h1 class="social-title">
-        <span class="peak">Peak</span><span class="cy">CY</span> – Official Social Networks
-      </h1>
-      <p class="social-sub">
-        A community of like-minded people<br>
-        together rising to the peak.
+      <!-- Merged headline -->
+      <p class="headline">
+        <span class="peak">Peak</span><span class="cy">CY</span> – We are a community of like-minded people,<br>
+        together rising to the peak — and we want <strong>YOU</strong>.
       </p>
 
       <!-- Links -->
