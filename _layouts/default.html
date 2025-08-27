@@ -6,28 +6,32 @@
   <title>{{ page.title | default: "PeakCY - Join the Peak Performance Community in Cyprus | Growth, Fitness, Wealth" }}</title>
   <meta name="description" content="{{ page.description | default: "Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth. Apply to reach your peak potential." }}">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="{{ page.canonical | default: "https://www.peakcy.com" }}">
+  <!-- Force non-www canonical -->
+  <link rel="canonical" href="{{ page.canonical | default: 'https://peakcy.com' }}">
 
-  <meta property="og:title" content="{{ page.og_title | default: "PeakCY - Join the Peak Performance Community in Cyprus" }}">
-  <meta property="og:description" content="{{ page.og_description | default: "Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth. Apply to reach your peak potential." }}">
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ page.og_title | default: 'PeakCY - Join the Peak Performance Community in Cyprus' }}">
+  <meta property="og:description" content="{{ page.og_description | default: 'Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth. Apply to reach your peak potential.' }}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.og_url | default: "https://www.peakcy.com" }}">
-  <meta property="og:image" content="{{ page.og_image | default: "https://www.peakcy.com/og-image.jpg" }}">
+  <meta property="og:url" content="{{ page.og_url | default: 'https://peakcy.com' }}">
+  <meta property="og:image" content="{{ page.og_image | default: 'https://peakcy.com/og-image.jpg' }}">
   <meta property="og:site_name" content="PeakCY">
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ page.twitter_title | default: "PeakCY - Join the Peak Performance Community in Cyprus" }}">
-  <meta name="twitter:description" content="{{ page.twitter_description | default: "Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth." }}">
-  <meta name="twitter:image" content="{{ page.twitter_image | default: "https://www.peakcy.com/og-image.jpg" }}">
+  <meta name="twitter:title" content="{{ page.twitter_title | default: 'PeakCY - Join the Peak Performance Community in Cyprus' }}">
+  <meta name="twitter:description" content="{{ page.twitter_description | default: 'Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth.' }}">
+  <meta name="twitter:image" content="{{ page.twitter_image | default: 'https://peakcy.com/og-image.jpg' }}">
 
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "PeakCY",
     "description": "Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth",
-    "url": "https://www.peakcy.com",
-    "logo": "https://www.peakcy.com/images/logo.png",
+    "url": "https://peakcy.com",
+    "logo": "https://peakcy.com/images/logo.png",
     "sameAs": [
       "https://www.instagram.com/thepeakcy",
       "https://www.tiktok.com/@thepeakcy",
@@ -42,15 +46,22 @@
   }
   </script>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- Video preload for hero background -->
+  <link rel="preload" as="video" href="/assets/videos/promo.mp4" type="video/mp4">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="/css/main.css?v=7">
 
+  <!-- No-JS fallback to avoid initial fade -->
   <noscript><style>body{opacity:1!important}</style></noscript>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      // matches your current behavior + app.js gracefully handles opacity too
       document.body.style.opacity = '1';
     });
   </script>

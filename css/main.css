@@ -1,3 +1,8 @@
+/* ===============================
+   PeakCY — main.css (Hero Background Video styles added)
+   Paths: /css/main.css
+   =============================== */
+
 :root {
   --bg-primary: #050505;
   --bg-secondary: #0a0a0a;
@@ -402,7 +407,7 @@ body.menu-open {
 }
 
 /* ===============================
-   HERO SECTION
+   HERO SECTION (Background Video)
    =============================== */
 
 .hero {
@@ -413,31 +418,31 @@ body.menu-open {
   align-items: center;
   text-align: center; 
   position: relative;
-  background: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+  background: #000; /* replaces static image */
+  overflow: hidden;
 }
 
-.hero::before {
-  content: ''; 
-  position: absolute; 
-  inset: 0;
-  background: linear-gradient(135deg, rgba(5,5,5,.9), rgba(5,5,5,.7), rgba(10,223,131,.1), rgba(5,5,5,.8));
-  z-index: 1;
+.hero-video-container {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
 }
 
-.hero::after {
-  content: ''; 
-  position: absolute; 
-  inset: 0;
+.hero-video {
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.05);
+  opacity: 0.9;
+}
+
+.hero-video-overlay {
+  position: absolute; inset: 0; z-index: 1;
   background:
-    radial-gradient(circle at 20% 80%, rgba(10,223,131,.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0,179,102,.1) 0%, transparent 50%);
-  z-index: 1; 
-  animation: heroGlow 8s ease-in-out infinite alternate;
-}
-
-@keyframes heroGlow { 
-  0% { opacity: .6 } 
-  100% { opacity: 1 } 
+    linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 30%, rgba(0,0,0,0.55) 100%),
+    radial-gradient(800px 400px at 50% 110%, rgba(10,223,131,0.12), transparent 60%);
+  pointer-events: none;
 }
 
 .hero-content { 
@@ -505,8 +510,30 @@ body.menu-open {
   box-shadow: 0 25px 50px rgba(10,223,131,.3); 
 }
 
+/* Video control buttons */
+.hero-video-controls {
+  position: absolute; right: 16px; bottom: 16px; z-index: 3;
+  display: flex; gap: 10px;
+}
+.hero-video-controls button {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  backdrop-filter: blur(10px);
+}
+.hero-video-controls button:hover {
+  transform: translateY(-2px);
+  background: rgba(0,0,0,0.6);
+  border-color: rgba(255,255,255,0.3);
+}
+.hero-video-controls svg { width: 22px; height: 22px; }
+
 /* ===============================
-   SECTIONS
+   SECTIONS (kept as in your file)
    =============================== */
 
 section { 
@@ -539,10 +566,7 @@ section {
   line-height: 1.7; 
 }
 
-/* ===============================
-   ABOUT SECTION
-   =============================== */
-
+/* ABOUT (unchanged content) */
 .about-hero { 
   font-size: 1.4rem; 
   color: var(--text-secondary); 
@@ -619,10 +643,7 @@ section {
   font-weight: 800;
 }
 
-/* ===============================
-   IDENTITY SECTION
-   =============================== */
-
+/* IDENTITY */
 .identity { 
   background: var(--bg-primary); 
   position: relative; 
@@ -706,10 +727,7 @@ section {
   min-width: 100px; 
 }
 
-/* ===============================
-   PILLARS SECTION
-   =============================== */
-
+/* PILLARS */
 .pillars-lead {
   max-width: 800px; 
   margin: 0 auto 3rem; 
@@ -772,10 +790,7 @@ section {
   stroke: var(--bg-primary); 
 }
 
-/* ===============================
-   QUOTE SECTION
-   =============================== */
-
+/* QUOTE */
 .quote-section { 
   background: var(--bg-primary); 
   padding: 4rem 2rem; 
@@ -811,10 +826,7 @@ section {
   font-size: 1.15rem; 
 }
 
-/* ===============================
-   APPLY SECTION
-   =============================== */
-
+/* APPLY */
 .apply { 
   background: var(--bg-secondary); 
   padding: 5rem 2rem; 
@@ -888,10 +900,7 @@ section {
   box-shadow: 0 15px 35px rgba(10,223,131,.4); 
 }
 
-/* ===============================
-   FOOTER
-   =============================== */
-
+/* FOOTER */
 .footer { 
   background: var(--bg-primary); 
   padding: 3rem 2rem; 
@@ -1172,10 +1181,7 @@ textarea:focus-visible {
   border: 0;
 }
 
-/* ===============================
-   SCROLLBAR STYLING
-   =============================== */
-
+/* Scrollbar */
 ::-webkit-scrollbar { 
   width: 8px; 
 }
@@ -1193,10 +1199,7 @@ textarea:focus-visible {
   background: var(--accent-hover); 
 }
 
-/* ===============================
-   FORM VALIDATION & MESSAGES
-   =============================== */
-
+/* Form messages */
 .form-message {
   margin-top: 1rem;
   padding: 1rem;
@@ -1224,10 +1227,7 @@ textarea:focus-visible {
   border-color: rgba(34, 197, 94, 0.5);
 }
 
-/* ===============================
-   LOGO TEXT UTILITY
-   =============================== */
-
+/* Logo text utility */
 .logo-text .peak {
   color: var(--text-primary);
 }
@@ -1236,19 +1236,13 @@ textarea:focus-visible {
   color: var(--gold);
 }
 
-/* ===============================
-   PARTNERS PAGE SPECIFIC
-   =============================== */
-
+/* Partners page */
 .partners-title {
   line-height: 1.1;
   margin-bottom: 1rem;
 }
 
-/* ===============================
-   LOADING STATES
-   =============================== */
-
+/* Loading */
 .loading {
   opacity: 0.7;
   pointer-events: none;
