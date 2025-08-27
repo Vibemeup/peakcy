@@ -234,8 +234,9 @@ body::before{
   transition: all 0.3s ease;
 }
 
-.mobile-menu.active {
-  display: block;
+.mobile-menu.active,
+.mobile-menu.is-open {
+  display: block !important;
   opacity: 1;
   transform: translateY(0);
 }
