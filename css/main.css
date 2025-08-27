@@ -217,21 +217,28 @@ body::before{
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
+/* ===============================
+   MOBILE MENU - COMPACT VERSION
+   =============================== */
+
 .mobile-menu {
   display: none;
   position: fixed;
   top: 68px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 68px);
+  height: 0;
+  max-height: 60vh;
   background: rgba(5, 5, 5, 0.98);
   backdrop-filter: blur(20px);
   z-index: 999;
-  padding: 2rem;
-  overflow-y: auto;
+  padding: 0 2rem;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(-20px);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 nav.mobile-menu.active,
@@ -239,8 +246,12 @@ nav.mobile-menu.is-open,
 #mobileMenu.active,
 #mobileMenu.is-open {
   display: block !important;
+  height: auto !important;
+  max-height: 60vh !important;
   opacity: 1 !important;
   transform: translateY(0) !important;
+  padding: 1.5rem 2rem !important;
+  overflow-y: auto !important;
 }
 
 /* Menu links styling - more compact */
@@ -248,13 +259,15 @@ nav.mobile-menu.is-open,
   display: block;
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 1rem; /* Slightly smaller */
+  font-size: 1rem;
   font-weight: 600;
-  padding: 0.8rem 1rem; /* Reduced padding */
-  margin-bottom: 0.3rem; /* Less space between items */
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.3rem;
   border-radius: 12px;
   transition: var(--transition);
   border: 1px solid transparent;
+  opacity: 0;
+  animation: fadeInMenuItem 0.3s ease forwards;
 }
 
 .mobile-menu a:hover {
@@ -267,7 +280,7 @@ nav.mobile-menu.is-open,
   background: var(--gradient) !important;
   color: var(--bg-primary) !important;
   font-weight: 700;
-  margin: 1rem 0 0.5rem 0; /* Reduced margins */
+  margin: 1rem 0 0.5rem 0;
   box-shadow: var(--shadow-glow);
 }
 
@@ -281,11 +294,13 @@ nav.mobile-menu.is-open,
 .mobile-social {
   display: flex;
   align-items: center;
-  gap: 10px; /* Reduced gap */
-  padding: 0.6rem 1rem; /* Smaller padding */
-  font-size: 0.9rem; /* Smaller text */
-  margin-top: 0.5rem; /* Less margin */
+  gap: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  animation: fadeInMenuItem 0.3s ease forwards;
 }
 
 .mobile-social:first-of-type {
@@ -295,7 +310,7 @@ nav.mobile-menu.is-open,
 }
 
 .mobile-social img {
-  width: 16px; /* Smaller icons */
+  width: 16px;
   height: 16px;
   opacity: 0.9;
   transition: all 0.2s ease;
@@ -308,6 +323,33 @@ nav.mobile-menu.is-open,
 
 body.menu-open {
   overflow: hidden;
+}
+
+/* Animation delays for menu items */
+.mobile-menu.active a:nth-child(1),
+.mobile-menu.is-open a:nth-child(1) { animation-delay: 0.05s; }
+.mobile-menu.active a:nth-child(2),
+.mobile-menu.is-open a:nth-child(2) { animation-delay: 0.1s; }
+.mobile-menu.active a:nth-child(3),
+.mobile-menu.is-open a:nth-child(3) { animation-delay: 0.15s; }
+.mobile-menu.active a:nth-child(4),
+.mobile-menu.is-open a:nth-child(4) { animation-delay: 0.2s; }
+.mobile-menu.active .mobile-social:nth-child(5),
+.mobile-menu.is-open .mobile-social:nth-child(5) { animation-delay: 0.25s; }
+.mobile-menu.active .mobile-social:nth-child(6),
+.mobile-menu.is-open .mobile-social:nth-child(6) { animation-delay: 0.3s; }
+.mobile-menu.active .mobile-social:nth-child(7),
+.mobile-menu.is-open .mobile-social:nth-child(7) { animation-delay: 0.35s; }
+
+@keyframes fadeInMenuItem {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* RESPONSIVE NAVIGATION */
@@ -331,6 +373,31 @@ body.menu-open {
   }
   .menu-toggle { 
     display: inline-flex !important; 
+  }
+}
+
+/* Additional responsive adjustments for mobile menu */
+@media (max-width: 480px) {
+  .mobile-menu {
+    max-height: 50vh;
+  }
+  
+  nav.mobile-menu.active,
+  nav.mobile-menu.is-open,
+  #mobileMenu.active,
+  #mobileMenu.is-open {
+    max-height: 50vh !important;
+    padding: 1rem 1.5rem !important;
+  }
+  
+  .mobile-menu a {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.8rem;
+  }
+  
+  .mobile-social {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
   }
 }
 
