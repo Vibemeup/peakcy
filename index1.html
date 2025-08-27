@@ -50,4 +50,279 @@
     .hero-video{ width:100%; height:100%; object-fit:cover; }
     .hero-overlay{ position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.6)); }
     .hero-content{ position:relative; z-index:2; padding-top: calc(var(--nav-height) + 32px); padding-bottom: 48px; }
-    .hero-title{ font-size: clamp(28px, 6vw, 56px
+    .hero-title{ font-size: clamp(28px, 6vw, 56px); line-height:1.08; margin:0 0 12px; }
+    .hero-subtitle{ font-size: clamp(16px, 2.8vw, 20px); margin:0 0 18px; }
+    .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+    .section{ padding:72px 0; }
+    .section-head{ margin-bottom:24px; }
+    .section-title{ font-size: clamp(24px, 4.5vw, 36px); margin:0 0 6px; }
+    .section-kicker{ opacity:.85; margin:0; }
+    .about-grid, .pillars-grid{ grid-template-columns: repeat(12, 1fr); }
+    .card{ border:1px solid var(--border, rgba(255,255,255,0.08)); border-radius:16px; padding:20px; background: var(--bg-card, rgba(255,255,255,0.04)); }
+    .card-elevated{ box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+    .card-glow{ box-shadow: 0 0 0 1px var(--accent-subtle, rgba(10,223,131,0.08)), 0 12px 48px rgba(0,0,0,0.35); }
+    .about-grid > *{ grid-column: span 4; }
+    .pillars-grid > *{ grid-column: span 3; }
+    @media (max-width: 900px){
+      .about-grid > *, .pillars-grid > *{ grid-column: 1 / -1; }
+    }
+    .form-card .form-grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:14px; }
+    .form-field{ grid-column: span 6; display:flex; flex-direction:column; gap:6px; }
+    .form-field--full{ grid-column: 1 / -1; }
+    .form-label{ font-size:0.95rem; opacity:.9; }
+    .form-field input, .form-field textarea{ width:100%; border:1px solid var(--border, rgba(255,255,255,0.1)); border-radius:10px; padding:12px 12px; background: transparent; color: var(--text-primary, #fff); }
+    .form-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:12px; }
+    .partners-band{ display:flex; align-items:center; justify-content:center; }
+    .footer-wrap{ display:grid; gap:16px; align-items:center; justify-items:center; padding:16px 0; }
+    .footer-links a{ margin:0 10px; text-decoration:none; }
+    .footer-brand{ display:flex; align-items:center; gap:10px; }
+    .brand-wordmark .brand-peak{ font-weight:700; }
+    .brand-wordmark .brand-cy{ font-weight:700; }
+  </style>
+</head>
+<body class="site-body">
+  <!-- =========================
+       NAVBAR (IDs & paths unchanged)
+       ========================= -->
+  <header id="navbar" class="navbar" role="banner" aria-label="Primary">
+    <div class="pc-wrap pc-flex">
+      <a href="/" class="brand" aria-label="PeakCY Home" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="/assets/images/logo.jpeg" alt="PeakCY" class="brand-logo" width="36" height="36" decoding="async" loading="eager">
+        <span class="brand-wordmark">
+          <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
+        </span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Main">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/social">Social</a>
+        <a class="btn-apply pc-btn pc-btn-primary" href="/#apply" data-cta="apply">Apply</a>
+      </nav>
+
+      <button id="menuToggle" class="nav-toggle" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile">
+      <a href="/#about" class="mobile-link">About</a>
+      <a href="/#edge" class="mobile-link">Pillars</a>
+      <a href="/partners" class="mobile-link">Partners</a>
+      <a href="/social" class="mobile-link">Social</a>
+      <a href="/#apply" class="mobile-link" data-cta="apply">Apply</a>
+    </nav>
+  </header>
+
+  <!-- =========================
+       HERO (video + safe fallback)
+       ========================= -->
+  <section class="hero" id="home" aria-label="Hero">
+    <div class="hero-media">
+      <video id="heroVideo"
+             class="hero-video"
+             autoplay
+             loop
+             muted
+             playsinline
+             preload="auto"
+             poster="/assets/images/hero-fallback.jpg">
+        <source src="/assets/videos/promo.webm" type="video/webm">
+        <source src="/assets/videos/promo.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="pc-wrap hero-content">
+      <h1 class="hero-title">The Peak Awaits — And We’re Rising Together.</h1>
+      <p class="hero-subtitle">A community of like-minded people together rising to the peak.</p>
+
+      <div class="hero-ctas" role="group" aria-label="Primary actions">
+        <a href="/#apply" class="pc-btn pc-btn-primary" data-cta="apply-hero">Apply Now</a>
+        <a href="/#about" class="pc-btn">Learn More</a>
+      </div>
+
+      <div class="pc-badges" aria-label="Highlights">
+        <span class="pc-badge">Mindset</span>
+        <span class="pc-badge">Health</span>
+        <span class="pc-badge">Wealth</span>
+        <span class="pc-badge">Community</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       ABOUT
+       ========================= -->
+  <section id="about" class="section section-about" aria-labelledby="about-title">
+    <div class="pc-wrap">
+      <div class="section-head">
+        <h2 id="about-title" class="section-title">About PeakCY</h2>
+        <p class="section-kicker">Who we are & how we move</p>
+      </div>
+
+      <div class="pc-grid about-grid">
+        <div class="card card-elevated">
+          <h3 class="card-title">Whole-life Growth</h3>
+          <p class="card-text">We grow in <strong>mindset, health & wealth</strong> — together. We share knowledge, train, build, and hold each other to high standards.</p>
+        </div>
+        <div class="card card-elevated">
+          <h3 class="card-title">Real Community</h3>
+          <p class="card-text">Curated members, real events, meaningful connections. From workouts to founder dinners — we move as one.</p>
+        </div>
+        <div class="card card-elevated">
+          <h3 class="card-title">Cyprus First</h3>
+          <p class="card-text">Born in Cyprus — open to the world. We’re building the island’s most driven tribe of doers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       PILLARS
+       ========================= -->
+  <section id="edge" class="section section-pillars" aria-labelledby="pillars-title">
+    <div class="pc-wrap">
+      <div class="section-head">
+        <h2 id="pillars-title" class="section-title">Our Pillars</h2>
+        <p class="section-kicker">The Edge we sharpen daily</p>
+      </div>
+
+      <div class="pc-grid pillars-grid">
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Mindset</h3>
+          <p class="card-text">Accountability, clarity, consistency. We put in the reps.</p>
+        </article>
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Health</h3>
+          <p class="card-text">Strength, recovery, longevity. Look good, feel better, perform best.</p>
+        </article>
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Wealth</h3>
+          <p class="card-text">Build, scale, invest. Surround yourself with winners.</p>
+        </article>
+        <article class="pillar card card-glow">
+          <div class="pillar-icon" aria-hidden="true"></div>
+          <h3 class="card-title">Community</h3>
+          <p class="card-text">Iron sharpens iron. We grow faster together.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       PARTNERS
+       ========================= -->
+  <section class="section section-partners" aria-label="Partners">
+    <div class="pc-wrap partners-band">
+      <a class="pc-btn" href="/partners">See Partners</a>
+    </div>
+  </section>
+
+  <!-- =========================
+       APPLY (form preserved)
+       ========================= -->
+  <section id="apply" class="section section-apply" aria-labelledby="apply-title">
+    <div class="pc-wrap">
+      <div class="section-head">
+        <h2 id="apply-title" class="section-title">Apply to PeakCY</h2>
+        <p class="section-kicker">Serious about growth? Let’s talk.</p>
+      </div>
+
+      <form id="applyForm" class="card form-card" action="/apply" method="post" novalidate>
+        <div class="form-grid">
+          <label class="form-field">
+            <span class="form-label">Full Name</span>
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label">Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+
+          <label class="form-field">
+            <span class="form-label">Phone</span>
+            <input type="tel" name="phone" autocomplete="tel">
+          </label>
+
+          <label class="form-field form-field--full">
+            <span class="form-label">Why do you want to join?</span>
+            <textarea name="reason" rows="4" required></textarea>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="pc-btn pc-btn-primary" data-cta="apply-submit">Submit Application</button>
+          <p class="form-safe">We review every application carefully.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="pc-wrap footer-wrap">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/social">Social</a>
+        <a href="/#apply">Apply</a>
+      </nav>
+
+      <div class="footer-brand">
+        <img src="/assets/images/logo.jpeg" alt="" width="28" height="28" loading="lazy" decoding="async">
+        <span class="brand-wordmark">
+          <span class="brand-peak">Peak</span><span class="brand-cy">CY</span>
+        </span>
+      </div>
+
+      <p class="footer-copy">© <span id="year"></span> PeakCY. All rights reserved.</p>
+
+      <div class="footer-socials" aria-label="Social links">
+        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="20" height="20" loading="lazy">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Minimal inline util (no conflict with /js/app.js) -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Mobile menu: rely on your app.js if present; add safe fallback toggler
+    (function(){
+      var t = document.getElementById('menuToggle');
+      var m = document.getElementById('mobileMenu');
+      if(t && m){
+        t.addEventListener('click', function(){
+          var open = m.classList.toggle('open');
+          t.setAttribute('aria-expanded', open ? 'true' : 'false');
+          document.body.style.overflow = open ? 'hidden' : '';
+        });
+        // close on link tap
+        m.addEventListener('click', function(e){
+          if(e.target.closest('a')){ m.classList.remove('open'); t.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+        });
+      }
+    })();
+  </script>
+  <script src="/js/app.js?v=20250827" defer></script>
+</body>
+</html>
