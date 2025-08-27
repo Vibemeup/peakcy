@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PeakCY — Socials</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="All official PeakCY links in one place: website, Instagram, TikTok.">
+  <link rel="canonical" href="https://peakcy.com/social.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PeakCY — Socials">
+  <meta property="og:description" content="All official PeakCY links in one place.">
+  <meta property="og:url" content="https://peakcy.com/social.html">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="https://peakcy.com/assets/images/og/peakcy-share.jpg"> -->
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PeakCY — Socials">
+  <meta name="twitter:description" content="All official PeakCY links in one place.">
+  <!-- <meta name="twitter:image" content="https://peakcy.com/assets/images/og/peakcy-share.jpg"> -->
+
+  <!-- Main site CSS & JS (unchanged paths) -->
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/app.js" defer></script>
+
+  <!-- Page-scoped styles (use existing tokens; no changes to your palette/typography) -->
+  <style>
+    .social-wrap {
+      min-height: calc(100vh - var(--nav-height, 64px));
+      display: grid;
+      place-items: start center;
+      padding: calc(var(--nav-height, 64px) + 32px) 16px 56px;
+      background: var(--bg-primary);
+    }
+    .social-card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .social-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .brand-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    .brand-icon img {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+    .social-title {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .social-sub {
+      margin: 2px 0 0 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    .links-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .link-item:hover,
+    .link-item:focus-visible {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      outline: none;
+    }
+    .link-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      display: grid;
+      place-items: center;
+      opacity: 0.92;
+    }
+    .link-icon img {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .link-label {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .note {
+      margin-top: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .social-title { font-size: 1.35rem; }
+      .social-card { padding: 28px; }
+    }
+  </style>
+
+  <!-- JSON-LD: Organization with official socials -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PeakCY",
+    "url": "https://peakcy.com/",
+    "logo": "https://peakcy.com/favicon.ico",
+    "sameAs": [
+      "https://www.instagram.com/thepeakcy",
+      "https://www.tiktok.com/@thepeakcy"
+    ]
+  }
+  </script>
+</head>
+<body>
+  {% include header.html %}
+
+  <main class="social-wrap" id="content">
+    <section class="social-card" role="navigation" aria-label="PeakCY Social Links">
+      <header class="social-header">
+        <div class="brand-icon" aria-hidden="true">
+          <img src="/favicon.ico" alt="PeakCY favicon">
+        </div>
+        <div>
+          <h1 class="social-title">PeakCY — Official Links</h1>
+          <p class="social-sub">Website and socials, nothing else.</p>
+        </div>
+      </header>
+
+      <nav class="links-list">
+        <!-- Website (only site; no sections) -->
+        <a class="link-item" href="/" aria-label="Go to PeakCY website home">
+          <span class="link-icon" aria-hidden="true">
+            <img src="/favicon.ico" alt="PeakCY site icon">
+          </span>
+          <span class="link-label">Visit Website</span>
+        </a>
+
+        <!-- Instagram -->
+        <a class="link-item" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Open PeakCY on Instagram (opens in a new tab)">
+          <span class="link-icon" aria-hidden="true">
+            <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram icon">
+          </span>
+          <span class="link-label">@thepeakcy (Instagram)</span>
+        </a>
+
+        <!-- TikTok -->
+        <a class="link-item" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="Open PeakCY on TikTok (opens in a new tab)">
+          <span class="link-icon" aria-hidden="true">
+            <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="TikTok icon">
+          </span>
+          <span class="link-label">@thepeakcy (TikTok)</span>
+        </a>
+      </nav>
+
+      <p class="note">Only official links. Beware of imposters.</p>
+    </section>
+  </main>
+
+  {% include footer.html %}
+</body>
+</html>
