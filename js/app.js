@@ -139,7 +139,25 @@ document.addEventListener("DOMContentLoaded", () => {
     anchor.addEventListener("click", (e) => handleAnchorClick(e, anchor));
   });
 
-  
+  // Handle hash on page load
+  if (location.hash) {
+    const el = document.getElementById(location.hash.substring(1));
+    if (el) setTimeout(() => smoothScrollTo(el), 100);
+  }
+
+  // Re-adjust scroll target on resize if hash present (with light debounce)
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setNavHeightVar();
+      if (location.hash) {
+        const el = document.getElementById(location.hash.substring(1));
+        if (el) smoothScrollTo(el);
+      }
+    }, 150);
+  });
+
   // ===============================
   // NAVBAR SCROLL EFFECT
   // ===============================
@@ -161,29 +179,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ===== Hero Background Video + Fallback (added) =====
-document.addEventListener("DOMContentLoaded", () => {
-  const hero = document.querySelector(".hero");
-  const video = document.getElementById("heroVideo");
+// === Hero Video Controls (lean) ===
+(function(){
+  const hero = document.querySelector('.hero');
+  const video = document.querySelector('.hero-video') || document.getElementById('heroVideo');
   if (!video) return;
 
-  // Minimal: make sure the element has the right flags for mobile autoplay
-  try {
-    video.muted = true;
-    video.setAttribute("muted","");
-    video.setAttribute("playsinline","");
-    video.setAttribute("webkit-playsinline","");
-    video.setAttribute("autoplay","");
-    video.loop = true;
-  } catch (_) {}
+  // Ensure autoplay-friendly flags remain (for safety)
+  try { video.muted = true; video.setAttribute('muted',''); video.setAttribute('playsinline',''); video.setAttribute('webkit-playsinline',''); } catch(_){}
 
-  // Try a single play() and silently fall back to static if blocked
-  try {
-    const p = video.play();
-    if (p && typeof p.then === "function") {
-      p.catch(() => { if (hero) hero.classList.add("video-fallback"); });
-    }
-  } catch (_) {
-    if (hero) hero.classList.add("video-fallback");
+  const toggleBtn = document.querySelector('.hero-video-controls .video-toggle');
+  const muteBtn   = document.querySelector('.hero-video-controls .video-mute');
+  const playIcon  = document.querySelector('.hero-video-controls .play-icon');
+  const pauseIcon = document.querySelector('.hero-video-controls .pause-icon');
+  const volOnIcon = document.querySelector('.hero-video-controls .volume-on');
+  const volOffIcon= document.querySelector('.hero-video-controls .volume-off');
+
+  function updateIcons(){
+    try {
+      if (video.paused) { if (pauseIcon) pauseIcon.style.display='none'; if (playIcon) playIcon.style.display=''; }
+      else { if (pauseIcon) pauseIcon.style.display=''; if (playIcon) playIcon.style.display='none'; }
+      if (video.muted) { if (volOnIcon) volOnIcon.style.display='none'; if (volOffIcon) volOffIcon.style.display=''; }
+      else { if (volOnIcon) volOnIcon.style.display=''; if (volOffIcon) volOffIcon.style.display='none'; }
+    } catch(_){}
   }
-});
+
+  if (toggleBtn) toggleBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    if (video.paused) {
+      try { video.muted = true; } catch(_){}
+      video.play().then(()=>{ if (hero) hero.classList.remove('video-paused'); updateIcons(); }).catch(()=>{});
+    } else {
+      try { video.pause(); } catch(_){}
+      if (hero) hero.classList.add('video-paused'); // show static bg when paused
+      updateIcons();
+    }
+  });
+
+  if (muteBtn) muteBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    try { video.muted = !video.muted; } catch(_){}
+    try { if (!video.muted && video.volume === 0) video.volume = 0.5; } catch(_){}
+    updateIcons();
+  });
+
+  ['play','pause','volumechange','loadeddata','ended'].forEach(evt=>video.addEventListener(evt,updateIcons));
+  updateIcons();
+})();
