@@ -11,29 +11,36 @@ layout: none
   <meta name="description" content="PeakCY is a private social club in Cyprus for ambitious people focused on health, wealth, and mindset. Join curated meetups, training, and a high-intent network.">
   <link rel="canonical" href="https://peakcy.com/">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="PeakCY — Cyprus’ Private Growth Club" />
   <meta property="og:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://peakcy.com/" />
   <meta property="og:image" content="/assets/images/logo.jpeg" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PeakCY — Cyprus’ Private Growth Club" />
   <meta name="twitter:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
   <meta name="twitter:image" content="/assets/images/logo.jpeg" />
 
-  <!-- Tiny critical styles so page never looks naked -->
+  <!-- Minimal critical styles (unchanged aside from logo sizing) -->
   <style>
     :root{--bg:#050505;--fg:#fff;--muted:#a3a3a3;--accent:#0adf83;--card:rgba(255,255,255,.04);--bdr:rgba(255,255,255,.12);}
     *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
     .container{max-width:1160px;margin:0 auto;padding:0 16px}
+
     .navbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.5);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--bdr)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+    /* ✅ Keep logo inline & correct size */
+    .logo{display:flex;align-items:center}
+    .logo img{display:block;width:36px;height:36px;border-radius:8px}
+
+    .menu-toggle{background:none;border:0;display:flex;flex-direction:column;gap:4px}
+    .menu-toggle .bar{display:block;width:22px;height:2px;background:#fff}
+
     .nav-links a{margin:0 12px;text-decoration:none;color:var(--fg)}
     .btn{display:inline-block;padding:10px 16px;border:1px solid var(--accent);border-radius:10px;text-decoration:none}
     .btn-primary{background:var(--accent);color:#000;border-color:transparent}
+
     .hero{position:relative;min-height:72vh;display:grid;place-items:center;text-align:center}
     .hero-media{position:absolute;inset:0;overflow:hidden}
     .hero-video{width:100%;height:100%;object-fit:cover}
@@ -43,6 +50,7 @@ layout: none
     .hero-subtitle{color:var(--muted);max-width:820px;margin:0 auto 16px}
     .hero-benefits{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;list-style:none;padding:0;margin:0 0 16px}
     .hero-benefits li{background:var(--card);border:1px solid var(--bdr);padding:8px 12px;border-radius:10px}
+
     .section{padding:56px 0}
     .section-header{text-align:center;margin-bottom:24px}
     .section-subtitle{color:var(--muted)}
@@ -50,25 +58,27 @@ layout: none
     .cards-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px}
     .steps{max-width:760px;margin:0 auto;color:var(--muted)}
+
     .apply .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .apply .form-grid .full{grid-column:1/-1}
     .apply input,.apply textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bdr);background:#0a0a0a;color:#fff}
+
     .footer{border-top:1px solid var(--bdr);padding:24px 0;background:#090909}
     @media (max-width:768px){.apply .form-grid{grid-template-columns:1fr}}
   </style>
 
-  <!-- External CSS: absolute + relative fallback + cache-bust -->
+  <!-- External CSS (absolute + relative fallback) -->
   <link rel="stylesheet" href="/css/main.css?v=20250827" />
   <link rel="stylesheet" href="css/main.css?v=20250827" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="css/main.css?v=20250827"></noscript>
 </head>
 
-<!-- 🔑 KEY FIX: add body classes likely used by your theme -->
 <body class="site home">
   <header id="navbar" class="navbar" role="navigation" aria-label="Primary">
     <div class="container nav-inner">
+      <!-- ✅ Logo inline, no extra text node -->
       <a class="logo" href="/" aria-label="PeakCY Home">
-        <img src="/assets/images/logo.jpeg" alt="PeakCY" width="36" height="36" loading="eager" decoding="async" />
+        <img src="/assets/images/logo.jpeg" alt="PeakCY logo">
       </a>
 
       <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
@@ -93,8 +103,8 @@ layout: none
     </nav>
   </header>
 
-  <!-- common wrapper most themes target -->
   <main id="content" class="site-main" role="main">
+    <!-- HERO -->
     <section id="home" class="hero" aria-label="PeakCY Hero">
       <div class="hero-media" aria-hidden="true">
         <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
@@ -124,6 +134,7 @@ layout: none
       </div>
     </section>
 
+    <!-- PROOF -->
     <section id="proof" class="section">
       <div class="container">
         <div class="section-header">
@@ -150,6 +161,7 @@ layout: none
       </div>
     </section>
 
+    <!-- EDGE -->
     <section id="edge" class="section">
       <div class="container">
         <div class="section-header">
@@ -191,6 +203,7 @@ layout: none
       </div>
     </section>
 
+    <!-- HOW -->
     <section id="how" class="section">
       <div class="container">
         <div class="section-header">
@@ -210,6 +223,7 @@ layout: none
       </div>
     </section>
 
+    <!-- APPLY -->
     <section id="apply" class="section apply">
       <div class="container">
         <div class="section-header">
@@ -269,7 +283,6 @@ layout: none
     </div>
   </footer>
 
-  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -285,11 +298,10 @@ layout: none
   }
   </script>
 
-  <!-- JS -->
   <script src="/js/app.js?v=20250827" defer></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
   <script>
-    // Minimal resilient menu (works even if app.js fails)
+    // Resilient mobile menu (kept minimal)
     (function(){
       var btn=document.getElementById('menuToggle'), menu=document.getElementById('mobileMenu');
       if(!btn||!menu) return;
