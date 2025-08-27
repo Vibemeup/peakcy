@@ -24,22 +24,20 @@ layout: none
   <meta name="twitter:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
   <meta name="twitter:image" content="/assets/images/logo.jpeg" />
 
-  <!-- Preload fonts / critical (optional if already in main.css pipeline) -->
-  <!-- <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-var.woff2" crossorigin> -->
-
+  <!-- Primary (absolute) -->
   <link rel="stylesheet" href="/css/main.css" />
+  <!-- Fallback (relative, in case absolute path doesn’t resolve on alt page) -->
+  <link rel="stylesheet" href="css/main.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/main.css"></noscript>
 </head>
 
 <body>
   {% include header.html %}
 
-  <!-- =========================
-       HERO (keeps your video)
-       ========================= -->
+  <!-- HERO (video preserved) -->
   <section id="home" class="hero" aria-label="PeakCY Hero">
     <div class="hero-media" aria-hidden="true">
-      <!-- Keep your existing video sources; mp4 is required, webm is optional but recommended -->
-      <video class="hero-video" autoplay muted playsinline loop preload="auto">
+      <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
         <source src="/assets/videos/promo.webm" type="video/webm">
         <source src="/assets/videos/promo.mp4" type="video/mp4">
       </video>
@@ -52,7 +50,6 @@ layout: none
         A curated community of high-intent people who train, build, and grow together. Real world meetups. Real accountability. Real results.
       </p>
 
-      <!-- Fast benefits (above the fold) -->
       <ul class="hero-benefits" role="list">
         <li>🚀 Network with ambitious founders & professionals</li>
         <li>🏋️‍♂️ Train body & mind with accountability</li>
@@ -61,15 +58,13 @@ layout: none
       </ul>
 
       <div class="hero-ctas">
-        <a href="#apply" class="btn btn-primary" aria-label="Apply to PeakCY">Apply to Become a Member</a>
-        <a href="/social/" class="btn btn-secondary" aria-label="PeakCY Socials">Follow Our Socials</a>
+        <a href="#apply" class="btn btn-primary">Apply to Become a Member</a>
+        <a href="/social/" class="btn btn-secondary">Follow Our Socials</a>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       SOCIAL PROOF (lightweight)
-       ========================= -->
+  <!-- SOCIAL PROOF -->
   <section id="proof" class="section">
     <div class="container">
       <div class="section-header">
@@ -96,9 +91,7 @@ layout: none
     </div>
   </section>
 
-  <!-- =========================
-       PILLARS (keep your anchor)
-       ========================= -->
+  <!-- EDGE / PILLARS -->
   <section id="edge" class="section">
     <div class="container">
       <div class="section-header">
@@ -140,9 +133,7 @@ layout: none
     </div>
   </section>
 
-  <!-- =========================
-       HOW IT WORKS
-       ========================= -->
+  <!-- HOW IT WORKS -->
   <section id="how" class="section">
     <div class="container">
       <div class="section-header">
@@ -162,40 +153,7 @@ layout: none
     </div>
   </section>
 
-  <!-- =========================
-       FAQ (conversion friction)
-       ========================= -->
-  <section id="faq" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Questions We Get</h2>
-        <p class="section-subtitle">Quick answers before you apply</p>
-      </div>
-
-      <div class="faq-grid">
-        <details>
-          <summary>Who is PeakCY for?</summary>
-          <p>Ambitious people in Cyprus who want to grow in health, wealth, and mindset — and value accountability and community.</p>
-        </details>
-        <details>
-          <summary>Is there a fitness requirement?</summary>
-          <p>No. We meet you where you are. Consistency beats intensity.</p>
-        </details>
-        <details>
-          <summary>Do I need to be a founder?</summary>
-          <p>No. Professionals, creators, and builders are welcome. What matters: attitude and effort.</p>
-        </details>
-        <details>
-          <summary>How often are meetups?</summary>
-          <p>Weekly touchpoints and monthly events. Extra pop-ups when energy is high.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       APPLY (keep #apply anchor)
-       ========================= -->
+  <!-- APPLY -->
   <section id="apply" class="section apply">
     <div class="container">
       <div class="section-header">
@@ -203,7 +161,6 @@ layout: none
         <p class="section-subtitle">We review every application and reply quickly</p>
       </div>
 
-      <!-- Keep simple semantic form; if you already have a working form, you can replace this inner <form> with your existing one. -->
       <form class="form" method="post" action="#" aria-label="Application form">
         <div class="form-grid">
           <label>
@@ -231,7 +188,7 @@ layout: none
 
   {% include footer.html %}
 
-  <!-- Organization schema for SEO -->
+  <!-- Org schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -246,6 +203,9 @@ layout: none
   }
   </script>
 
+  <!-- Primary (absolute) -->
   <script src="/js/app.js" defer></script>
+  <!-- Fallback (relative) -->
+  <script>!function(){var s=document.createElement('script');s.src='js/app.js';s.defer=true;document.body.appendChild(s);}()</script>
 </body>
 </html>
