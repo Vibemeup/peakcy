@@ -140,10 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle hash on page load
-  if (location.hash) {
-    const el = document.getElementById(location.hash.substring(1));
-    if (el) setTimeout(() => smoothScrollTo(el), 100);
-  }
+  if (location.hash) { const el = document.getElementById(location.hash.substring(1)); if (el) { setTimeout(() => smoothScrollTo(el), 100); } }
 
   // Re-adjust scroll target on resize if hash present (with light debounce)
   let resizeTimer;
@@ -190,12 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.querySelector(".hero-video-controls .video-toggle");
   const muteBtn   = document.querySelector(".hero-video-controls .video-mute");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// If user prefers reduced motion, immediately show fallback and stop further video handling
-if (prefersReducedMotion) {
-  showFallback();
-  return;
-}
 
   function ensureMutedAttribute(el) {
     if (!el) return;
