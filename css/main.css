@@ -234,11 +234,13 @@ body::before{
   transition: all 0.3s ease;
 }
 
-.mobile-menu.active,
-.mobile-menu.is-open {
+nav.mobile-menu.active,
+nav.mobile-menu.is-open,
+#mobileMenu.active,
+#mobileMenu.is-open {
   display: block !important;
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .mobile-menu a {
