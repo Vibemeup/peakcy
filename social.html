@@ -22,11 +22,10 @@ permalink: /social/
   <meta name="twitter:title" content="PeakCY — Socials">
   <meta name="twitter:description" content="All official PeakCY links in one place.">
 
-  <!-- Main site CSS & JS (unchanged paths) -->
+  <!-- Main site CSS & JS -->
   <link rel="stylesheet" href="/css/main.css">
   <script src="/js/app.js" defer></script>
 
-  <!-- Page-scoped styles (brand tokens respected; no color/font changes) -->
   <style>
     .social-wrap {
       min-height: calc(100vh - var(--nav-height, 64px));
@@ -41,43 +40,55 @@ permalink: /social/
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 24px;
+      padding: 32px 24px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      text-align: center;
     }
 
-    /* Header block with your logo + 2-line bio */
-    .social-header {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 16px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .brand-cover {
-      width: 88px;
-      height: 88px;
-      border-radius: 16px;
+    /* Round logo above text */
+    .brand-round {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
       overflow: hidden;
-      border: 1px solid var(--border);
+      margin: 0 auto 16px auto;
+      border: 2px solid var(--border);
       box-shadow: 0 8px 24px rgba(0,0,0,0.35);
       background: var(--bg-card);
     }
-    .brand-cover img {
-      width: 100%; height: 100%;
-      display: block; object-fit: cover;
+    .brand-round img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    .social-title { margin: 0; font-size: 1.25rem; color: var(--text-primary); line-height: 1.2; }
-    .social-sub  { margin: 6px 0 0 0; color: var(--text-secondary); font-size: 0.95rem; }
+
+    .social-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .social-title .peak { color: #fff; font-weight: 700; }
+    .social-title .cy { color: var(--gold); font-weight: 700; }
+
+    .social-sub {
+      margin: 8px 0 0 0;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
 
     /* Links list */
-    .links-list { display: grid; gap: 12px; margin-top: 20px; }
+    .links-list { display: grid; gap: 12px; margin-top: 24px; }
     .link-item {
       display: flex; align-items: center; gap: 12px;
       width: 100%; padding: 14px 16px;
       border: 1px solid var(--border);
       border-radius: 12px;
       background: var(--bg-card);
-      color: var(--text-primary); text-decoration: none;
+      color: var(--text-primary);
+      text-decoration: none;
       transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .link-item:hover, .link-item:focus-visible {
@@ -87,103 +98,57 @@ permalink: /social/
       outline: none;
     }
 
-    /* REAL social icons (uniform size/alignment) */
-    .icon {
-      width: 24px; height: 24px; flex: 0 0 24px;
-      display: grid; place-items: center;
-      line-height: 0;
-    }
+    /* Real icons */
+    .icon { width: 24px; height: 24px; flex: 0 0 24px; }
     .icon img { width: 24px; height: 24px; display: block; }
 
-    .link-label { font-size: 1rem; line-height: 1.2; }
-    .note { margin-top: 16px; color: var(--text-muted); font-size: 0.9rem; text-align: center; }
-
-    @media (min-width: 768px) {
-      .social-title { font-size: 1.35rem; }
-      .social-card { padding: 28px; }
-      .brand-cover { width: 96px; height: 96px; }
-    }
+    .link-label { font-size: 1rem; }
+    .note { margin-top: 16px; color: var(--text-muted); font-size: 0.9rem; }
   </style>
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "PeakCY",
-    "url": "https://peakcy.com/",
-    "logo": "https://peakcy.com/favicon.ico",
-    "sameAs": [
-      "https://www.instagram.com/thepeakcy",
-      "https://www.tiktok.com/@thepeakcy",
-      "https://www.youtube.com/@thepeakcy",
-      "https://t.me/+cnJJEOWLfGU1ZDA8"
-    ]
-  }
-  </script>
 </head>
 <body>
   {% include header.html %}
 
   <main class="social-wrap" id="content">
     <section class="social-card" role="navigation" aria-label="PeakCY Social Links">
-      <header class="social-header">
-        <!-- Replace src below with your uploaded file path; fallback to favicon -->
-        <div class="brand-cover" aria-hidden="true">
-          <img src="/assets/images/peakcy-social-logo.jpg" alt="PeakCY logo"
-               onerror="this.onerror=null;this.src='/favicon.ico'">
-        </div>
-        <div>
-          <h1 class="social-title">PeakCY — Official Links</h1>
-          <p class="social-sub">
-            A community of like-minded people<br>
-            together rising to the peak.
-          </p>
-        </div>
-      </header>
+      <!-- Round centered logo -->
+      <div class="brand-round">
+        <img src="/assets/images/logo.jpeg" alt="PeakCY logo" onerror="this.onerror=null;this.src='/favicon.ico'">
+      </div>
 
+      <!-- Heading + bio -->
+      <h1 class="social-title">
+        <span class="peak">Peak</span><span class="cy">CY</span> – Official Social Networks
+      </h1>
+      <p class="social-sub">
+        A community of like-minded people<br>
+        together rising to the peak.
+      </p>
+
+      <!-- Links -->
       <nav class="links-list">
-        <!-- Website -->
         <a class="link-item" href="/" aria-label="Go to PeakCY website home">
-          <span class="icon" aria-hidden="true">
-            <img src="/favicon.ico" alt="">
-          </span>
+          <span class="icon"><img src="/favicon.ico" alt=""></span>
           <span class="link-label">Visit Website</span>
         </a>
 
-        <!-- Instagram -->
-        <a class="link-item" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener"
-           aria-label="Follow us on Instagram (opens in a new tab)">
-          <span class="icon" aria-hidden="true">
-            <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="">
-          </span>
+        <a class="link-item" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener">
+          <span class="icon"><img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="Instagram"></span>
           <span class="link-label">Follow us on Instagram</span>
         </a>
 
-        <!-- TikTok -->
-        <a class="link-item" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener"
-           aria-label="Follow us on TikTok (opens in a new tab)">
-          <span class="icon" aria-hidden="true">
-            <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="">
-          </span>
+        <a class="link-item" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener">
+          <span class="icon"><img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="TikTok"></span>
           <span class="link-label">Follow us on TikTok</span>
         </a>
 
-        <!-- YouTube -->
-        <a class="link-item" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener"
-           aria-label="Subscribe to our YouTube channel (opens in a new tab)">
-          <span class="icon" aria-hidden="true">
-            <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="">
-          </span>
+        <a class="link-item" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener">
+          <span class="icon"><img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="YouTube"></span>
           <span class="link-label">Subscribe to our YouTube</span>
         </a>
 
-        <!-- Telegram -->
-        <a class="link-item" href="https://t.me/+cnJJEOWLfGU1ZDA8" target="_blank" rel="noopener"
-           aria-label="Join our Telegram group (opens in a new tab)">
-          <span class="icon" aria-hidden="true">
-            <img src="https://cdn.simpleicons.org/telegram/FFFFFF" alt="">
-          </span>
+        <a class="link-item" href="https://t.me/+cnJJEOWLfGU1ZDA8" target="_blank" rel="noopener">
+          <span class="icon"><img src="https://cdn.simpleicons.org/telegram/FFFFFF" alt="Telegram"></span>
           <span class="link-label">Join our Telegram Group</span>
         </a>
       </nav>
