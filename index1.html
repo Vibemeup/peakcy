@@ -11,12 +11,14 @@ layout: none
   <meta name="description" content="PeakCY is a private social club in Cyprus for ambitious people focused on health, wealth, and mindset. Join curated meetups, training, and a high-intent network.">
   <link rel="canonical" href="https://peakcy.com/">
 
+  <!-- Open Graph -->
   <meta property="og:title" content="PeakCY — Cyprus’ Private Growth Club" />
   <meta property="og:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://peakcy.com/" />
   <meta property="og:image" content="/assets/images/logo.jpeg" />
 
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PeakCY — Cyprus’ Private Growth Club" />
   <meta name="twitter:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
@@ -25,7 +27,7 @@ layout: none
   <!-- Tiny critical styles so page never looks naked -->
   <style>
     :root{--bg:#050505;--fg:#fff;--muted:#a3a3a3;--accent:#0adf83;--card:rgba(255,255,255,.04);--bdr:rgba(255,255,255,.12);}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
     .container{max-width:1160px;margin:0 auto;padding:0 16px}
     .navbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.5);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--bdr)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
@@ -61,7 +63,8 @@ layout: none
   <noscript><link rel="stylesheet" href="css/main.css?v=20250827"></noscript>
 </head>
 
-<body>
+<!-- 🔑 KEY FIX: add body classes likely used by your theme -->
+<body class="site home">
   <header id="navbar" class="navbar" role="navigation" aria-label="Primary">
     <div class="container nav-inner">
       <a class="logo" href="/" aria-label="PeakCY Home">
@@ -90,152 +93,155 @@ layout: none
     </nav>
   </header>
 
-  <section id="home" class="hero" aria-label="PeakCY Hero">
-    <div class="hero-media" aria-hidden="true">
-      <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
-        <source src="/assets/videos/promo.webm" type="video/webm">
-        <source src="/assets/videos/promo.mp4" type="video/mp4">
-      </video>
-      <div class="hero-overlay"></div>
-    </div>
-
-    <div class="container hero-content">
-      <h1 class="hero-title">PeakCY — Cyprus’ Private Growth Club for <span>Health</span>, <span>Wealth</span> &amp; <span>Mindset</span></h1>
-      <p class="hero-subtitle">
-        A curated community of high-intent people who train, build, and grow together. Real world meetups. Real accountability. Real results.
-      </p>
-
-      <ul class="hero-benefits" role="list">
-        <li>🚀 Network with ambitious founders & professionals</li>
-        <li>🏋️‍♂️ Train body & mind with accountability</li>
-        <li>💼 Share deals, skills & opportunities</li>
-        <li>📍 Cyprus-based meetups + global connections</li>
-      </ul>
-
-      <div class="hero-ctas">
-        <a href="#apply" class="btn btn-primary" aria-label="Apply to PeakCY">Apply to Become a Member</a>
-        <a href="/social/" class="btn btn-secondary" aria-label="PeakCY Socials">Follow Our Socials</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="proof" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>What Members Say</h2>
-        <p class="section-subtitle">Why high-intent people choose PeakCY</p>
-      </div>
-      <div class="cards-grid">
-        <article class="card">
-          <h3>“Right people, right energy.”</h3>
-          <p>I closed two partnerships in my first month. Training + business + accountability in one club.</p>
-          <p class="muted">— Member, Limassol</p>
-        </article>
-        <article class="card">
-          <h3>“The consistency I needed.”</h3>
-          <p>Weekly meetups keep me on track: gym, habits, and goals — without excuses.</p>
-          <p class="muted">— Member, Nicosia</p>
-        </article>
-        <article class="card">
-          <h3>“Cyprus, but leveled up.”</h3>
-          <p>New friends, real introductions, and deals I wouldn’t have found alone.</p>
-          <p class="muted">— Member, Paphos</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="edge" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>The PeakCY Edge</h2>
-        <p class="section-subtitle">Three pillars that compound together</p>
+  <!-- common wrapper most themes target -->
+  <main id="content" class="site-main" role="main">
+    <section id="home" class="hero" aria-label="PeakCY Hero">
+      <div class="hero-media" aria-hidden="true">
+        <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
+          <source src="/assets/videos/promo.webm" type="video/webm">
+          <source src="/assets/videos/promo.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
       </div>
 
-      <div class="pillars-grid">
-        <article class="pillar">
-          <h3>Mindset</h3>
-          <p>Habits, focus, clarity. We set targets and stay accountable — weekly.</p>
-          <ul class="checklist" role="list">
-            <li>Goal reviews & habit tracking</li>
-            <li>Deep-work & learning sessions</li>
-            <li>Accountability partners</li>
-          </ul>
-        </article>
+      <div class="container hero-content">
+        <h1 class="hero-title">PeakCY — Cyprus’ Private Growth Club for <span>Health</span>, <span>Wealth</span> &amp; <span>Mindset</span></h1>
+        <p class="hero-subtitle">
+          A curated community of high-intent people who train, build, and grow together. Real world meetups. Real accountability. Real results.
+        </p>
 
-        <article class="pillar">
-          <h3>Health</h3>
-          <p>Train together. Strong body, strong mind — consistent & measurable.</p>
-          <ul class="checklist" role="list">
-            <li>Group workouts & challenges</li>
-            <li>Recovery & nutrition basics</li>
-            <li>Progress checks</li>
-          </ul>
-        </article>
+        <ul class="hero-benefits" role="list">
+          <li>🚀 Network with ambitious founders & professionals</li>
+          <li>🏋️‍♂️ Train body & mind with accountability</li>
+          <li>💼 Share deals, skills & opportunities</li>
+          <li>📍 Cyprus-based meetups + global connections</li>
+        </ul>
 
-        <article class="pillar">
-          <h3>Wealth</h3>
-          <p>Build skills. Share dealflow. Create opportunities for each other.</p>
-          <ul class="checklist" role="list">
-            <li>Skill-sharing & workshops</li>
-            <li>Partner & vendor network</li>
-            <li>Warm intros & collabs</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="how" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>How Joining Works</h2>
-        <p class="section-subtitle">Simple, selective, supportive</p>
-      </div>
-
-      <ol class="steps" aria-label="Joining steps">
-        <li><strong>Apply:</strong> Tell us who you are and what you’re building or pursuing.</li>
-        <li><strong>Intro Call / Meetup:</strong> Quick vibe check and expectations alignment.</li>
-        <li><strong>Start:</strong> Get paired, join meetups, pick your first 4-week sprint.</li>
-      </ol>
-
-      <div class="center">
-        <a href="#apply" class="btn btn-primary">Apply Now</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="apply" class="section apply">
-    <div class="container">
-      <div class="section-header">
-        <h2>Apply to PeakCY</h2>
-        <p class="section-subtitle">We review every application and reply quickly</p>
-      </div>
-
-      <form class="form" method="post" action="#" aria-label="Application form">
-        <div class="form-grid">
-          <label>
-            <span>Full Name</span>
-            <input type="text" name="name" required autocomplete="name" />
-          </label>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" required autocomplete="email" />
-          </label>
-          <label>
-            <span>Telegram (optional)</span>
-            <input type="text" name="telegram" placeholder="@username" />
-          </label>
-          <label class="full">
-            <span>What are you working on? What do you want from PeakCY?</span>
-            <textarea name="about" rows="5" required></textarea>
-          </label>
+        <div class="hero-ctas">
+          <a href="#apply" class="btn btn-primary" aria-label="Apply to PeakCY">Apply to Become a Member</a>
+          <a href="/social/" class="btn btn-secondary" aria-label="PeakCY Socials">Follow Our Socials</a>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Application</button>
-        <p class="muted small">By applying you agree to be contacted about membership and events.</p>
-      </form>
-    </div>
-  </section>
+      </div>
+    </section>
+
+    <section id="proof" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>What Members Say</h2>
+          <p class="section-subtitle">Why high-intent people choose PeakCY</p>
+        </div>
+        <div class="cards-grid">
+          <article class="card">
+            <h3>“Right people, right energy.”</h3>
+            <p>I closed two partnerships in my first month. Training + business + accountability in one club.</p>
+            <p class="muted">— Member, Limassol</p>
+          </article>
+          <article class="card">
+            <h3>“The consistency I needed.”</h3>
+            <p>Weekly meetups keep me on track: gym, habits, and goals — without excuses.</p>
+            <p class="muted">— Member, Nicosia</p>
+          </article>
+          <article class="card">
+            <h3>“Cyprus, but leveled up.”</h3>
+            <p>New friends, real introductions, and deals I wouldn’t have found alone.</p>
+            <p class="muted">— Member, Paphos</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="edge" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>The PeakCY Edge</h2>
+          <p class="section-subtitle">Three pillars that compound together</p>
+        </div>
+
+        <div class="pillars-grid">
+          <article class="pillar">
+            <h3>Mindset</h3>
+            <p>Habits, focus, clarity. We set targets and stay accountable — weekly.</p>
+            <ul class="checklist" role="list">
+              <li>Goal reviews & habit tracking</li>
+              <li>Deep-work & learning sessions</li>
+              <li>Accountability partners</li>
+            </ul>
+          </article>
+
+          <article class="pillar">
+            <h3>Health</h3>
+            <p>Train together. Strong body, strong mind — consistent & measurable.</p>
+            <ul class="checklist" role="list">
+              <li>Group workouts & challenges</li>
+              <li>Recovery & nutrition basics</li>
+              <li>Progress checks</li>
+            </ul>
+          </article>
+
+          <article class="pillar">
+            <h3>Wealth</h3>
+            <p>Build skills. Share dealflow. Create opportunities for each other.</p>
+            <ul class="checklist" role="list">
+              <li>Skill-sharing & workshops</li>
+              <li>Partner & vendor network</li>
+              <li>Warm intros & collabs</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>How Joining Works</h2>
+          <p class="section-subtitle">Simple, selective, supportive</p>
+        </div>
+
+        <ol class="steps" aria-label="Joining steps">
+          <li><strong>Apply:</strong> Tell us who you are and what you’re building or pursuing.</li>
+          <li><strong>Intro Call / Meetup:</strong> Quick vibe check and expectations alignment.</li>
+          <li><strong>Start:</strong> Get paired, join meetups, pick your first 4-week sprint.</li>
+        </ol>
+
+        <div class="center">
+          <a href="#apply" class="btn btn-primary">Apply Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="apply" class="section apply">
+      <div class="container">
+        <div class="section-header">
+          <h2>Apply to PeakCY</h2>
+          <p class="section-subtitle">We review every application and reply quickly</p>
+        </div>
+
+        <form class="form" method="post" action="#" aria-label="Application form">
+          <div class="form-grid">
+            <label>
+              <span>Full Name</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+            <label>
+              <span>Telegram (optional)</span>
+              <input type="text" name="telegram" placeholder="@username" />
+            </label>
+            <label class="full">
+              <span>What are you working on? What do you want from PeakCY?</span>
+              <textarea name="about" rows="5" required></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Application</button>
+          <p class="muted small">By applying you agree to be contacted about membership and events.</p>
+        </form>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer" role="contentinfo">
     <div class="container">
@@ -263,6 +269,7 @@ layout: none
     </div>
   </footer>
 
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -278,6 +285,7 @@ layout: none
   }
   </script>
 
+  <!-- JS -->
   <script src="/js/app.js?v=20250827" defer></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
   <script>
