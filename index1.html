@@ -24,17 +24,44 @@ layout: none
   <meta name="twitter:description" content="A members-only community for health, wealth, and mindset growth. Curated events, real connections, clear results." />
   <meta name="twitter:image" content="/assets/images/logo.jpeg" />
 
-  <!-- Primary (absolute) -->
-  <link rel="stylesheet" href="/css/main.css" />
-  <!-- Fallback (relative, in case absolute path doesn’t resolve on alt page) -->
-  <link rel="stylesheet" href="css/main.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="css/main.css"></noscript>
+  <!-- Absolute + cache-bust to avoid stale CDN -->
+  <link rel="stylesheet" href="/css/main.css?v=20250827" />
 </head>
 
 <body>
-  {% include header.html %}
+  <!-- ===== Inline header (no includes to avoid build issues) ===== -->
+  <header id="navbar" class="navbar" role="navigation" aria-label="Primary">
+    <div class="container nav-inner">
+      <a class="logo" href="/" aria-label="PeakCY Home">
+        <img src="/assets/images/logo.jpeg" alt="PeakCY" width="36" height="36" loading="eager" decoding="async" />
+        <span class="sr-only">PeakCY</span>
+      </a>
 
-  <!-- HERO (video preserved) -->
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+
+      <nav class="nav-links" aria-label="Desktop navigation">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/social">Social</a>
+        <a href="/#apply" class="btn btn-primary">Apply</a>
+      </nav>
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile navigation" hidden>
+      <a href="/#about">About</a>
+      <a href="/#edge">Pillars</a>
+      <a href="/partners">Partners</a>
+      <a href="/social">Social</a>
+      <a href="/#apply" class="btn btn-primary">Apply</a>
+    </nav>
+  </header>
+
+  <!-- =========================
+       HERO (keeps your video)
+       ========================= -->
   <section id="home" class="hero" aria-label="PeakCY Hero">
     <div class="hero-media" aria-hidden="true">
       <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/assets/images/hero-poster.jpg">
@@ -58,13 +85,15 @@ layout: none
       </ul>
 
       <div class="hero-ctas">
-        <a href="#apply" class="btn btn-primary">Apply to Become a Member</a>
-        <a href="/social/" class="btn btn-secondary">Follow Our Socials</a>
+        <a href="#apply" class="btn btn-primary" aria-label="Apply to PeakCY">Apply to Become a Member</a>
+        <a href="/social/" class="btn btn-secondary" aria-label="PeakCY Socials">Follow Our Socials</a>
       </div>
     </div>
   </section>
 
-  <!-- SOCIAL PROOF -->
+  <!-- =========================
+       SOCIAL PROOF
+       ========================= -->
   <section id="proof" class="section">
     <div class="container">
       <div class="section-header">
@@ -91,7 +120,9 @@ layout: none
     </div>
   </section>
 
-  <!-- EDGE / PILLARS -->
+  <!-- =========================
+       PILLARS
+       ========================= -->
   <section id="edge" class="section">
     <div class="container">
       <div class="section-header">
@@ -133,7 +164,9 @@ layout: none
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- =========================
+       HOW IT WORKS
+       ========================= -->
   <section id="how" class="section">
     <div class="container">
       <div class="section-header">
@@ -153,7 +186,9 @@ layout: none
     </div>
   </section>
 
-  <!-- APPLY -->
+  <!-- =========================
+       APPLY
+       ========================= -->
   <section id="apply" class="section apply">
     <div class="container">
       <div class="section-header">
@@ -186,9 +221,34 @@ layout: none
     </div>
   </section>
 
-  {% include footer.html %}
+  <!-- ===== Inline footer (no includes) ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/#apply">Apply</a>
+      </nav>
 
-  <!-- Org schema -->
+      <p class="socials-heading">Follow us on socials</p>
+      <div class="social-links-footer">
+        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+      </div>
+
+      <p class="footer-copy muted small">© <span id="year"></span> PeakCY. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -198,14 +258,33 @@ layout: none
     "logo": "https://peakcy.com/assets/images/logo.jpeg",
     "sameAs": [
       "https://www.instagram.com/thepeakcy",
-      "https://www.tiktok.com/@thepeakcy"
+      "https://www.tiktok.com/@thepeakcy",
+      "https://www.youtube.com/@thepeakcy"
     ]
   }
   </script>
 
-  <!-- Primary (absolute) -->
-  <script src="/js/app.js" defer></script>
-  <!-- Fallback (relative) -->
-  <script>!function(){var s=document.createElement('script');s.src='js/app.js';s.defer=true;document.body.appendChild(s);}()</script>
+  <!-- Absolute + cache-bust to avoid stale JS -->
+  <script src="/js/app.js?v=20250827" defer></script>
+  <script>
+    // Lightweight year + resilient mobile menu in case app.js fails to load
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function() {
+      var btn = document.getElementById('menuToggle');
+      var menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+      function toggle(open) {
+        var expanded = open != null ? open : btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', expanded);
+        menu.hidden = !expanded;
+        document.body.style.overflow = expanded ? 'hidden' : '';
+      }
+      btn.addEventListener('click', function(){ toggle(); });
+      // close on link click
+      menu.addEventListener('click', function(e){
+        if (e.target.tagName === 'A') toggle(false);
+      });
+    })();
+  </script>
 </body>
 </html>
