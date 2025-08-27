@@ -147,18 +147,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Re-adjust scroll target on resize if hash present (with light debounce)
   let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      setNavHeightVar();
-      if (location.hash) {
-        const el = document.getElementById(location.hash.substring(1));
-        if (el) smoothScrollTo(el);
-      }
-    }, 150);
-  });
-
-  // ===============================
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); } catch(_){}
+    // Removed hash-based auto re-scroll on resize to prevent mobile snap-to-top
+  }, 150);
+});
+// ===============================
   // NAVBAR SCROLL EFFECT
   // ===============================
   const navbar = navEl();
@@ -226,3 +222,32 @@ document.addEventListener("DOMContentLoaded", () => {
   ['play','pause','volumechange','loadeddata','ended'].forEach(evt=>video.addEventListener(evt,updateIcons));
   updateIcons();
 })();
+
+
+// Mobile apply: scroll directly to the first form field (not the section title)
+document.addEventListener("DOMContentLoaded", () => {
+  function isMobile() { return window.matchMedia && window.matchMedia("(max-width: 768px)").matches; }
+  function targetApplyField() {
+    return document.getElementById("fullName") || document.querySelector("#apply input, #apply textarea, #apply .form-group");
+  }
+  function scrollToApplyField(e) {
+    if (!isMobile()) return false;
+    const field = targetApplyField();
+    if (!field) return false;
+    if (e && e.preventDefault) e.preventDefault();
+    // Use your existing smoothScrollTo if available, else fallback
+    if (typeof smoothScrollTo === "function") smoothScrollTo(field);
+    else field.scrollIntoView({ behavior: "smooth", block: "start" });
+    return true;
+  }
+
+  // Intercept clicks to #apply links on mobile
+  document.querySelectorAll('a[href="#apply"], a[href="/#apply"]').forEach(a => {
+    a.addEventListener("click", (e) => { scrollToApplyField(e); });
+  });
+
+  // If page opens at #apply on mobile, adjust to first field
+  window.addEventListener("load", () => {
+    if (location.hash === "#apply") scrollToApplyField();
+  });
+});
