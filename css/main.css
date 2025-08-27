@@ -1368,3 +1368,37 @@ textarea:focus-visible {
       linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
   }
 }
+
+
+/* ================================================
+   Mobile Section Backgrounds — Strong Override
+   ================================================ */
+@media (max-width: 768px) {
+  section#about { 
+    background:
+      radial-gradient(80% 50% at 0% 0%, rgba(10,223,131, 0.12), rgba(0,0,0,0) 60%),
+      radial-gradient(80% 50% at 100% 20%, rgba(212,175,55,0.10), rgba(0,0,0,0) 55%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0)) !important;
+  }
+  section#edge { 
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(10,223,131, 0.12), rgba(0,0,0,0) 55%),
+      linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55)) !important;
+  }
+  .quote-section { 
+    background:
+      radial-gradient(100% 60% at 100% 0%, rgba(212,175,55,0.10), rgba(0,0,0,0) 60%),
+      radial-gradient(120% 80% at 0% 100%, rgba(10,223,131, 0.12), rgba(0,0,0,0) 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.55)) !important;
+  }
+  section#apply { 
+    background:
+      radial-gradient(100% 80% at 50% 0%, rgba(10,223,131, 0.12), rgba(0,0,0,0) 60%),
+      linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65)) !important;
+  }
+  footer.footer { 
+    background:
+      radial-gradient(120% 120% at 50% 120%, rgba(10,223,131, 0.12), rgba(0,0,0,0) 65%),
+      linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85)) !important;
+  }
+}
