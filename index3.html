@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "PeakCY - Join the Peak Performance Community in Cyprus | Growth, Fitness, Wealth"
-description: "Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth. Apply to reach your peak potential."
+description: "Join PeakCY - Cyprus's community for people focused on mindset, health, wealth & community growth. Apply to reach your peak potential."
 ---
 
 <!-- Enhanced Hero Section -->
@@ -358,21 +358,21 @@ description: "Join PeakCY - Cyprus's exclusive community for ambitious individua
             <div class="benefit-icon">✓</div>
             <div class="benefit-content">
               <h4>Immediate Access</h4>
-              <p>Get instant entry to our exclusive community platform after signing up</p>
+              <p>Join in right away and start connecting with our community platform.</p>
             </div>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">✓</div>
             <div class="benefit-content">
-              <h4>Weekly Events</h4>
-              <p>Join fitness sessions, masterminds, and networking events every week</p>
+              <h4>Real Connections</h4>
+              <p>Surround yourself with like-minded people who share your goals and ambitions.</p>
             </div>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">✓</div>
             <div class="benefit-content">
-              <h4>Direct Support</h4>
-              <p>Get answers and guidance from our community leaders and members</p>
+              <h4>Private Events</h4>
+              <p>Take part in fitness sessions, masterminds, and gatherings that bring us together.</p>
             </div>
           </div>
         </div>
@@ -469,9 +469,17 @@ description: "Join PeakCY - Cyprus's exclusive community for ambitious individua
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 4rem;
+    margin-bottom: 6rem; /* Increased to avoid overlap with scroll indicator on desktop */
     position: relative;
     z-index: 5;
+  }
+
+  @media (max-width: 768px) {
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 5rem; /* mobile spacing */
+    }
   }
   
   .cta-secondary {
@@ -675,11 +683,11 @@ description: "Join PeakCY - Cyprus's exclusive community for ambitious individua
   }
   
   .testimonial-content:before {
-    content: """;
+    content: "»";
     position: absolute;
     top: 1rem;
     left: 1.5rem;
-    font-size: 4rem;
+    font-size: 3rem;
     color: var(--accent);
     opacity: 0.2;
     font-family: Georgia, serif;
@@ -856,12 +864,6 @@ description: "Join PeakCY - Cyprus's exclusive community for ambitious individua
   }
   
   @media (max-width: 768px) {
-    .hero-buttons {
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 5rem;
-    }
-    
     .stats-bar .container {
       justify-content: center;
     }
@@ -878,11 +880,11 @@ description: "Join PeakCY - Cyprus's exclusive community for ambitious individua
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Typing animation - Updated to "mind, body, soul"
+    // Typing animation - Updated to "health, wealth, mindset"
     const typedTextSpan = document.querySelector('.typed-text');
     const cursorSpan = document.querySelector('.cursor');
     
-    const textArray = ['mind', 'body', 'soul'];
+    const textArray = ['health', 'wealth', 'mindset'];
     const typingDelay = 100;
     const erasingDelay = 50;
     const newTextDelay = 1500;
