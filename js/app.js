@@ -4,21 +4,25 @@
 
 /* Strip accidental ?query on load (keep hash) */
 if (location.search) {
-  try { history.replaceState(null, "", location.pathname + location.hash); } catch (_) {}
+  try { history.replaceState(null, "", location.pathname + location.hash); }
+  catch (_) {}
 }
 
 /* Helpers */
 function navEl() { return document.getElementById("navbar"); }
 function getToggleEl() {
-  return document.getElementById("menuToggle") || document.querySelector(".menu-toggle");
+  return document.getElementById("menuToggle") ||
+  document.querySelector(".menu-toggle");
 }
 function getPanelEl() {
-  return document.getElementById("mobileMenu") || document.querySelector(".mobile-menu");
+  return document.getElementById("mobileMenu") ||
+  document.querySelector(".mobile-menu");
 }
 
 function setNavHeightVar() {
   const nav = navEl();
-  if (nav) document.documentElement.style.setProperty("--nav-height", nav.offsetHeight + "px");
+  if (nav) document.documentElement.style.setProperty("--nav-height",
+  nav.offsetHeight + "px");
 }
 
 function getNavHeight() {
@@ -28,7 +32,8 @@ function getNavHeight() {
 
 function smoothScrollTo(el) {
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 12;
+  const top = el.getBoundingClientRect().top + window.scrollY -
+  getNavHeight() - 12;
   window.scrollTo({ top, behavior: "smooth" });
 }
 
@@ -135,7 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor =>
+  {
     anchor.addEventListener("click", (e) => handleAnchorClick(e, anchor));
   });
 
@@ -150,8 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); } catch(_){}
-      // Removed hash-based auto re-scroll on resize to prevent mobile snap-to-top
+      try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); }
+    catch(_){}
+      // Removed hash-based auto re-scroll on resize to prevent mobile snap-
+      // to-top
     }, 150);
   });
 
@@ -178,11 +186,17 @@ document.addEventListener("DOMContentLoaded", () => {
 (function(){
   const hero = document.querySelector('.hero');
   const container = document.querySelector('.hero-video-container');
-  const getVideo = () => document.getElementById('heroVideo') || document.querySelector('.hero .hero-video') || document.querySelector('.hero video') || document.querySelector('video');
+  const getVideo = () => document.getElementById('heroVideo') ||
+  document.querySelector('.hero .hero-video') || document.querySelector('.hero video') || document.querySelector('video');
   const video = getVideo();
   if (!video || !hero) return;
 
-  try { video.muted = true; video.setAttribute('muted',''); video.setAttribute('playsinline',''); video.setAttribute('webkit-playsinline',''); } catch(_){}
+  try {
+    video.muted = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+  } catch(_){}
 
   if (container && video.poster) {
     try { container.style.backgroundImage = `url('${video.poster}')`; } catch(_){}
@@ -191,7 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function syncUI(){
-    const controls = document.querySelector('.hero-video-controls') || document.querySelector('[data-video-controls]');
+    const controls = document.querySelector('.hero-video-controls') ||
+    document.querySelector('[data-video-controls]');
     const playIcon  = controls && controls.querySelector('.play-icon');
     const pauseIcon = controls && controls.querySelector('.pause-icon');
     const volOnIcon = controls && controls.querySelector('.volume-on');
@@ -199,8 +214,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const playing = !video.paused;
     const muted   = video.muted;
 
-    if (playIcon && pauseIcon) { playIcon.style.display = playing ? 'none' : ''; pauseIcon.style.display = playing ? '' : 'none'; }
-    if (volOnIcon && volOffIcon) { volOnIcon.style.display = muted ? 'none' : ''; volOffIcon.style.display = muted ? '' : 'none'; }
+    if (playIcon && pauseIcon) {
+      playIcon.style.display = playing ? 'none' : '';
+      pauseIcon.style.display = playing ? '' : 'none';
+    }
+    if (volOnIcon && volOffIcon) {
+      volOnIcon.style.display = muted ? 'none' : '';
+      volOffIcon.style.display = muted ? '' : 'none';
+    }
 
     video.style.transition = 'opacity .25s ease';
     video.style.opacity = playing ? '1' : '0';
@@ -219,17 +240,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const cls  = (btn.className || '').toLowerCase();
     const act  = (btn.getAttribute('data-action') || '').toLowerCase();
 
-    const isMute   = cls.includes('video-mute')   || act == 'mute'   || 'mute' in aria || 'unmute' in aria;
-    const isToggle = cls.includes('video-toggle') || act == 'toggle' || 'play' in aria || 'pause' in aria;
+    const isMute   = cls.includes('video-mute') ||
+                     act === 'mute' ||
+                     aria.includes('mute') ||
+                     aria.includes('unmute');
+    const isToggle = cls.includes('video-toggle') ||
+                     act === 'toggle' ||
+                     aria.includes('play') ||
+                     aria.includes('pause');
 
-    if ! (isMute || isToggle):
-        return
+    if (!(isMute || isToggle)) {
+      return;
+    }
 
     e.preventDefault();
 
     if (isMute) {
       try { video.muted = !video.muted; } catch(_){}
-      if (!video.muted && video.volume === 0) { try { video.volume = 0.5; } catch(_){ } }
+      if (!video.muted && video.volume === 0) {
+        try { video.volume = 0.5; } catch(_){}
+      }
       return syncUI();
     }
 
@@ -246,11 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
   ['play','pause','volumechange','loadeddata','ended'].forEach(evt => video.addEventListener(evt, syncUI));
   syncUI();
 })();
+
 // Mobile apply: scroll directly to the first form field (not the section title)
 document.addEventListener("DOMContentLoaded", () => {
-  function isMobile() { return window.matchMedia && window.matchMedia("(max-width: 768px)").matches; }
+  function isMobile() {
+    return window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
+  }
   function targetApplyField() {
-    return document.getElementById("fullName") || document.querySelector("#apply input, #apply textarea, #apply .form-group");
+    return document.getElementById("fullName") ||
+    document.querySelector("#apply input, #apply textarea, #apply .form-group");
   }
   function scrollToApplyField(e) {
     if (!isMobile()) return false;
@@ -291,7 +325,8 @@ function initTypingAnimation() {
 
   function type() {
     if (charIndex < textArray[textArrayIndex].length) {
-      if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
+      if (!cursorSpan.classList.contains('typing'))
+        cursorSpan.classList.add('typing');
       typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
       charIndex++;
       setTimeout(type, typingDelay);
@@ -303,7 +338,8 @@ function initTypingAnimation() {
 
   function erase() {
     if (charIndex > 0) {
-      if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
+      if (!cursorSpan.classList.contains('typing'))
+        cursorSpan.classList.add('typing');
       typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
       charIndex--;
       setTimeout(erase, erasingDelay);

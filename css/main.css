@@ -1357,9 +1357,8 @@ textarea:focus-visible {
 
 /* Controls (optional, already in your HTML) */
 .hero-video-controls {
-  position: absolute; right: 1.25rem; bottom: 1.25rem; z-index: 6;
-  display: flex; gap: .75rem;
-  pointer-events: auto;
+  position: absolute; right: 16px; bottom: 16px; z-index: 3;
+  display: flex; gap: 10px;
 }
 .hero-video-controls button {
   background: rgba(0,0,0,0.45);
@@ -1379,8 +1378,7 @@ textarea:focus-visible {
 .hero-video-controls svg { width: 22px; height: 22px; }
 
 /* --- Hero video: paused via controls shows static background --- */
-.hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease;   pointer-events: none;
-}
+.hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease; }
 .hero.video-paused { background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center; }
 
 
@@ -1490,7 +1488,7 @@ textarea:focus-visible {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
   position: relative;
   z-index: 5;
 }
@@ -1687,7 +1685,7 @@ textarea:focus-visible {
 }
 
 .testimonial-content:before {
-  content: "»";
+  content: """;
   position: absolute;
   top: 1rem;
   left: 1.5rem;
@@ -1886,5 +1884,3 @@ textarea:focus-visible {
     bottom: 1rem;
   }
 }
-
-.about-unified-card .about-unified-text { color: var(--text-primary) !important; }
