@@ -32,7 +32,7 @@ description: "Join PeakCY - Cyprus's community for people focused on mindset, he
     <h1>We're only <span class="peak-word">Peaking</span> the best.</h1>
     
     <div class="typing-container">
-      <p>A private community for those committed to growth - in <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+      <p>A private community for those committed to growth - in <span class="typed-text"></span><span class="cursor" aria-hidden="true"></span></p>
     </div>
     
     <div class="hero-buttons">
@@ -198,7 +198,7 @@ description: "Join PeakCY - Cyprus's community for people focused on mindset, he
 <section id="edge" class="pillars">
   <div class="container">
     <h2 class="section-title">The <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> Pillars</h2>
-    <div class="pillars-lead">
+  <div class="pillars-lead">
       Every peak stands on a foundation. At <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>, ours is built on four pillars: mindset, health, wealth, and community. Together, they create balance, power, and sustainable growth.
     </div>
     <div class="pillars-grid">
@@ -443,25 +443,22 @@ description: "Join PeakCY - Cyprus's community for people focused on mindset, he
     color: var(--accent);
     font-weight: 600;
   }
-  
+
+  /* Cursor rebuilt: visual only, no &nbsp; character */
   .cursor {
     display: inline-block;
-    background-color: var(--accent);
-    margin-left: 0.1rem;
-    width: 3px;
-    animation: blink 1s infinite;
+    width: 0;
+    height: 1em;
+    border-left: 3px solid var(--accent);
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    opacity: 1;
+    animation: cursor-blink 1s step-end infinite;
   }
-  
-  .cursor.typing {
-    animation: none;
-  }
-  
-  @keyframes blink {
-    0%  { background-color: var(--accent); }
-    49% { background-color: var(--accent); }
-    50% { background-color: transparent; }
-    99% { background-color: transparent; }
-    100% { background-color: var(--accent); }
+  .cursor.typing { animation: none; }
+
+  @keyframes cursor-blink {
+    50% { opacity: 0; }
   }
   
   .hero-buttons {
@@ -880,64 +877,77 @@ description: "Join PeakCY - Cyprus's community for people focused on mindset, he
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Typing animation - Updated to "health, wealth, mindset"
+    /** =========================
+     *  Robust Typewriter (no glue)
+     *  ========================= */
     const typedTextSpan = document.querySelector('.typed-text');
     const cursorSpan = document.querySelector('.cursor');
-    
-    const textArray = ['health', 'wealth', 'mindset'];
-    const typingDelay = 100;
-    const erasingDelay = 50;
-    const newTextDelay = 1500;
-    let textArrayIndex = 0;
-    let charIndex = 0;
-    
-    function type() {
-      if (charIndex < textArray[textArrayIndex].length) {
-        if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
-        typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(type, typingDelay);
-      } else {
-        cursorSpan.classList.remove('typing');
-        setTimeout(erase, newTextDelay);
+    const words = ['health', 'wealth', 'mindset']; // keep current copy
+    const TYPING = 90;
+    const ERASING = 45;
+    const HOLD_AFTER_TYPE = 1200;
+    const HOLD_AFTER_ERASE = 450;
+
+    let w = 0, i = 0, mode = 'type', timerId = null;
+
+    function setCursorTyping(on) {
+      if (!cursorSpan) return;
+      cursorSpan.classList.toggle('typing', !!on);
+    }
+
+    function step() {
+      const word = words[w];
+
+      if (mode === 'type') {
+        setCursorTyping(true);
+        if (i < word.length) {
+          i++;
+          typedTextSpan.textContent = word.slice(0, i);
+          timerId = setTimeout(step, TYPING);
+        } else {
+          setCursorTyping(false);
+          timerId = setTimeout(() => { mode = 'erase'; step(); }, HOLD_AFTER_TYPE);
+        }
+      } else if (mode === 'erase') {
+        setCursorTyping(true);
+        if (i > 0) {
+          i--;
+          typedTextSpan.textContent = word.slice(0, i);
+          timerId = setTimeout(step, ERASING);
+        } else {
+          setCursorTyping(false);
+          w = (w + 1) % words.length;
+          // hard reset to guarantee no leftover characters
+          typedTextSpan.textContent = '';
+          timerId = setTimeout(() => { mode = 'type'; step(); }, HOLD_AFTER_ERASE);
+        }
       }
     }
-    
-    function erase() {
-      if (charIndex > 0) {
-        if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
-        typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-        charIndex--;
-        setTimeout(erase, erasingDelay);
-      } else {
-        cursorSpan.classList.remove('typing');
-        textArrayIndex++;
-        if (textArrayIndex >= textArray.length) textArrayIndex = 0;
-        setTimeout(type, typingDelay + 1000);
-      }
+
+    // Safety: ensure only one loop ever runs
+    if (timerId) clearTimeout(timerId);
+    if (words.length && typedTextSpan && cursorSpan) {
+      timerId = setTimeout(step, 350);
     }
-    
-    // Start typing animation
-    if (textArray.length) setTimeout(type, newTextDelay + 250);
-    
-    // Counter animation for stats
+
+    /** =========================
+     *  Counters
+     *  ========================= */
     const counters = document.querySelectorAll('.stat-number');
     const speed = 200;
-    
+
     function animateCounters() {
       counters.forEach(counter => {
         const target = +counter.getAttribute('data-count');
         const count = +counter.innerText;
         const increment = Math.ceil(target / speed);
-        
         if (count < target) {
           counter.innerText = Math.min(count + increment, target);
-          setTimeout(() => animateCounters(), 1);
+          setTimeout(animateCounters, 12);
         }
       });
     }
-    
-    // Start counter animation when stats are in viewport
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -947,45 +957,41 @@ description: "Join PeakCY - Cyprus's community for people focused on mindset, he
       });
     }, { threshold: 0.5 });
     
-    observer.observe(document.querySelector('.stats-bar'));
-    
-    // Testimonial slider
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) observer.observe(statsBar);
+
+    /** =========================
+     *  Testimonials
+     *  ========================= */
     const testimonials = document.querySelectorAll('.testimonial');
     const dotsContainer = document.querySelector('.testimonial-dots');
     let currentTestimonial = 0;
-    
-    // Create dots
-    testimonials.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.classList.add('testimonial-dot');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => showTestimonial(i));
-      dotsContainer.appendChild(dot);
-    });
-    
-    function showTestimonial(index) {
-      testimonials[currentTestimonial].classList.remove('active');
-      document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.remove('active');
-      
-      currentTestimonial = index;
-      if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
-      if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
-      
-      testimonials[currentTestimonial].classList.add('active');
-      document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
+
+    if (testimonials.length && dotsContainer) {
+      testimonials.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('testimonial-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => showTestimonial(i));
+        dotsContainer.appendChild(dot);
+      });
+
+      function showTestimonial(index) {
+        testimonials[currentTestimonial].classList.remove('active');
+        document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.remove('active');
+
+        currentTestimonial = (index + testimonials.length) % testimonials.length;
+
+        testimonials[currentTestimonial].classList.add('active');
+        document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
+      }
+
+      const nextBtn = document.querySelector('.testimonial-next');
+      const prevBtn = document.querySelector('.testimonial-prev');
+      if (nextBtn) nextBtn.addEventListener('click', () => showTestimonial(currentTestimonial + 1));
+      if (prevBtn) prevBtn.addEventListener('click', () => showTestimonial(currentTestimonial - 1));
+
+      setInterval(() => showTestimonial(currentTestimonial + 1), 7000);
     }
-    
-    document.querySelector('.testimonial-next').addEventListener('click', () => {
-      showTestimonial(currentTestimonial + 1);
-    });
-    
-    document.querySelector('.testimonial-prev').addEventListener('click', () => {
-      showTestimonial(currentTestimonial - 1);
-    });
-    
-    // Auto-advance testimonials
-    setInterval(() => {
-      showTestimonial(currentTestimonial + 1);
-    }, 7000);
   });
 </script>
