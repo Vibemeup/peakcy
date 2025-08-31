@@ -1346,20 +1346,14 @@ textarea:focus-visible {
   object-fit: cover;
   opacity: 0.9;
 }
-.hero-video-overlay { position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 30%, rgba(0,0,0,.55) 100%);
-  pointer-events: none;
-}
+.hero-video-overlay { pointer-events: none; }
 /* Ensure text is above video */
 .hero-content { position: relative; z-index: 2; }
 /* If video fails, hide the video layer to keep mountain bg visible */
 .hero.video-fallback .hero-video-container { display: none; }
 
 /* Controls (optional, already in your HTML) */
-.hero-video-controls {
-  position: absolute; right: 16px; bottom: 16px; z-index: 3;
-  display: flex; gap: 10px;
-}
+.hero-video-controls { z-index: 6; }
 .hero-video-controls button {
   background: rgba(0,0,0,0.45);
   border: 1px solid rgba(255,255,255,0.15);
@@ -1897,5 +1891,5 @@ textarea:focus-visible {
   background-position: center;
 }
 .hero.video-paused .hero-video{ opacity: 0; pointer-events: none; transition: opacity .25s ease; }
-.hero-video-overlay{ pointer-events: none; }
-.hero-video-controls{ position: relative; z-index: 6; }
+.hero-video-overlay { pointer-events: none; }
+.hero-video-controls { z-index: 6; }
