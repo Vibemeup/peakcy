@@ -1888,3 +1888,14 @@ textarea:focus-visible {
 
 /* Force white text inside the about-unified-card box */
 .about-unified-card .about-unified-text { color: var(--text-primary) !important; }
+
+
+/* === Video pause overlay behavior === */
+.hero-video-container{
+  background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}
+.hero.video-paused .hero-video{ opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.hero-video-overlay{ pointer-events: none; }
+.hero-video-controls{ position: relative; z-index: 6; }
