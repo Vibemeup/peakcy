@@ -1488,7 +1488,7 @@ textarea:focus-visible {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
   position: relative;
   z-index: 5;
 }
@@ -1685,7 +1685,7 @@ textarea:focus-visible {
 }
 
 .testimonial-content:before {
-  content: """;
+  content: "»";
   position: absolute;
   top: 1rem;
   left: 1.5rem;
@@ -1713,7 +1713,7 @@ textarea:focus-visible {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--accent), #0a8d56);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1869,7 +1869,7 @@ textarea:focus-visible {
   .hero-buttons {
     flex-direction: column;
     align-items: center;
-    margin-bottom: 5rem;
+    margin-bottom: 6rem;
   }
   
   .stats-bar .container {
@@ -1884,3 +1884,7 @@ textarea:focus-visible {
     bottom: 1rem;
   }
 }
+
+
+/* Force white text inside the about-unified-card box */
+.about-unified-card .about-unified-text { color: var(--text-primary) !important; }

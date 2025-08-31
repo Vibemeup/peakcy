@@ -163,13 +163,13 @@ window.addEventListener("resize", () => {
 
     window.addEventListener('scroll', () => {
       const currentScroll = window.pageYOffset;
-      
+
       if (currentScroll > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-      
+
       lastScroll = currentScroll;
     });
   }
@@ -260,16 +260,17 @@ document.addEventListener("DOMContentLoaded", () => {
 function initTypingAnimation() {
   const typedTextSpan = document.querySelector('.typed-text');
   const cursorSpan = document.querySelector('.cursor');
-  
+
   if (!typedTextSpan || !cursorSpan) return;
-  
-  const textArray = ['mind', 'body', 'soul'];
+
+  // UPDATED per request
+  const textArray = ['health', 'wealth', 'mindset'];
   const typingDelay = 100;
   const erasingDelay = 50;
   const newTextDelay = 1500;
   let textArrayIndex = 0;
   let charIndex = 0;
-  
+
   function type() {
     if (charIndex < textArray[textArrayIndex].length) {
       if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
@@ -281,7 +282,7 @@ function initTypingAnimation() {
       setTimeout(erase, newTextDelay);
     }
   }
-  
+
   function erase() {
     if (charIndex > 0) {
       if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
@@ -295,7 +296,7 @@ function initTypingAnimation() {
       setTimeout(type, typingDelay + 1000);
     }
   }
-  
+
   // Start typing animation
   if (textArray.length) setTimeout(type, newTextDelay + 250);
 }
@@ -304,22 +305,22 @@ function initTypingAnimation() {
 function initCounterAnimation() {
   const counters = document.querySelectorAll('.stat-number');
   const speed = 200;
-  
+
   if (!counters.length) return;
-  
+
   function animateCounters() {
     counters.forEach(counter => {
       const target = +counter.getAttribute('data-count');
       const count = +counter.innerText;
       const increment = Math.ceil(target / speed);
-      
+
       if (count < target) {
         counter.innerText = Math.min(count + increment, target);
         setTimeout(() => animateCounters(), 1);
       }
     });
   }
-  
+
   // Start counter animation when stats are in viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -329,7 +330,7 @@ function initCounterAnimation() {
       }
     });
   }, { threshold: 0.5 });
-  
+
   const statsBar = document.querySelector('.stats-bar');
   if (statsBar) observer.observe(statsBar);
 }
@@ -338,11 +339,11 @@ function initCounterAnimation() {
 function initTestimonialSlider() {
   const testimonials = document.querySelectorAll('.testimonial');
   const dotsContainer = document.querySelector('.testimonial-dots');
-  
+
   if (!testimonials.length || !dotsContainer) return;
-  
+
   let currentTestimonial = 0;
-  
+
   // Create dots
   testimonials.forEach((_, i) => {
     const dot = document.createElement('div');
@@ -351,34 +352,34 @@ function initTestimonialSlider() {
     dot.addEventListener('click', () => showTestimonial(i));
     dotsContainer.appendChild(dot);
   });
-  
+
   function showTestimonial(index) {
     testimonials[currentTestimonial].classList.remove('active');
     document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.remove('active');
-    
+
     currentTestimonial = index;
     if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
     if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
-    
+
     testimonials[currentTestimonial].classList.add('active');
     document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
   }
-  
+
   const nextBtn = document.querySelector('.testimonial-next');
   const prevBtn = document.querySelector('.testimonial-prev');
-  
+
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       showTestimonial(currentTestimonial + 1);
     });
   }
-  
+
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       showTestimonial(currentTestimonial - 1);
     });
   }
-  
+
   // Auto-advance testimonials
   setInterval(() => {
     showTestimonial(currentTestimonial + 1);
