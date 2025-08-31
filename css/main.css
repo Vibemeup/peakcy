@@ -1346,14 +1346,22 @@ textarea:focus-visible {
   object-fit: cover;
   opacity: 0.9;
 }
-.hero-video-overlay { pointer-events: none; }
+.hero-video-overlay { position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 30%, rgba(0,0,0,.55) 100%);
+  pointer-events: none;
+}
 /* Ensure text is above video */
 .hero-content { position: relative; z-index: 2; }
 /* If video fails, hide the video layer to keep mountain bg visible */
 .hero.video-fallback .hero-video-container { display: none; }
 
 /* Controls (optional, already in your HTML) */
-.hero-video-controls { z-index: 6; }
+.hero-video-controls {
+  position: absolute; right: 1.25rem; bottom: 1.25rem; z-index: 6;
+  display: flex; gap: .75rem;
+
+  pointer-events: auto;
+}
 .hero-video-controls button {
   background: rgba(0,0,0,0.45);
   border: 1px solid rgba(255,255,255,0.15);
@@ -1372,7 +1380,9 @@ textarea:focus-visible {
 .hero-video-controls svg { width: 22px; height: 22px; }
 
 /* --- Hero video: paused via controls shows static background --- */
-.hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease; }
+.hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease; 
+  pointer-events: none;
+}
 .hero.video-paused { background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center; }
 
 
@@ -1707,7 +1717,7 @@ textarea:focus-visible {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #0a8d56);
+  background: linear-gradient(135deg, var(--accent, #0adf83), #0a8d56);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1863,7 +1873,7 @@ textarea:focus-visible {
   .hero-buttons {
     flex-direction: column;
     align-items: center;
-    margin-bottom: 6rem;
+    margin-bottom: 5rem;
   }
   
   .stats-bar .container {
@@ -1880,16 +1890,4 @@ textarea:focus-visible {
 }
 
 
-/* Force white text inside the about-unified-card box */
 .about-unified-card .about-unified-text { color: var(--text-primary) !important; }
-
-
-/* === Video pause overlay behavior === */
-.hero-video-container{
-  background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center;
-}
-.hero.video-paused .hero-video{ opacity: 0; pointer-events: none; transition: opacity .25s ease; }
-.hero-video-overlay { pointer-events: none; }
-.hero-video-controls { z-index: 6; }
