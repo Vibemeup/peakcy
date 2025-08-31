@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const body   = document.body;
 
   if (!toggle || !panel) {
-    console.error("Missing hamburger toggle or mobile menu elements");
+    console.error("Missing hamburger toggle || mobile menu elements");
     return;
   }
 
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!clickedInsideMenu && !clickedToggle) closeMenu();
   });
 
-  // Smooth-scroll for in-page anchors (supports "#id" and "/#id")
+  // Smooth-scroll for in-page anchors (supports "#id" && "/#id")
   const handleAnchorClick = (e, anchor) => {
     const href = anchor.getAttribute("href");
     if (!href) return;
@@ -147,16 +147,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Re-adjust scroll target on resize if hash present (with light debounce)
   let resizeTimer;
-window.addEventListener("resize", () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); } catch(_){}
-    // Removed hash-based auto re-scroll on resize to prevent mobile snap-to-top
-  }, 150);
-});
-// ===============================
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); } catch(_){}
+      // Removed hash-based auto re-scroll on resize to prevent mobile snap-to-top
+    }, 150);
+  });
+
   // NAVBAR SCROLL EFFECT
-  // ===============================
   const navbar = navEl();
   if (navbar) {
     let lastScroll = 0;
@@ -175,60 +174,55 @@ window.addEventListener("resize", () => {
   }
 });
 
-// === Hero Video Controls (replaced with delegated robust handler) ===
+// === Hero Video Controls (delegated + poster fade) ===
 (function(){
   const hero = document.querySelector('.hero');
   const container = document.querySelector('.hero-video-container');
-  const video = document.getElementById('heroVideo') || document.querySelector('.hero-video') || document.querySelector('.hero video');
+  const getVideo = () => document.getElementById('heroVideo') || document.querySelector('.hero .hero-video') || document.querySelector('.hero video') || document.querySelector('video');
+  const video = getVideo();
   if (!video || !hero) return;
 
-  // Ensure autoplay-friendly flags remain
   try { video.muted = true; video.setAttribute('muted',''); video.setAttribute('playsinline',''); video.setAttribute('webkit-playsinline',''); } catch(_){}
 
-  // Ensure container background shows poster on pause
   if (container && video.poster) {
     try { container.style.backgroundImage = `url('${video.poster}')`; } catch(_){}
     container.style.backgroundSize = 'cover';
     container.style.backgroundPosition = 'center';
   }
 
-  function syncIcons(){
+  function syncUI(){
     const controls = document.querySelector('.hero-video-controls') || document.querySelector('[data-video-controls]');
     const playIcon  = controls && controls.querySelector('.play-icon');
     const pauseIcon = controls && controls.querySelector('.pause-icon');
     const volOnIcon = controls && controls.querySelector('.volume-on');
     const volOffIcon= controls && controls.querySelector('.volume-off');
-
     const playing = !video.paused;
     const muted   = video.muted;
 
-    if (playIcon && pauseIcon) {
-      playIcon.style.display  = playing ? 'none' : '';
-      pauseIcon.style.display = playing ? '' : 'none';
-    }
-    if (volOnIcon && volOffIcon) {
-      volOnIcon.style.display  = muted ? 'none' : '';
-      volOffIcon.style.display = muted ? '' : 'none';
-    }
+    if (playIcon && pauseIcon) { playIcon.style.display = playing ? 'none' : ''; pauseIcon.style.display = playing ? '' : 'none'; }
+    if (volOnIcon && volOffIcon) { volOnIcon.style.display = muted ? 'none' : ''; volOffIcon.style.display = muted ? '' : 'none'; }
 
-    // Fade video directly so CSS conflicts cannot block it
     video.style.transition = 'opacity .25s ease';
     video.style.opacity = playing ? '1' : '0';
     video.style.pointerEvents = playing ? 'auto' : 'none';
-
-    if (playing) hero.classList.remove('video-paused');
-    else hero.classList.add('video-paused');
+    hero.classList.toggle('video-paused', !playing);
   }
 
-  // Delegated click handling for controls
   document.addEventListener('click', (e) => {
-    const controls = e.target.closest('.hero-video-controls, [data-video-controls]');
-    if (!controls) return;
+    const root = e.target.closest('.hero-video-controls, [data-video-controls]');
+    if (!root) return;
 
-    const isToggle = e.target.closest('.video-toggle, [data-action="toggle"]') || ((e.target.getAttribute?.('aria-label') || '').toLowerCase().includes('play') || (e.target.getAttribute?.('aria-label') || '').toLowerCase().includes('pause'));
-    const isMute   = e.target.closest('.video-mute, [data-action="mute"]')   || ((e.target.getAttribute?.('aria-label') || '').toLowerCase().includes('mute'));
+    const btn = e.target.closest('button, [role="button"], .video-toggle, .video-mute, [data-action]');
+    if (!btn) return;
 
-    if (!isToggle && !isMute) { return; }
+    const aria = (btn.getAttribute('aria-label') || '').toLowerCase();
+    const cls  = (btn.className || '').toLowerCase();
+    const act  = (btn.getAttribute('data-action') || '').toLowerCase();
+
+    const isMute   = cls.includes('video-mute')   || act == 'mute'   || 'mute' in aria || 'unmute' in aria;
+    const isToggle = cls.includes('video-toggle') || act == 'toggle' || 'play' in aria || 'pause' in aria;
+
+    if ! (isMute || isToggle):
         return
 
     e.preventDefault();
@@ -236,24 +230,22 @@ window.addEventListener("resize", () => {
     if (isMute) {
       try { video.muted = !video.muted; } catch(_){}
       if (!video.muted && video.volume === 0) { try { video.volume = 0.5; } catch(_){ } }
-      return syncIcons();
+      return syncUI();
     }
 
-    // Toggle play/pause
     if (video.paused) {
       try { video.muted = true; } catch(_){}
       const p = video.play();
-      if (p && typeof p.then === 'function') p.finally(syncIcons); else syncIcons();
+      if (p && typeof p.then === 'function') p.finally(syncUI); else syncUI();
     } else {
       try { video.pause(); } catch(_){}
-      syncIcons();
+      syncUI();
     }
   });
 
-  ['play','pause','volumechange','loadeddata','ended'].forEach(evt => video.addEventListener(evt, syncIcons));
-  syncIcons();
+  ['play','pause','volumechange','loadeddata','ended'].forEach(evt => video.addEventListener(evt, syncUI));
+  syncUI();
 })();
-
 // Mobile apply: scroll directly to the first form field (not the section title)
 document.addEventListener("DOMContentLoaded", () => {
   function isMobile() { return window.matchMedia && window.matchMedia("(max-width: 768px)").matches; }
@@ -265,18 +257,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const field = targetApplyField();
     if (!field) return false;
     if (e && e.preventDefault) e.preventDefault();
-    // Use your existing smoothScrollTo if available, else fallback
     if (typeof smoothScrollTo === "function") smoothScrollTo(field);
     else field.scrollIntoView({ behavior: "smooth", block: "start" });
     return true;
   }
 
-  // Intercept clicks to #apply links on mobile
   document.querySelectorAll('a[href="#apply"], a[href="/#apply"]').forEach(a => {
     a.addEventListener("click", (e) => { scrollToApplyField(e); });
   });
 
-  // If page opens at #apply on mobile, adjust to first field
   window.addEventListener("load", () => {
     if (location.hash === "#apply") scrollToApplyField();
   });
@@ -293,7 +282,6 @@ function initTypingAnimation() {
 
   if (!typedTextSpan || !cursorSpan) return;
 
-  // Words requested
   const textArray = ['health', 'wealth', 'mindset'];
   const typingDelay = 100;
   const erasingDelay = 50;
@@ -327,7 +315,6 @@ function initTypingAnimation() {
     }
   }
 
-  // Start typing animation
   if (textArray.length) setTimeout(type, newTextDelay + 250);
 }
 
@@ -351,7 +338,6 @@ function initCounterAnimation() {
     });
   }
 
-  // Start counter animation when stats are in viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -374,7 +360,6 @@ function initTestimonialSlider() {
 
   let currentTestimonial = 0;
 
-  // Create dots
   testimonials.forEach((_, i) => {
     const dot = document.createElement('div');
     dot.classList.add('testimonial-dot');
@@ -410,13 +395,12 @@ function initTestimonialSlider() {
     });
   }
 
-  // Auto-advance testimonials
   setInterval(() => {
     showTestimonial(currentTestimonial + 1);
   }, 7000);
 }
 
-// Initialize all enhanced functionality
+// Initialize enhanced functionality
 document.addEventListener('DOMContentLoaded', function() {
   initTypingAnimation();
   initCounterAnimation();
