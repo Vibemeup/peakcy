@@ -1,11 +1,14 @@
 // ===============================
-// PeakCY — FIXED app.js (unified)
+// PeakCY — app.js (deduplicated fix)
 // ===============================
 
 /* Strip accidental ?query on load (keep hash) */
 if (location.search) {
   try { history.replaceState(null, "", location.pathname + location.hash); } catch (_) {}
 }
+
+/* Global guard */
+window.__PEAKCY = window.__PEAKCY || {};
 
 /* Helpers */
 function navEl() { return document.getElementById("navbar"); }
@@ -51,69 +54,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const panel  = getPanelEl();
   const body   = document.body;
 
-  if (!toggle || !panel) {
-    console.error("Missing hamburger toggle or mobile menu elements");
-    return;
-  }
+  if (toggle && panel) {
+    const isMenuOpen = () => toggle.getAttribute("aria-expanded") === "true";
 
-  // Utility
-  const isMenuOpen = () => toggle.getAttribute("aria-expanded") === "true";
-
-  // Initialize menu state (closed)
-  toggle.setAttribute("aria-expanded", "false");
-  toggle.classList.remove("active");
-  panel.classList.remove("is-open", "active");
-  panel.setAttribute("hidden", "");
-  body.classList.remove("menu-open");
-  unlockScroll();
-
-  // Open/Close controls
-  const openMenu = () => {
-    panel.removeAttribute("hidden");
-    panel.classList.add("is-open", "active");
-    toggle.classList.add("active");
-    toggle.setAttribute("aria-expanded", "true");
-    body.classList.add("menu-open");
-    lockScroll();
-  };
-
-  const closeMenu = () => {
+    // Initialize menu state (closed)
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.classList.remove("active");
     panel.classList.remove("is-open", "active");
     panel.setAttribute("hidden", "");
-    toggle.classList.remove("active");
-    toggle.setAttribute("aria-expanded", "false");
     body.classList.remove("menu-open");
     unlockScroll();
-  };
 
-  const toggleMenu = () => (isMenuOpen() ? closeMenu() : openMenu());
+    // Open/Close controls
+    const openMenu = () => {
+      panel.removeAttribute("hidden");
+      panel.classList.add("is-open", "active");
+      toggle.classList.add("active");
+      toggle.setAttribute("aria-expanded", "true");
+      body.classList.add("menu-open");
+      lockScroll();
+    };
 
-  // Toggle button click
-  toggle.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
-  });
+    const closeMenu = () => {
+      panel.classList.remove("is-open", "active");
+      panel.setAttribute("hidden", "");
+      toggle.classList.remove("active");
+      toggle.setAttribute("aria-expanded", "false");
+      body.classList.remove("menu-open");
+      unlockScroll();
+    };
 
-  // Close when clicking a link inside the mobile menu
-  panel.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      if (isMenuOpen()) closeMenu();
+    const toggleMenu = () => (isMenuOpen() ? closeMenu() : openMenu());
+
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
     });
-  });
 
-  // Close on ESC key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isMenuOpen()) closeMenu();
-  });
+    // Close when clicking a link inside the mobile menu
+    panel.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        if (isMenuOpen()) closeMenu();
+      });
+    });
 
-  // Close when clicking outside menu & toggle
-  document.addEventListener("click", (e) => {
-    if (!isMenuOpen()) return;
-    const clickedInsideMenu = panel.contains(e.target);
-    const clickedToggle = toggle.contains(e.target);
-    if (!clickedInsideMenu && !clickedToggle) closeMenu();
-  });
+    // Close on ESC key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMenuOpen()) closeMenu();
+    });
+
+    // Close when clicking outside menu & toggle
+    document.addEventListener("click", (e) => {
+      if (!isMenuOpen()) return;
+      const clickedInsideMenu = panel.contains(e.target);
+      const clickedToggle = toggle.contains(e.target);
+      if (!clickedInsideMenu && !clickedToggle) closeMenu();
+    });
+  }
 
   // Smooth-scroll for in-page anchors (supports "#id" and "/#id")
   const handleAnchorClick = (e, anchor) => {
@@ -129,7 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
-      if (isMenuOpen()) closeMenu();
+      if (document.body.classList.contains("menu-open")) {
+        // best-effort: close menu if open
+        const t = getToggleEl(); if (t) t.click();
+      }
       smoothScrollTo(el);
       try { history.pushState(null, "", `#${id}`); } catch (_) {}
     }
@@ -145,32 +146,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) setTimeout(() => smoothScrollTo(el), 100);
   }
 
-  // Re-adjust scroll target on resize if hash present (with light debounce)
-  let resizeTimer;
-window.addEventListener("resize", () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    try { if (typeof setNavHeightVar === 'function') setNavHeightVar(); } catch(_){}
-    // Removed hash-based auto re-scroll on resize to prevent mobile snap-to-top
-  }, 150);
-});
-// ===============================
   // NAVBAR SCROLL EFFECT
-  // ===============================
   const navbar = navEl();
   if (navbar) {
-    let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
       const currentScroll = window.pageYOffset;
-
-      if (currentScroll > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-
-      lastScroll = currentScroll;
+      if (currentScroll > 50) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
     });
   }
 });
@@ -223,7 +205,6 @@ window.addEventListener("resize", () => {
   updateIcons();
 })();
 
-
 // Mobile apply: scroll directly to the first form field (not the section title)
 document.addEventListener("DOMContentLoaded", () => {
   function isMobile() { return window.matchMedia && window.matchMedia("(max-width: 768px)").matches; }
@@ -235,47 +216,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const field = targetApplyField();
     if (!field) return false;
     if (e && e.preventDefault) e.preventDefault();
-    // Use your existing smoothScrollTo if available, else fallback
     if (typeof smoothScrollTo === "function") smoothScrollTo(field);
     else field.scrollIntoView({ behavior: "smooth", block: "start" });
     return true;
   }
 
-  // Intercept clicks to #apply links on mobile
   document.querySelectorAll('a[href="#apply"], a[href="/#apply"]').forEach(a => {
     a.addEventListener("click", (e) => { scrollToApplyField(e); });
   });
 
-  // If page opens at #apply on mobile, adjust to first field
   window.addEventListener("load", () => {
     if (location.hash === "#apply") scrollToApplyField();
   });
 });
 
 // ===============================
-// ENHANCED FUNCTIONALITY FOR PEAKCY
+// DEDUPED ENHANCEMENTS
 // ===============================
 
-// Typing animation for hero section
+// Typing animation (health / wealth / mindset) — idempotent
 function initTypingAnimation() {
+  if (window.__PEAKCY.typingInit) return; // guard
+  window.__PEAKCY.typingInit = true;
+
   const typedTextSpan = document.querySelector('.typed-text');
   const cursorSpan = document.querySelector('.cursor');
-
   if (!typedTextSpan || !cursorSpan) return;
 
-  // UPDATED per request
-  const textArray = ['health', 'wealth', 'mindset'];
+  const words = ['health', 'wealth', 'mindset'];
   const typingDelay = 100;
   const erasingDelay = 50;
   const newTextDelay = 1500;
-  let textArrayIndex = 0;
-  let charIndex = 0;
+  let wi = 0;
+  let ci = 0;
+
+  // ensure clean start (prevents "wweeaalltthh" from prior runs)
+  typedTextSpan.textContent = "";
+  cursorSpan.classList.remove("typing");
 
   function type() {
-    if (charIndex < textArray[textArrayIndex].length) {
+    if (ci < words[wi].length) {
       if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
-      typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-      charIndex++;
+      typedTextSpan.textContent += words[wi].charAt(ci++);
       setTimeout(type, typingDelay);
     } else {
       cursorSpan.classList.remove('typing');
@@ -284,28 +266,28 @@ function initTypingAnimation() {
   }
 
   function erase() {
-    if (charIndex > 0) {
+    if (ci > 0) {
       if (!cursorSpan.classList.contains('typing')) cursorSpan.classList.add('typing');
-      typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-      charIndex--;
+      typedTextSpan.textContent = words[wi].substring(0, ci - 1);
+      ci--;
       setTimeout(erase, erasingDelay);
     } else {
       cursorSpan.classList.remove('typing');
-      textArrayIndex++;
-      if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+      wi = (wi + 1) % words.length;
       setTimeout(type, typingDelay + 1000);
     }
   }
 
-  // Start typing animation
-  if (textArray.length) setTimeout(type, newTextDelay + 250);
+  if (words.length) setTimeout(type, newTextDelay + 250);
 }
 
-// Counter animation for stats
+// Counter animation — idempotent
 function initCounterAnimation() {
+  if (window.__PEAKCY.countersInit) return;
+  window.__PEAKCY.countersInit = true;
+
   const counters = document.querySelectorAll('.stat-number');
   const speed = 200;
-
   if (!counters.length) return;
 
   function animateCounters() {
@@ -335,58 +317,49 @@ function initCounterAnimation() {
   if (statsBar) observer.observe(statsBar);
 }
 
-// Testimonial slider functionality
+// Testimonial slider — idempotent and self-cleaning
 function initTestimonialSlider() {
-  const testimonials = document.querySelectorAll('.testimonial');
-  const dotsContainer = document.querySelector('.testimonial-dots');
+  const slider = document.querySelector('.testimonial-slider');
+  if (!slider || slider.dataset.peakcyInited === "1") return; // guard per element
+  slider.dataset.peakcyInited = "1";
 
-  if (!testimonials.length || !dotsContainer) return;
+  const testimonials = slider.querySelectorAll('.testimonial');
+  const dotsContainer = slider.querySelector('.testimonial-dots');
+  const nextBtn = slider.querySelector('.testimonial-next');
+  const prevBtn = slider.querySelector('.testimonial-prev');
+  if (!testimonials.length || !dotsContainer || !nextBtn || !prevBtn) return;
 
-  let currentTestimonial = 0;
+  // Clear any existing dots to avoid duplicates
+  dotsContainer.innerHTML = "";
+
+  let current = 0;
+  testimonials.forEach((t, i) => t.classList.toggle('active', i === 0));
 
   // Create dots
   testimonials.forEach((_, i) => {
     const dot = document.createElement('div');
-    dot.classList.add('testimonial-dot');
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => showTestimonial(i));
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => show(i));
     dotsContainer.appendChild(dot);
   });
 
-  function showTestimonial(index) {
-    testimonials[currentTestimonial].classList.remove('active');
-    document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.remove('active');
-
-    currentTestimonial = index;
-    if (currentTestimonial >= testimonials.length) currentTestimonial = 0;
-    if (currentTestimonial < 0) currentTestimonial = testimonials.length - 1;
-
-    testimonials[currentTestimonial].classList.add('active');
-    document.querySelectorAll('.testimonial-dot')[currentTestimonial].classList.add('active');
+  function show(i) {
+    testimonials[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = (i + testimonials.length) % testimonials.length;
+    testimonials[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
   }
 
-  const nextBtn = document.querySelector('.testimonial-next');
-  const prevBtn = document.querySelector('.testimonial-prev');
+  prevBtn.addEventListener('click', () => show(current - 1));
+  nextBtn.addEventListener('click', () => show(current + 1));
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      showTestimonial(currentTestimonial + 1);
-    });
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      showTestimonial(currentTestimonial - 1);
-    });
-  }
-
-  // Auto-advance testimonials
-  setInterval(() => {
-    showTestimonial(currentTestimonial + 1);
-  }, 7000);
+  // Single interval; clear any previous
+  if (window.__PEAKCY.testimonialTimer) clearInterval(window.__PEAKCY.testimonialTimer);
+  window.__PEAKCY.testimonialTimer = setInterval(() => show(current + 1), 7000);
 }
 
-// Initialize all enhanced functionality
+// Initialize all enhanced functionality once
 document.addEventListener('DOMContentLoaded', function() {
   initTypingAnimation();
   initCounterAnimation();
