@@ -4,14 +4,30 @@ title: PeakCY — Community in Famagusta / Protaras
 permalink: /indexnew.html
 ---
 
-{% include header.html %}
-
 <main id="home" aria-label="PeakCY Home">
-  <!-- HERO -->
+  <!-- HERO (keeps video structure) -->
   <section class="hero" role="banner">
-    <div class="container">
+    <div class="hero-media">
+      <video
+        id="heroVideo"
+        class="hero-video"
+        autoplay
+        muted
+        playsinline
+        loop
+        poster="/assets/images/hero-poster.jpg"
+      >
+        <source src="/assets/videos/promo.webm" type="video/webm">
+        <source src="/assets/videos/promo.mp4" type="video/mp4">
+        <!-- Fallback image if video fails -->
+        <img src="/assets/images/hero-poster.jpg" alt="PeakCY — Cyprus coast at sunrise">
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="container hero-content">
       <h1 class="hero-title">
-        PeakCY — a community of like-minded people in Famagusta/Protaras.
+        PeakCY — a community of like-minded people in Famagusta / Protaras.
       </h1>
       <p class="hero-subtitle">
         Meet real people. Build real connections. Do cool things together.
@@ -21,7 +37,7 @@ permalink: /indexnew.html
         <a href="#about" class="button ghost">What We’re About</a>
       </div>
       <p class="hero-note">
-        Curated, not random — members join via application and vouching to keep quality and good vibes.
+        <strong>Curated, not random.</strong> Members join via application and vouching to keep quality and good vibes.
       </p>
     </div>
   </section>
@@ -47,7 +63,7 @@ permalink: /indexnew.html
       <h2>The Vibe & Values</h2>
       <ul class="bullets">
         <li><strong>Good vibes first:</strong> relaxed, supportive, adventurous, easy-going.</li>
-        <li><strong>Networking beyond business:</strong> meet people who share your lifestyle, gym habits, and interests.</li>
+        <li><strong>Networking beyond business:</strong> find people who share your lifestyle, gym habits, and interests.</li>
         <li><strong>Give & receive:</strong> share what you know (fitness, health, lifestyle, business) — we all rise together.</li>
         <li><strong>Curated membership:</strong> invite-only with member vouching to keep it real and high-quality.</li>
         <li><strong>Local pride:</strong> rooted in Cyprus — beaches, mountains, Mediterranean life. We rep our island.</li>
@@ -119,7 +135,7 @@ permalink: /indexnew.html
         We read every application. Short and honest is perfect. If it’s a fit, we’ll reach out with next steps.
       </p>
 
-      <!-- Keep your existing form behavior/styles; this is content only -->
+      <!-- Keep existing form behavior/styles -->
       <form id="applyForm" action="/apply" method="post" novalidate>
         <div class="grid">
           <label>
@@ -199,10 +215,3 @@ permalink: /indexnew.html
     </div>
   </section>
 </main>
-
-{% include footer.html %}
-
-<!-- Keep asset paths and versions -->
-<link rel="preload" href="/css/main.css?v=20250827" as="style">
-<link rel="stylesheet" href="/css/main.css?v=20250827">
-<script src="/js/app.js?v=20250827" defer></script>
