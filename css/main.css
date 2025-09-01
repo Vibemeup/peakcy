@@ -634,10 +634,11 @@ section h2::before {
   box-shadow: var(--shadow-glow); 
 }
 
-.about-unified-text { 
-  font-size: 1.15rem; 
-  line-height: 1.7; 
-  color: var(--text-secondary); 
+/* Ensure the callout text inside the unified about card uses primary text color for better contrast */
+.about-unified-text {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-primary);
 }
 
 .about-finale {
@@ -1488,7 +1489,8 @@ textarea:focus-visible {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 4rem;
+  /* Increased spacing to avoid overlap with the scroll indicator on larger screens */
+  margin-bottom: 6rem;
   position: relative;
   z-index: 5;
 }
@@ -1685,7 +1687,8 @@ textarea:focus-visible {
 }
 
 .testimonial-content:before {
-  content: """;
+  /* Decorative opening quote */
+  content: "\201C";
   position: absolute;
   top: 1rem;
   left: 1.5rem;
@@ -1883,4 +1886,22 @@ textarea:focus-visible {
   .scroll-indicator {
     bottom: 1rem;
   }
+}
+
+
+/* =========================================
+   PeakCY — Desktop Overlap Hotfix (2025-09-01)
+   Scope: prevent "Scroll to explore" overlapping hero buttons on DESKTOP only.
+   Do not alter mobile.
+========================================= */
+.hero-buttons { position: relative; z-index: 5; }
+.scroll-indicator { z-index: 3; pointer-events: none; }
+
+@media (min-width: 1024px) {
+  .hero .hero-buttons { margin-bottom: 8rem; }
+  .hero .scroll-indicator { bottom: 1rem; }
+}
+
+@media (max-height: 740px) and (min-width: 1024px) {
+  .scroll-indicator { display: none; }
 }
