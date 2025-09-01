@@ -316,6 +316,13 @@ function initTypingAnimation() {
 
   if (!typedTextSpan || !cursorSpan) return;
 
+  // Reset any existing content from prior initialisations. Without clearing
+  // the text up front, repeated calls to initTypingAnimation will append
+  // characters to the existing word, resulting in duplicated letters like
+  // "wweeaalltthh". Clearing the content ensures a fresh start each time.
+  typedTextSpan.textContent = '';
+  cursorSpan.classList.remove('typing');
+
   const textArray = ['health', 'wealth', 'mindset'];
   const typingDelay = 100;
   const erasingDelay = 50;
@@ -395,6 +402,13 @@ function initTestimonialSlider() {
   if (!testimonials.length || !dotsContainer) return;
 
   let currentTestimonial = 0;
+
+  // If dots already exist, remove them before adding new ones. This prevents
+  // duplicate dot elements and duplicated event listeners when the slider is
+  // initialised multiple times (for example if multiple scripts call this).
+  while (dotsContainer.firstChild) {
+    dotsContainer.removeChild(dotsContainer.firstChild);
+  }
 
   testimonials.forEach((_, i) => {
     const dot = document.createElement('div');
