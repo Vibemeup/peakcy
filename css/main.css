@@ -634,11 +634,10 @@ section h2::before {
   box-shadow: var(--shadow-glow); 
 }
 
-/* Ensure the callout text inside the unified about card uses primary text color for better contrast */
-.about-unified-text {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: var(--text-primary);
+.about-unified-text { 
+  font-size: 1.15rem; 
+  line-height: 1.7; 
+  color: var(--text-secondary); 
 }
 
 .about-finale {
@@ -1489,8 +1488,7 @@ textarea:focus-visible {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  /* Increased spacing to avoid overlap with the scroll indicator on larger screens */
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
   position: relative;
   z-index: 5;
 }
@@ -1687,8 +1685,7 @@ textarea:focus-visible {
 }
 
 .testimonial-content:before {
-  /* Decorative opening quote */
-  content: "\201C";
+  content: """;
   position: absolute;
   top: 1rem;
   left: 1.5rem;
