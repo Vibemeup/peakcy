@@ -1,413 +1,236 @@
 ---
 layout: default
-title: "PeakCY — Real People, Real Connections in Famagusta / Protaras"
-description: "PeakCY is a curated social club in Cyprus (Famagusta / Protaras) for like-minded people to connect, train, hang out, and grow together. Apply to join."
+title: PeakCY — Community in Protaras (Famagusta area)
 permalink: /indexnew.html
 ---
 
-<!-- Enhanced Hero Section -->
-<section id="home" class="hero">
-  <div class="hero-video-container">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline
-      poster="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop">
-      <source src="/assets/videos/promo.mp4" type="video/mp4">
-      <source src="/assets/videos/promo.webm" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
-    <div class="hero-video-overlay"></div>
+{% include header.html %}
 
-    <!-- Animated gradient overlays -->
-    <div class="hero-gradient hero-gradient-1"></div>
-    <div class="hero-gradient hero-gradient-2"></div>
-  </div>
+<main id="home" aria-label="PeakCY Home">
+  <!-- Page-scoped helpers (non-global) -->
+  <style>
+    /* Brand accent for CY */
+    .brand-cy { color: var(--gold); }
+    /* Smaller hero H1, without touching global CSS */
+    .hero-title--smaller { font-size: clamp(28px, 4.2vw, 52px); line-height: 1.15; }
+    /* Tighten vertical rhythm where you noted big gaps */
+    .tight-gap { margin-top: 0.75rem !important; padding-top: 0 !important; }
+    .compact { margin-top: 1rem !important; }
+    /* Keep certain terms on one line */
+    .nowrap { white-space: nowrap; }
+    /* Force this sentence to white regardless of section theme */
+    .text-white { color: #fff !important; }
+    /* Defensive: neutralize double-letter split/glitch effects if any script re-wraps chars */
+    [data-nosplit] .char, .splitting .char { all: unset !important; }
+  </style>
 
-  <div class="hero-content">
-    <div class="badge">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      Real people. Real connections. Cyprus-based.
+  <!-- HERO -->
+  <section class="hero" role="banner" data-nosplit>
+    <div class="container">
+      <h1 class="hero-title hero-title--smaller">
+        Welcome to Peak<span class="brand-cy">CY</span>.
+      </h1>
+      <p class="hero-subtitle">
+        A community of like-minded people in Protaras (Famagusta area).
+      </p>
+      <div class="hero-cta">
+        <a href="#apply" class="button primary">Apply to Join</a>
+        <a href="#about" class="button ghost">What We’re About</a>
+      </div>
+      <p class="hero-note">
+        Our community is curated and invite-only by members who vouch for new members. No random people. Quality above quantity.
+      </p>
     </div>
+  </section>
 
-    <h1>PeakCY — a community of like-minded people in Famagusta / Protaras.</h1>
-
-    <div class="typing-container">
-      <p>Fun, energetic, and growth-minded — in <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+  <!-- ABOUT -->
+  <section id="about" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>What is Peak<span class="brand-cy">CY</span>?</h2>
+      <p>
+        Peak<span class="brand-cy">CY</span> is a social club for people in the Protaras / Famagusta area who want more than small talk.
+        We connect ambitious, open, team-oriented people who like to socialize, learn from each other, and explore Cyprus together.
+      </p>
+      <p>
+        There wasn’t a real community hub here — just lots of individuals looking for their crowd.
+        We’re bridging that gap with real meetups, real friendships, and a culture of “sharing is caring.”
+      </p>
     </div>
+  </section>
 
-    <div class="hero-buttons">
-      <a href="#apply" class="cta-primary">Apply to Join</a>
-      <a href="#about" class="cta-secondary">Learn More</a>
+  <!-- VIBE & VALUES -->
+  <section id="edge" class="section tight-gap" data-nosplit>
+    <div class="container">
+      <h2>The Vibe &amp; Values</h2>
+      <p class="text-white compact">Relaxed, adventurous, supportive. We give and we grow together.</p>
+      <ul class="bullets">
+        <li><strong>Good vibes first:</strong> relaxed, supportive, adventurous, easy-going.</li>
+        <li><strong>Networking beyond business:</strong> meet people who share your lifestyle, gym habits, and interests.</li>
+        <li><strong>Give &amp; receive:</strong> share what you know (fitness, health, lifestyle, business) — we all rise together.</li>
+        <li><strong>Curated membership:</strong> Carefully Curated. Invite-only by other member vouching. Quality people, zero spam. Only the real deal!</li>
+        <li><strong>Local pride:</strong> rooted in Cyprus — beaches, mountains, Mediterranean life. We rep our island.</li>
+      </ul>
     </div>
+  </section>
 
-    <div class="scroll-indicator">
-      <span>Curated, not random — applications & vouching keep the vibe high.</span>
-      <div class="scroll-line"></div>
+  <!-- NOT FOR -->
+  <section id="notfor" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>This Isn’t For</h2>
+      <ul class="bullets">
+        <li><strong>Blamers:</strong> those who blame others instead of taking responsibility.</li>
+        <li><strong>Drainers:</strong> people who drain energy instead of contributing to it.</li>
+        <li><strong>Spam &amp; funnels:</strong> Community first. Not a course funnel.</li>
+      </ul>
     </div>
-  </div>
+  </section>
 
-  <div class="hero-video-controls">
-    <button class="video-toggle" aria-label="Play/Pause video">
-      <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="5,3 19,12 5,21"/>
-      </svg>
-      <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-        <rect x="6" y="4" width="4" height="16"/>
-        <rect x="14" y="4" width="4" height="16"/>
-      </svg>
-    </button>
-    <button class="video-mute" aria-label="Mute/Unmute video">
-      <svg class="volume-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      <svg class="volume-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
-        <line x1="23" y1="9" x2="17" y2="15"/>
-        <line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-    </button>
-  </div>
-</section>
-
-<!-- Stats Bar (unchanged structure) -->
-<section class="stats-bar">
-  <div class="container">
-    <div class="stat">
-      <div class="stat-number" data-count="250">0</div>
-      <div class="stat-label">Members</div>
+  <!-- ACTIVITIES -->
+  <section id="activities" class="section tight-gap" data-nosplit>
+    <div class="container">
+      <h2>What We Actually Do</h2>
+      <ul class="bullets">
+        <li><strong>Casual meetups:</strong> bars, cafés, family/kid-friendly hangs, and dinners.</li>
+        <li><strong>Outdoors:</strong> hikes, mini-trips, and guided days out across Cyprus (we have a pro guide in the group).</li>
+        <li><strong>Fitness together:</strong> member-led sessions for bonding and sweat (many of us train hard and care about health).</li>
+        <li><strong>Mastermind dinners (soon):</strong> once the core is solid, we’ll run themed nights and guest masterclasses.</li>
+      </ul>
+      <p class="muted compact">
+        We meet monthly, in person, to grow closer, climb higher, and build something real.
+        This is how the Peak<span class="brand-cy">CY</span> tribe begins — together, on the ground, lifting each other up.
+      </p>
     </div>
-    <div class="stat">
-      <div class="stat-number" data-count="42">0</div>
-      <div class="stat-label">Events</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-count="15">0</div>
-      <div class="stat-label">Partners</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Enhanced About Section -->
-<section id="about" class="about">
-  <div class="container">
-    <h2 class="section-title">What is <span class="highlight">PeakCY</span>?</h2>
+  <!-- WHO IT’S FOR -->
+  <section id="members" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>Who Fits Here</h2>
+      <p>
+        Typically 30–50, entrepreneurial or entrepreneurial-minded (from Airbnb rentals and coaching to supplements, fitness, or AI),
+        goal-oriented, social, and <span class="nowrap">Team-spirited</span>. If you like to <em>give</em> as much as you get — you’ll feel at home.
+      </p>
+    </div>
+  </section>
 
-    <div class="about-content">
-      <p class="about-hero white-text">
-        PeakCY is a social club for people in the Famagusta / Protaras area who want more than small talk. We connect ambitious, open, team-oriented people who like to socialize, learn from each other, and explore Cyprus together.
+  <!-- WHY DIFFERENT -->
+  <section id="why" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>What Makes Peak<span class="brand-cy">CY</span> Different</h2>
+      <p>
+        We’re not a course funnel or an upsell machine. Just real people helping each other rise — socially, personally, and professionally.
+        No fluff. No pressure. Community first.
+      </p>
+      <p class="muted">
+        Carefully Curated. Invite-only by other member vouching. Quality people, zero spam. Only the real deal!
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>How It Works</h2>
+      <ol class="steps">
+        <li><strong>Apply:</strong> tell us who you are, what you do, and what you want to bring/gain.</li>
+        <li><strong>Review:</strong> we keep it small and high-quality; members can vouch for friends.</li>
+        <li><strong>Join:</strong> after approval, you’ll get invited into the group and upcoming meetups.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>Apply to Join</h2>
+      <p>
+        We read every application. Short and honest is perfect. If it’s a fit, we’ll reach out with next steps.
       </p>
 
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          </div>
-          <h3>United Community</h3>
-          <p>Meet people who actually vibe with your lifestyle — gym, outdoors, family-friendly hangs, and good energy.</p>
+      <!-- Content-only; keeps your existing form behavior/styles -->
+      <form id="applyForm" action="/apply" method="post" novalidate>
+        <div class="grid">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required placeholder="Your full name">
+          </label>
+          <label>
+            <span>Age</span>
+            <input type="number" name="age" min="16" max="100" placeholder="e.g., 34">
+          </label>
+          <label>
+            <span>What do you do?</span>
+            <input type="text" name="role" placeholder="e.g., coach, founder, Airbnb host, developer">
+          </label>
+          <label>
+            <span>What do you want to bring to the community?</span>
+            <textarea name="bring" rows="3" placeholder="Fitness, health, business skills, local knowledge, etc."></textarea>
+          </label>
+          <label>
+            <span>What do you want to get out of PeakCY?</span>
+            <textarea name="seek" rows="3" placeholder="Friends, training buddies, partnerships, ideas, accountability…"></textarea>
+          </label>
+          <label>
+            <span>Telegram (optional)</span>
+            <input type="text" name="telegram" placeholder="@yourhandle">
+          </label>
         </div>
-
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
-              <path d="M12 8v8"/>
-              <path d="M8 12h8"/>
-              <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
-            </svg>
-          </div>
-          <h3>Curated, Not Random</h3>
-          <p>Invite-only with member vouching. Quality people, zero spam. Community first — not a course funnel.</p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
-          </div>
-          <h3>Cyprus Pride</h3>
-          <p>Rooted in Cyprus — beaches, mountains, Mediterranean life. We’re building something real here in Famagusta / Protaras.</p>
-        </div>
-      </div>
-
-      <div class="about-unified-card white-text">
-        <div class="about-unified-text">
-          There wasn’t a real community hub here — just lots of individuals looking for their crowd. We’re bridging that gap with real meetups, real friendships, and a culture of “sharing is caring.”
-        </div>
-      </div>
-
-      <div class="about-finale">
-        Networking beyond business: find your people, then grow together — socially, personally, and professionally.
-      </div>
-
-      <div class="about-mission">
-        We start local and keep it high-quality. Collaborations and masterclasses will come once the core is strong.<br><br>
-        Welcome to <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.
-      </div>
+        <button type="submit" class="button primary">Send Application</button>
+        <p class="form-note">
+          Curated, invite-only. Member vouching keeps the vibe high.
+        </p>
+      </form>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Community / Vibe & Values -->
-<section class="identity">
-  <div class="container">
-    <h2 class="section-title">The Vibe & Values</h2>
-    <p class="section-lead">Relaxed, adventurous, supportive — we give and we grow together.</p>
-    <div class="identity-grid">
-      <div class="identity-card yes">
-        <div class="identity-header">
-          <span class="identity-badge yes">✓</span>
-          <span>You Belong If You Are</span>
-        </div>
-        <ul class="identity-list" role="list">
-          <li><strong>Team-spirited</strong> — sharing is caring; you give as much as you get.</li>
-          <li><strong>Open & curious</strong> — eager to learn (fitness, health, lifestyle, business).</li>
-          <li><strong>Social & active</strong> — you like hikes, gym, dinners, and good company.</li>
-          <li><strong>Goal-oriented</strong> — you want to grow with like-minded people.</li>
-          <li><strong>Positive</strong> — good vibes only; we keep the culture strong.</li>
-        </ul>
-      </div>
-      <div class="identity-card no">
-        <div class="identity-header">
-          <span class="identity-badge no">×</span>
-          <span>This Isn't For</span>
-        </div>
-        <ul class="identity-list" role="list">
-          <li><strong>Upsell hunters</strong> — this is not a course or sales funnel.</li>
-          <li><strong>Energy drainers</strong> — we keep it supportive and constructive.</li>
-          <li><strong>Gatekeepers</strong> — knowledge hoarders instead of contributors.</li>
-          <li><strong>Serial no-shows</strong> — reliability matters in a small community.</li>
-          <li><strong>Bad-vibe behavior</strong> — disrespect kills the room; not welcome.</li>
-        </ul>
-      </div>
+  <!-- FAQ -->
+  <section id="faq" class="section compact" data-nosplit>
+    <div class="container">
+      <h2>FAQ</h2>
+
+      <details>
+        <summary>Is Peak<span class="brand-cy">CY</span> only for business networking?</summary>
+        <p>
+          No. It’s networking in the wider sense — finding your people in Cyprus.
+          We mix social life, fitness, and growth with real relationships.
+        </p>
+      </details>
+
+      <details>
+        <summary>How often are meetups?</summary>
+        <p>
+          One anchor meetup per month, plus optional spontaneous hangs (hikes, gym sessions, dinners).
+        </p>
+      </details>
+
+      <details>
+        <summary>Is it invite-only?</summary>
+        <p>
+          Yes — applications are reviewed, and existing members can vouch friends. This keeps it curated and high-vibe.
+        </p>
+      </details>
+
+      <details>
+        <summary>Why Cyprus-specific?</summary>
+        <p>
+          We’re based in Protaras and proud of it — beaches, mountains, Mediterranean lifestyle.
+          We want to grow an awesome community here and showcase Cyprus to the world.
+        </p>
+      </details>
+
+      <details>
+        <summary>Do you do collabs with local places?</summary>
+        <p>
+          We’re building the core first. Collabs with gyms, restaurants, and hotels will roll in as we grow.
+        </p>
+      </details>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<!-- Activities (repurposed pillars grid, same layout) -->
-<section id="edge" class="pillars">
-  <div class="container">
-    <h2 class="section-title">What We Actually Do</h2>
-    <div class="pillars-lead">
-      Monthly anchor meetups — plus spontaneous extras if people want more. All local for now; trips and collabs to come.
-    </div>
-    <div class="pillars-grid">
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
-            <path d="M12 8v8"/>
-            <path d="M8 12h8"/>
-            <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
-          </svg>
-        </div>
-        <h3>Casual Meetups</h3>
-        <p>Bars, cafés, family/kid-friendly hangs, and dinners — real people, real conversations.</p>
-        <ul class="pillar-features">
-          <li>Monthly anchor meetup</li>
-          <li>Small group dinners</li>
-          <li>Family-friendly options</li>
-        </ul>
-      </article>
+{% include footer.html %}
 
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-        </div>
-        <h3>Outdoors & Hikes</h3>
-        <p>Explore Cyprus together — beaches, mountains, and guided trips with a pro in the group.</p>
-        <ul class="pillar-features">
-          <li>Weekend hikes</li>
-          <li>Day trips across Cyprus</li>
-          <li>Local guide-led routes</li>
-        </ul>
-      </article>
-
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <circle cx="12" cy="8" r="5"/>
-            <path d="M12 13v9"/>
-            <path d="M8 16h8"/>
-            <path d="M16 13a4 4 0 0 1-8 0"/>
-          </svg>
-        </div>
-        <h3>Fitness Together</h3>
-        <p>Member-led sessions for bonding and sweat — many of us train hard and care about health.</p>
-        <ul class="pillar-features">
-          <li>Gym meetups</li>
-          <li>Conditioning sessions</li>
-          <li>Recovery & wellness</li>
-        </ul>
-      </article>
-
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <h3>Mastermind Dinners (Soon)</h3>
-        <p>Once the core is solid, we’ll host themed nights and invite guests for practical masterclasses.</p>
-        <ul class="pillar-features">
-          <li>Themed discussions</li>
-          <li>Peer accountability</li>
-          <li>Guest masterclasses</li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section (kept as-is for layout; copy left generic) -->
-<section class="testimonials">
-  <div class="container">
-    <h2 class="section-title">Hear From Our Community</h2>
-    <p class="section-lead">Real stories from people who’ve made real connections with <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.</p>
-
-    <div class="testimonial-slider">
-      <div class="testimonial active">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "I finally found my people. The meetups are chill, the hikes are fun, and the energy is real."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">MK</div>
-            <div class="author-details">
-              <h4>Maria K.</h4>
-              <p>Member</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "We met at PeakCY and ended up collaborating on a project. Zero fluff — just good people."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">AS</div>
-            <div class="author-details">
-              <h4>Andreas S.</h4>
-              <p>Member</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "Member-led fitness sessions are the best part — training with people who actually show up."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">EC</div>
-            <div class="author-details">
-              <h4>Elena C.</h4>
-              <p>Member</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-controls">
-        <button class="testimonial-prev" aria-label="Previous testimonial">←</button>
-        <div class="testimonial-dots"></div>
-        <button class="testimonial-next" aria-label="Next testimonial">→</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Quote Section -->
-<section class="quote-section">
-  <div class="container">
-    <div class="quote-box">
-      <p class="quote">
-        "Community is built when real people show up for each other — consistently, openly, and with good vibes."
-      </p>
-      <cite class="quote-author">— PeakCY</cite>
-    </div>
-  </div>
-</section>
-
-<!-- Apply (kept layout; updated copy to reflect curated access) -->
-<section id="apply" class="apply">
-  <div class="container">
-    <h2 class="section-title">Apply to Join</h2>
-    <p class="section-lead">We review every application. Short and honest is perfect. If it’s a fit, we’ll reach out with next steps.</p>
-
-    <div class="apply-container">
-      <div class="apply-content">
-        <h3>Why Join <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>?</h3>
-        <div class="benefits-list">
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Curated Membership</h4>
-              <p>Invite-only with vouching. Keeps the culture strong and the vibe high.</p>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Real Connections</h4>
-              <p>Social, fitness, and growth — find people who actually match your lifestyle.</p>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Monthly Meetups</h4>
-              <p>One anchor meetup each month, with extra hangs when the group wants more.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-container">
-        <div class="form-wrap">
-          <form id="applicationForm" novalidate>
-            <div class="form-group">
-              <label for="fullName">Full Name <span aria-label="required">*</span></label>
-              <input type="text" id="fullName" name="fullName" required placeholder="Your full name" aria-describedby="fullName-error" autocomplete="name">
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number <span aria-label="required">*</span></label>
-              <input type="tel" id="phone" name="phone" required placeholder="+357 99 123456" aria-describedby="phone-error" autocomplete="tel">
-            </div>
-            <div class="form-group">
-              <label for="telegram">Telegram ID <span aria-label="required">*</span></label>
-              <input type="text" id="telegram" name="telegram" required placeholder="@yourtelegram" aria-describedby="telegram-error">
-            </div>
-            <div class="form-group">
-              <label for="reason">Why do you want to join us? <span aria-label="required">*</span></label>
-              <textarea id="reason" name="reason" required placeholder="What do you want to bring & get out of the community?" rows="4"></textarea>
-            </div>
-            <button type="submit" class="submit-btn">
-              Join The Community
-              <span class="sr-only">to join PeakCY</span>
-            </button>
-          </form>
-          <div id="formMessage" class="form-message" style="display: none;" role="alert" aria-live="polite"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Styles in /css/main.css; JS in /js/app.js (loaded by layout or elsewhere) -->
-<script src="/js/app.js" defer></script>
+<!-- Keep asset paths and versions -->
+<link rel="preload" href="/css/main.css?v=20250827" as="style">
+<link rel="stylesheet" href="/css/main.css?v=20250827">
+<script src="/js/app.js?v=20250827" defer></script>
