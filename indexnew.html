@@ -24,29 +24,6 @@
   <meta name="twitter:description" content="Join PeakCY - Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth.">
   <meta name="twitter:image" content="https://peakcy.com/og-image.jpg">
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "PeakCY",
-    "description": "Cyprus's exclusive community for ambitious individuals focused on mindset, health, wealth & community growth",
-    "url": "https://peakcy.com",
-    "logo": "https://peakcy.com/images/logo.png",
-    "sameAs": [
-      "https://www.instagram.com/thepeakcy",
-      "https://www.tiktok.com/@thepeakcy",
-      "https://www.youtube.com/@thepeakcy"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "availableLanguage": "English"
-    },
-    "areaServed": "Cyprus"
-  }
-  </script>
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,512 +41,312 @@
   <script>document.addEventListener('DOMContentLoaded',function(){document.body.style.opacity='1';});</script>
 </head>
 <body>
-  <!-- _includes/header.html -->
-<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-  <div class="nav-container">
-    <a href="/#home" class="logo" aria-label="PeakCY Home">
-      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 20L8 10L12 14L18 4L21 20"></path>
-      </svg>
-      <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>
-    </a>
+  <!-- Header / Nav (design preserved) -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="/#home" class="logo" aria-label="PeakCY Home">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 20L8 10L12 14L18 4L21 20"></path>
+        </svg>
+        <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>
+      </a>
 
-    <div class="nav-links">
-      <a href="/#about">About</a>
-      <a href="/#edge">Pillars</a>
-      <a href="/partners">Partners</a>
-      <a href="/social">Social</a>
-      <a href="/#apply" class="cta-primary">Apply</a>
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/social">Social</a>
+        <a href="/#apply" class="cta-primary">Apply</a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Panel -->
+  <nav id="mobileMenu" class="mobile-menu" hidden aria-label="Mobile navigation">
+    <a href="/#about">About</a>
+    <a href="/#edge">Pillars</a>
+    <a href="/partners">Partners</a>
+    <a href="/social">Social</a>
+    <a href="/#apply" class="cta-primary">Apply</a>
+  </nav>
+
+  <!-- HERO (design preserved; text updated; typing effect intact) -->
+  <section id="home" class="hero">
+    <div class="hero-video-container">
+      <video class="hero-video" id="heroVideo" autoplay muted loop playsinline
+        poster="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop">
+        <source src="/assets/videos/promo.mp4" type="video/mp4">
+        <source src="/assets/videos/promo.webm" type="video/webm">
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-video-overlay"></div>
+
+      <!-- Animated gradient overlays -->
+      <div class="hero-gradient hero-gradient-1"></div>
+      <div class="hero-gradient hero-gradient-2"></div>
     </div>
 
-    <!-- Mobile Menu Toggle -->
-    <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
-      <span class="hamburger-bar"></span>
-      <span class="hamburger-bar"></span>
-      <span class="hamburger-bar"></span>
-    </button>
-  </div>
-</nav>
+    <div class="hero-content">
+      <div class="badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        Ambitious. Driven. United.
+      </div>
 
-<!-- Mobile Menu Panel -->
-<nav id="mobileMenu" class="mobile-menu" hidden aria-label="Mobile navigation">
-  <a href="/#about">About</a>
-  <a href="/#edge">Pillars</a>
-  <a href="/partners">Partners</a>
-  <a href="/social">Social</a>
-  <a href="/#apply" class="cta-primary">Apply</a>
-</nav>
+      <h1>Welcome to <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> — a curated community in Protaras, Cyprus.</h1>
 
-<!-- Enhanced Hero Section -->
-<section id="home" class="hero">
-  <div class="hero-video-container">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline
-      poster="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop">
-      <source src="/assets/videos/promo.mp4" type="video/mp4">
-      <source src="/assets/videos/promo.webm" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
-    <div class="hero-video-overlay"></div>
+      <div class="typing-container">
+        <p>For driven, social individuals building real connections on the island — focused on <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+      </div>
 
-    <!-- Animated gradient overlays -->
-    <div class="hero-gradient hero-gradient-1"></div>
-    <div class="hero-gradient hero-gradient-2"></div>
-  </div>
+      <div class="hero-buttons">
+        <a href="#apply" class="cta-primary">Apply to Join</a>
+        <a href="#about" class="cta-secondary">Learn More</a>
+      </div>
 
-  <div class="hero-content">
-    <div class="badge">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
-        <circle cx="12" cy="12" r="3"/>
-      </svg>
-      Ambitious. Driven. United.
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
+      </div>
     </div>
 
-    <h1>Welcome to <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.</h1>
-
-    <div class="typing-container">
-      <p>A curated community in Protaras, Cyprus for driven, social individuals, focused on <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
+    <div class="hero-video-controls">
+      <button class="video-toggle" aria-label="Play/Pause video">
+        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5,3 19,12 5,21"/>
+        </svg>
+        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+          <rect x="6" y="4" width="4" height="16"/>
+          <rect x="14" y="4" width="4" height="16"/>
+        </svg>
+      </button>
+      <button class="video-mute" aria-label="Mute/Unmute video">
+        <svg class="volume-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        <svg class="volume-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+          <line x1="23" y1="9" x2="17" y2="15"/>
+          <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
     </div>
+  </section>
 
-    <div class="hero-buttons">
-      <a href="#apply" class="cta-primary">Apply to Join</a>
-      <a href="#about" class="cta-secondary">Learn More</a>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2>What is <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>?</h2>
+      <p>
+        <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> is a community for people in Protaras who want more than small talk.
+        We bring together ambitious, open-minded, and team-oriented individuals who enjoy sharing ideas, staying active, and exploring the island together.
+      </p>
+      <p>
+        We’re filling the gap with real meetups, real friendships, and a culture of “sharing is caring.”
+      </p>
     </div>
+  </section>
 
-    <div class="scroll-indicator">
-      <span>Scroll to explore</span>
-      <div class="scroll-line"></div>
+  <!-- VIBE & VALUES -->
+  <section id="edge" class="section">
+    <div class="container">
+      <h2>The Vibe &amp; Values</h2>
+      <p><strong>Relaxed, adventurous, supportive. We give and we grow together.</strong></p>
+      <ul class="bullets">
+        <li><strong>Positive energy only:</strong> we’re relaxed, adventurous, and team-spirited.</li>
+        <li><strong>Life-wide connections:</strong> meet people who share your lifestyle, fitness, and passions.</li>
+        <li><strong>Share to grow:</strong> exchange knowledge (fitness, health, business) and lift each other up.</li>
+        <li><strong>Invite-only:</strong> new members are vouched in by existing ones. Quality people, zero spam.</li>
+        <li><strong>Cyprus love:</strong> rooted in the island’s beaches, mountains, and Mediterranean life.</li>
+      </ul>
     </div>
-  </div>
+  </section>
 
-  <div class="hero-video-controls">
-    <button class="video-toggle" aria-label="Play/Pause video">
-      <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="5,3 19,12 5,21"/>
-      </svg>
-      <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-        <rect x="6" y="4" width="4" height="16"/>
-        <rect x="14" y="4" width="4" height="16"/>
-      </svg>
-    </button>
-    <button class="video-mute" aria-label="Mute/Unmute video">
-      <svg class="volume-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-      </svg>
-      <svg class="volume-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
-        <line x1="23" y1="9" x2="17" y2="15"/>
-        <line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-    </button>
-  </div>
-</section>
-
-<!-- Stats Bar -->
-<section class="stats-bar">
-  <div class="container">
-    <div class="stat">
-      <div class="stat-number" data-count="250">0</div>
-      <div class="stat-label">Members</div>
+  <!-- NOT FOR -->
+  <section id="notfor" class="section">
+    <div class="container">
+      <h2>This Isn’t For</h2>
+      <ul class="bullets">
+        <li><strong>Blamers:</strong> if you don’t take responsibility, this isn’t for you.</li>
+        <li><strong>Energy drainers:</strong> chronic complainers or takers who don’t give back.</li>
+        <li><strong>Sales pitches:</strong> no course funnels or pushy promotions. Community first.</li>
+        <li><strong>Talkers:</strong> people who talk the talk but never walk the walk.</li>
+        <li><strong>Excuse-makers:</strong> those who constantly find reasons why not.</li>
+      </ul>
     </div>
-    <div class="stat">
-      <div class="stat-number" data-count="42">0</div>
-      <div class="stat-label">Events</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" data-count="15">0</div>
-      <div class="stat-label">Partners</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Enhanced About Section -->
-<section id="about" class="about">
-  <div class="container">
-    <h2 class="section-title">The Peak Awaits <span class="highlight">And We're Rising Together</span>.</h2>
+  <!-- ACTIVITIES -->
+  <section id="activities" class="section">
+    <div class="container">
+      <h2>What We Actually Do</h2>
+      <ul class="bullets">
+        <li><strong>Casual hangouts:</strong> cafés, dinners, and family-friendly gatherings.</li>
+        <li><strong>Adventures across Cyprus:</strong> guided hikes and island explorations (led by our certified guide).</li>
+        <li><strong>Fitness that connects:</strong> member-led workouts — beach bootcamps, gym sessions, yoga.</li>
+        <li><strong>Mastermind dinners (coming soon):</strong> themed nights and guest talks on growth and life.</li>
+      </ul>
+      <p class="muted">
+        We meet in person every month — building trust, connection, and something real, together.
+      </p>
+    </div>
+  </section>
 
-    <div class="about-content">
-      <p class="about-hero white-text">
-        We are dreamers, builders, and go-getters, diverse in journey and united in purpose. We come together to share ideas, stay active, and explore Cyprus as one community.
+  <!-- WHO IT’S FOR -->
+  <section id="members" class="section">
+    <div class="container">
+      <h2>Who Fits Here</h2>
+      <p>
+        You’ll fit in if you’re growth-focused and social — whether you run a business, coach, or work in tech, fitness, or wellness.
+      </p>
+      <p>
+        You’re team-spirited, enjoy giving as much as you get, and want to grow with others.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY DIFFERENT -->
+  <section id="why" class="section">
+    <div class="container">
+      <h2>What Makes <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> Different</h2>
+      <p>
+        <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> isn’t about sales. It’s real people helping each other rise — socially, personally, and professionally. No fluff. No pressure. Just community.
+      </p>
+      <!-- (Removed the repeated curated line to avoid duplication) -->
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section">
+    <div class="container">
+      <h2>How It Works</h2>
+      <ol class="steps">
+        <li><strong>Apply:</strong> tell us about you — who you are and what you’d bring to the group.</li>
+        <li><strong>Review:</strong> we keep <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> high-quality. Members can also vouch for friends.</li>
+        <li><strong>Join:</strong> once approved, you’ll get access to the group and upcoming events.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply" class="section">
+    <div class="container">
+      <h2>Apply to Join</h2>
+      <p>
+        We review every application personally. Short and honest works best.
       </p>
 
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-          </div>
-          <h3>United Community</h3>
-          <p>Connect with driven, open-minded people who challenge and support your growth.</p>
+      <form id="applyForm" action="/apply" method="post" novalidate>
+        <div class="grid">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required placeholder="Your full name">
+          </label>
+          <label>
+            <span>Age</span>
+            <input type="number" name="age" min="16" max="100" placeholder="e.g., 34">
+          </label>
+          <label>
+            <span>What do you do?</span>
+            <input type="text" name="role" placeholder="e.g., coach, founder, Airbnb host, developer">
+          </label>
+          <label>
+            <span>What do you want to bring to the community?</span>
+            <textarea name="bring" rows="3" placeholder="Fitness, health, business skills, local knowledge, etc."></textarea>
+          </label>
+          <label>
+            <span>What do you want to get out of PeakCY?</span>
+            <textarea name="seek" rows="3" placeholder="Friends, training buddies, partnerships, ideas, accountability…"></textarea>
+          </label>
+          <label>
+            <span>Telegram (optional)</span>
+            <input type="text" name="telegram" placeholder="@yourhandle">
+          </label>
         </div>
-
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
-              <path d="M12 8v8"/>
-              <path d="M8 12h8"/>
-              <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
-            </svg>
-          </div>
-          <h3>Proven Framework</h3>
-          <p>Our four-pillar approach balances mindset, health, wealth, and community for sustainable growth.</p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="m15 18-6-6 6-6"/>
-            </svg>
-          </div>
-          <h3>Exclusive Access</h3>
-          <p>Invite-only, member-vouched entry to events, resources, and real connections for PeakCY members.</p>
-        </div>
-      </div>
-
-      <div class="about-unified-card white-text">
-        <div class="about-unified-text">
-          We share knowledge. We celebrate progress. We lift each other when the path gets tough.<br><br>
-          The best life is built together at the peak.
-        </div>
-      </div>
-
-      <div class="about-finale">
-        When the right people unite with fire in their hearts and purpose in their steps, reaching the top is not just possible, it is inevitable.
-      </div>
-
-      <div class="about-mission">
-        This is more than a community. This is a movement.<br>
-        And we want you with us.<br><br>
-        Welcome to <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.<br>
-        <strong>Our Mission: Nothing Less Than the Peak.</strong>
-      </div>
+        <button type="submit" class="button primary">Send Application</button>
+        <p class="form-note">
+          Curated, invite-only. Member vouching keeps the vibe high.
+        </p>
+      </form>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Identity Section -->
-<section class="identity">
-  <div class="container">
-    <h2 class="section-title">Are You One of Us?</h2>
-    <p class="section-lead"><span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> is for people who want to climb further, faster, together.</p>
-    <div class="identity-grid">
-      <div class="identity-card yes">
-        <div class="identity-header">
-          <span class="identity-badge yes">✓</span>
-          <span>You Belong If You Are</span>
-        </div>
-        <ul class="identity-list" role="list">
-          <li><strong>Driven and growth-oriented</strong> whether you run an Airbnb, coach clients, or work in tech, fitness, or wellness.</li>
-          <li><strong>Team-minded</strong> you believe growth is a team sport, not a solo climb.</li>
-          <li><strong>Curious</strong> open-minded, positive, and willing to learn.</li>
-          <li><strong>Accountable</strong> you bring energy and follow through on your word.</li>
-          <li><strong>Community-focused</strong> you enjoy giving as much as you get.</li>
-        </ul>
-      </div>
-      <div class="identity-card no">
-        <div class="identity-header">
-          <span class="identity-badge no">×</span>
-          <span>This Isn't For</span>
-        </div>
-        <ul class="identity-list" role="list">
-          <li><strong>Blamers</strong> if you point fingers instead of owning your path.</li>
-          <li><strong>Energy drainers</strong> chronic complainers or takers who do not contribute value.</li>
-          <li><strong>Spam and funnels</strong> this is not a platform for selling courses or running funnels.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Enhanced Pillars Section -->
-<section id="edge" class="pillars">
-  <div class="container">
-    <h2 class="section-title">The <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> Pillars</h2>
-    <div class="pillars-lead">
-      Every peak stands on a foundation. At <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>, ours is built on four pillars: mindset, health, wealth, and community. Together, they create balance, power, and sustainable growth.
-    </div>
-    <div class="pillars-grid">
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
-            <path d="M12 8v8"/>
-            <path d="M8 12h8"/>
-            <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
-          </svg>
-        </div>
-        <h3>Mindset</h3>
-        <p>Build focus, discipline, and clarity that turn obstacles into opportunities.</p>
-        <ul class="pillar-features">
-          <li>Member-led mindset sessions</li>
-          <li>Optional guided meditation or breathwork</li>
-          <li>Accountability partners</li>
-        </ul>
-      </article>
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-        </div>
-        <h3>Health</h3>
-        <p>Real fitness, real nutrition, and real energy that fuels your life.</p>
-        <ul class="pillar-features">
-          <li>Member-led fitness sessions</li>
-          <li>Practical nutrition resources</li>
-          <li>Recovery and wellness techniques</li>
-        </ul>
-      </article>
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <circle cx="12" cy="8" r="5"/>
-            <path d="M12 13v9"/>
-            <path d="M8 16h8"/>
-            <path d="M16 13a4 4 0 0 1-8 0"/>
-          </svg>
-        </div>
-        <h3>Wealth</h3>
-        <p>Smarter ways to earn, grow, and protect your future.</p>
-        <ul class="pillar-features">
-          <li>Practical investment and business sessions</li>
-          <li>Meaningful networking</li>
-          <li>Financial planning basics</li>
-        </ul>
-      </article>
-      <article class="pillar-card">
-        <div class="pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
-        <h3>Community</h3>
-        <p>Experiences and relationships that accelerate your climb.</p>
-        <ul class="pillar-features">
-          <li>Monthly anchor meetups</li>
-          <li>Mastermind dinners (coming soon)</li>
-          <li>Adventure days across Cyprus</li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials">
-  <div class="container">
-    <h2 class="section-title">Hear From Our Community</h2>
-    <p class="section-lead">Real stories from people who have reached new heights with <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.</p>
-
-    <div class="testimonial-slider">
-      <div class="testimonial active">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "<span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> transformed my approach to business and personal growth. The connections I've made here have been invaluable to my success."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">MK</div>
-            <div class="author-details">
-              <h4>Maria K.</h4>
-              <p>Entrepreneur, Member since 2023</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "The accountability and support system at <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> helped me achieve fitness goals I'd been struggling with for years."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">AS</div>
-            <div class="author-details">
-              <h4>Andreas S.</h4>
-              <p>Fitness Coach, Member since 2022</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <div class="testimonial-text">
-            "I've doubled my income and found my purpose through the wealth-building strategies and mindset work at <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-image">EC</div>
-            <div class="author-details">
-              <h4>Elena C.</h4>
-              <p>Marketing Director, Member since 2024</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-controls">
-        <button class="testimonial-prev" aria-label="Previous testimonial">←</button>
-        <div class="testimonial-dots"></div>
-        <button class="testimonial-next" aria-label="Next testimonial">→</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Quote Section -->
-<section class="quote-section">
-  <div class="container">
-    <div class="quote-box">
-      <p class="quote">
-        "Excellence is not a single act, but a habit formed in the company of those who demand more, from themselves and from you."
-      </p>
-      <cite class="quote-author">— Inspired by Aristotle</cite>
-    </div>
-  </div>
-</section>
-
-<!-- Enhanced Apply Section -->
-<section id="apply" class="apply">
-  <div class="container">
-    <h2 class="section-title">Ready to Reach Your Peak?</h2>
-    <p class="section-lead">Apply to join a curated, member-vouched community in Cyprus.</p>
-
-    <div class="apply-container">
-      <div class="apply-content">
-        <h3>Why Join <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>?</h3>
-        <div class="benefits-list">
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Curated Entry</h4>
-              <p>Apply to join. Members can vouch for you. We prioritize quality connections over quantity.</p>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Monthly Meetups</h4>
-              <p>One monthly anchor meetup with optional extras like hikes, workouts, and casual hangs.</p>
-            </div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">✓</div>
-            <div class="benefit-content">
-              <h4>Real Support</h4>
-              <p>Learn, share, and get help from people who give as much as they get.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-container">
-        <div class="form-wrap">
-          <form id="applicationForm" novalidate>
-            <div class="form-group">
-              <label for="fullName">Full Name <span aria-label="required">*</span></label>
-              <input type="text" id="fullName" name="fullName" required placeholder="Your full name" aria-describedby="fullName-error" autocomplete="name">
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number <span aria-label="required">*</span></label>
-              <input type="tel" id="phone" name="phone" required placeholder="+357 99 123456" aria-describedby="phone-error" autocomplete="tel">
-            </div>
-            <div class="form-group">
-              <label for="telegram">Telegram ID <span aria-label="required">*</span></label>
-              <input type="text" id="telegram" name="telegram" required placeholder="@yourtelegram" aria-describedby="telegram-error">
-            </div>
-            <div class="form-group">
-              <label for="reason">Why do you want to join us? <span aria-label="required">*</span></label>
-              <textarea id="reason" name="reason" required placeholder="Tell us about your goals and what you hope to achieve..." rows="4"></textarea>
-            </div>
-            <button type="submit" class="submit-btn">
-              Send Application
-              <span class="sr-only">to join PeakCY</span>
-            </button>
-          </form>
-          <div id="formMessage" class="form-message" style="display: none;" role="alert" aria-live="polite"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="faq">
-      <h2 class="section-title">FAQ</h2>
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="container">
+      <h2>FAQ</h2>
 
       <details>
-        <summary>Is PeakCY only for business networking?</summary>
+        <summary>Is PeakCY just for business networking?</summary>
         <p>
-          No. It is networking in the wider sense, finding your people in Cyprus. We mix social life, fitness, and growth with real relationships.
+          No. It’s about finding your people — mixing social life, fitness, and growth through real relationships.
         </p>
       </details>
 
       <details>
         <summary>How often are meetups?</summary>
         <p>
-          One anchor meetup per month, plus optional spontaneous hangs like hikes, gym sessions, and dinners.
+          One main meetup per month, plus optional hangouts like hikes, gym sessions, and dinners.
         </p>
       </details>
 
       <details>
-        <summary>Is there a membership fee?</summary>
+        <summary>Is it invite-only?</summary>
         <p>
-          Not at the moment. We are focused on building the right foundation. Future contributions, if any, will be transparent and fair.
+          Yes. All members are approved or vouched for — to keep the vibe high and authentic.
         </p>
       </details>
 
       <details>
         <summary>Why focus on Cyprus?</summary>
         <p>
-          We are based in Protaras and proud of it, with beaches, mountains, and Mediterranean lifestyle. We want to grow an awesome community here and showcase Cyprus to the world.
+          We’re based in Protaras and proud of it — beaches, mountains, Mediterranean life. We’re building a strong local community first.
         </p>
       </details>
-
-      <details>
-        <summary>Do you do collabs with local places?</summary>
-        <p>
-          We are building the core first. Collaborations with gyms, restaurants, and hotels will roll in as we grow.
-        </p>
-      </details>
+      <!-- Removed: collabs question (per your change list) -->
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- Footer (design preserved) -->
   <footer class="footer" role="contentinfo">
-  <div class="container">
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/#about">About</a>
-      <a href="/#edge">Pillars</a>
-      <a href="/partners">Partners</a>
-      <a href="/#apply">Apply</a>
-    </nav>
+    <div class="container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/#about">About</a>
+        <a href="/#edge">Pillars</a>
+        <a href="/partners">Partners</a>
+        <a href="/#apply">Apply</a>
+      </nav>
 
-    <p class="socials-heading">Follow us on socials</p>
-    <div class="social-links-footer">
-      <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
-        <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="22" height="22" loading="lazy">
-      </a>
-      <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
-        <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="22" height="22" loading="lazy">
-      </a>
-      <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
-        <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="22" height="22" loading="lazy">
-      </a>
+      <p class="socials-heading">Follow us on socials</p>
+      <div class="social-links-footer">
+        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+      </div>
+
+      <div class="copyright">
+        © 2025 <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>. Growing together. All the way to the peak.
+      </div>
     </div>
+  </footer>
 
-    <div class="copyright">
-      © 2025 <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>. Growing together. All the way to the peak.
-    </div>
-  </div>
-</footer>
-
+  <!-- Scripts -->
   <script src="/js/app.js" defer></script>
 </body>
 </html>
