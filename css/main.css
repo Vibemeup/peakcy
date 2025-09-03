@@ -476,6 +476,19 @@ body.menu-open {
   text-shadow: 0 0 30px var(--accent-glow); 
 }
 
+/* Fix for Welcome to PeakCY styling */
+.hero h1 .welcome-text {
+  color: #ffffff;
+}
+
+.hero h1 .logo-text .peak {
+  color: #ffffff;
+}
+
+.hero h1 .logo-text .cy {
+  color: var(--gold);
+}
+
 .hero p {
   font-size: 1.3rem; 
   color: #fff; 
@@ -675,6 +688,15 @@ section h2::before {
   font-weight: 800;
 }
 
+/* Fix for "Our Mission:" to be gold colored */
+.about-mission strong:first-of-type {
+  color: var(--gold) !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: initial !important;
+  background-clip: initial !important;
+}
+
 /* ===============================
    IDENTITY SECTION
    =============================== */
@@ -682,6 +704,7 @@ section h2::before {
 .identity { 
   background: var(--bg-primary); 
   position: relative; 
+  padding-top: 1.5rem !important; /* Reduced from 6rem to 1.5rem (50% closer) */
 }
 
 .identity-grid { 
@@ -874,6 +897,11 @@ section h2::before {
 .apply { 
   background: var(--bg-secondary); 
   padding: 5rem 2rem; 
+}
+
+/* Make "Ready to Reach Your Peak?" same size as "Hear From Our Community" */
+#apply .section-title {
+  font-size: clamp(2.2rem,6vw,3.2rem); /* Same as testimonials section */
 }
 
 .form-container { 
@@ -1334,8 +1362,6 @@ textarea:focus-visible {
   100% { transform: rotate(360deg); }
 }
 
-
-
 /* ===== Hero Background Video Layer & Fallback (added) ===== */
 .hero-video-container { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
 .hero-video {
@@ -1382,10 +1408,8 @@ textarea:focus-visible {
 .hero.video-paused .hero-video { opacity: 0; transition: opacity .25s ease; }
 .hero.video-paused { background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center; }
 
-
 /* Offset sections for fixed navbar */
 #apply, #about, #edge { scroll-margin-top: calc(var(--nav-height, 80px) + 12px); }
-
 
 /* ================================================
    Mobile Section Backgrounds — Visual Upgrade
@@ -1424,7 +1448,6 @@ textarea:focus-visible {
       linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
   }
 }
-
 
 /* ===============================
    ENHANCEMENTS FOR PEAKCY
