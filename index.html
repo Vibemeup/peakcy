@@ -27,59 +27,61 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
+  <!-- Critical CSS inline for immediate loading -->
   <style>
-    /* Critical inline CSS for faster loading */
+    /* Only essential styles inline - rest loads from main.css */
     :root {
       --bg-primary: #050505;
       --bg-secondary: #0a0a0a;
-      --bg-card: rgba(255,255,255,0.06);
       --text-primary: #ffffff;
       --text-secondary: #a3a3a3;
-      --text-muted: #666666;
       --accent: #0adf83;
-      --accent-hover: #00e67a;
-      --accent-glow: rgba(10, 223, 131, 0.3);
-      --accent-subtle: rgba(10, 223, 131, 0.12);
-      --border: rgba(255,255,255,0.12);
-      --border-hover: var(--accent);
       --gold: #D4AF37;
-      --red: #ef4444;
       --gradient: linear-gradient(135deg, #0adf83 0%, #00b366 100%);
-      --shadow-glow: 0 25px 50px rgba(10, 223, 131, 0.2);
-      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-      --radius: 20px;
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     * { margin:0; padding:0; box-sizing:border-box; }
     
-    html { 
-      scroll-behavior:smooth; 
-      overflow-x: hidden;
-      font-size: 16px;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.65;
-      overflow-x: hidden;
-      opacity: 0;
-      transition: opacity .4s ease;
+      opacity: 1; /* Ensure visibility */
     }
 
-    body.loaded { opacity: 1; }
+    /* Fallback if main.css fails */
+    .navbar { 
+      position: fixed; 
+      top: 0; 
+      width: 100%; 
+      z-index: 1000;
+      background: rgba(5,5,5,.9);
+      padding: 1rem 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000') center/cover;
+      padding-top: 72px;
+    }
   </style>
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="/css/main.css?v=8">
+  <!-- Main CSS - your original file -->
+  <link rel="stylesheet" href="./css/main.css?v=9">
 
   <!-- No-JS fallback -->
   <noscript><style>body{opacity:1!important}</style></noscript>
 </head>
-<body>
+<body class="loaded">
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
@@ -125,116 +127,63 @@
 
   <!-- HERO SECTION -->
   <section id="home" class="hero">
-    <!-- Enhanced Background Layers -->
     <div class="hero-video-container">
       <video class="hero-video" id="heroVideo" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=2000&auto=format&fit=crop">
-        <source src="/assets/videos/promo.mp4" type="video/mp4">
-        <source src="/assets/videos/promo.webm" type="video/webm">
+        <source src="./assets/videos/promo.mp4" type="video/mp4">
+        <source src="./assets/videos/promo.webm" type="video/webm">
         Your browser does not support the video tag.
       </video>
-    </div>
-    
-    <!-- Layered Overlays for Depth -->
-    <div class="hero-video-overlay"></div>
-    <div class="hero-gradient hero-gradient-1"></div>
-    <div class="hero-gradient hero-gradient-2"></div>
-    
-    <!-- Floating Elements -->
-    <div class="hero-floating-elements">
-      <div class="floating-orb orb-1"></div>
-      <div class="floating-orb orb-2"></div>
-      <div class="floating-orb orb-3"></div>
+      <div class="hero-video-overlay"></div>
+      <div class="hero-gradient hero-gradient-1"></div>
+      <div class="hero-gradient hero-gradient-2"></div>
     </div>
 
     <div class="hero-content">
-      <!-- Enhanced Badge -->
       <div class="badge fade-in-up">
-        <div class="badge-glow"></div>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>
-        <span>Ambitious. Driven. United.</span>
-        <div class="badge-sparkles">
-          <span class="sparkle sparkle-1">✦</span>
-          <span class="sparkle sparkle-2">✦</span>
-          <span class="sparkle sparkle-3">✦</span>
-        </div>
+        Ambitious. Driven. United.
       </div>
 
-      <!-- Main Headline with Enhanced Styling -->
       <h1 class="fade-in-up stagger-1">
         <span class="welcome-text">Welcome To </span>
-        <span class="logo-text hero-logo">
-          <span class="peak">Peak</span><span class="cy">CY</span>
-          <div class="logo-glow"></div>
-        </span>
+        <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>
       </h1>
-      
-      <p class="hero-subtitle fade-in-up stagger-2">
-        A curated community in <span class="location-highlight">Protaras, Cyprus</span>
-        <span class="subtitle-decoration"></span>
-      </p>
+      <p class="hero-subtitle fade-in-up stagger-2">A curated community in Protaras, Cyprus.</p>
 
-      <!-- Enhanced Typing Animation -->
       <div class="typing-container fade-in-up stagger-3">
-        <p class="typing-text">
-          For driven, social individuals building real connections - focused on 
-          <span class="typed-text-wrapper">
-            <span class="typed-text"></span>
-            <span class="cursor">&nbsp;</span>
-          </span>
-        </p>
+        <p>For driven, social individuals building real connections - focused on <span class="typed-text"></span><span class="cursor">&nbsp;</span></p>
       </div>
 
-      <!-- Enhanced CTA Buttons -->
       <div class="hero-buttons fade-in-up stagger-4">
-        <a href="#apply" class="cta-primary cta-enhanced">
-          <span class="btn-text">Apply to Join</span>
-          <div class="btn-glow"></div>
-          <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-        <a href="#about" class="cta-secondary cta-enhanced">
-          <span class="btn-text">What We're About</span>
-          <div class="btn-ripple"></div>
-        </a>
+        <a href="#apply" class="cta-primary">Apply to Join</a>
+        <a href="#about" class="cta-secondary">What We're About</a>
       </div>
 
-      <!-- Enhanced Scroll Indicator -->
-      <div class="scroll-indicator enhanced-scroll">
-        <div class="scroll-text">Scroll to explore</div>
-        <div class="scroll-line">
-          <div class="scroll-dot"></div>
-        </div>
-        <div class="scroll-chevron">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m6 9 6 6 6-6"/>
-          </svg>
-        </div>
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-line"></div>
       </div>
     </div>
 
-    <!-- Enhanced Video Controls -->
-    <div class="hero-video-controls enhanced-controls">
-      <button class="video-control-btn video-toggle" aria-label="Play/Pause video">
-        <div class="control-glow"></div>
-        <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <div class="hero-video-controls">
+      <button class="video-toggle" aria-label="Play/Pause video">
+        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="5,3 19,12 5,21"/>
         </svg>
-        <svg class="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
           <rect x="6" y="4" width="4" height="16"/>
           <rect x="14" y="4" width="4" height="16"/>
         </svg>
       </button>
-      <button class="video-control-btn video-mute" aria-label="Mute/Unmute video">
-        <div class="control-glow"></div>
-        <svg class="volume-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <button class="video-mute" aria-label="Mute/Unmute video">
+        <svg class="volume-on" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
           <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
         </svg>
-        <svg class="volume-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+        <svg class="volume-off" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
           <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
           <line x1="23" y1="9" x2="17" y2="15"/>
           <line x1="17" y1="9" x2="23" y2="15"/>
@@ -243,153 +192,101 @@
     </div>
   </section>
 
-  <!-- ENHANCED STATS BAR -->
-  <section class="stats-bar enhanced-stats">
+  <!-- STATS BAR -->
+  <section class="stats-bar">
     <div class="container">
       <div class="stat observe-fade">
-        <div class="stat-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
         <div class="stat-number" data-count="250">0</div>
-        <div class="stat-label">Active Members</div>
+        <div class="stat-label">Members</div>
       </div>
       <div class="stat observe-fade">
-        <div class="stat-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-            <line x1="16" x2="16" y1="2" y2="6"/>
-            <line x1="8" x2="8" y1="2" y2="6"/>
-            <line x1="3" x2="21" y1="10" y2="10"/>
-          </svg>
-        </div>
         <div class="stat-number" data-count="42">0</div>
-        <div class="stat-label">Events Hosted</div>
+        <div class="stat-label">Events</div>
       </div>
       <div class="stat observe-fade">
-        <div class="stat-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-        </div>
         <div class="stat-number" data-count="15">0</div>
-        <div class="stat-label">Local Partners</div>
+        <div class="stat-label">Partners</div>
       </div>
     </div>
   </section>
 
-  <!-- ENHANCED ABOUT SECTION -->
-  <section id="about" class="about enhanced-about">
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about">
     <div class="container">
-      <h2 class="section-title observe-fade">
-        The Peak Awaits 
-        <span class="highlight-animated">And We're Rising Together</span>
-        <span class="title-decoration"></span>
-      </h2>
+      <h2 class="section-title observe-fade">The Peak Awaits <span class="highlight">And We're Rising Together</span>.</h2>
       
       <div class="about-content">
-        <p class="about-hero observe-fade stagger-1">
+        <p class="about-hero white-text observe-fade stagger-1">
           We are dreamers, builders, and doers - diverse in path, united in purpose. From every city, every background, and every walk of life, we come together to push further, grow stronger, and climb higher.
         </p>
 
-        <div class="about-grid enhanced-grid">
-          <div class="about-card enhanced-card observe-fade stagger-1">
-            <div class="card-glow"></div>
+        <div class="about-grid">
+          <div class="about-card observe-fade stagger-1">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
-              <div class="icon-pulse"></div>
             </div>
             <h3>United Community</h3>
             <p>Connect with driven individuals who challenge and support your growth - not just comfort.</p>
-            <div class="card-border-glow"></div>
           </div>
           
-          <div class="about-card enhanced-card observe-fade stagger-2">
-            <div class="card-glow"></div>
+          <div class="about-card observe-fade stagger-2">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
                 <path d="M12 8v8"/>
                 <path d="M8 12h8"/>
+                <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
               </svg>
-              <div class="icon-pulse"></div>
             </div>
             <h3>Proven Framework</h3>
             <p>Our four-pillar framework ensures balanced, sustainable growth in every area of life.</p>
-            <div class="card-border-glow"></div>
           </div>
           
-          <div class="about-card enhanced-card observe-fade stagger-3">
-            <div class="card-glow"></div>
+          <div class="about-card observe-fade stagger-3">
             <div class="about-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                <path d="m15 18-6-6 6-6"/>
               </svg>
-              <div class="icon-pulse"></div>
             </div>
             <h3>Exclusive Access</h3>
             <p>Access exclusive events, resources, and connections - only for PeakCY members.</p>
-            <div class="card-border-glow"></div>
           </div>
         </div>
 
-        <div class="about-unified-card enhanced-unified observe-fade">
-          <div class="unified-glow"></div>
+        <div class="about-unified-card white-text observe-fade">
           <div class="about-unified-text">
             Because the best life isn't lived in comfort - it's lived at the peak. Together.
           </div>
-          <div class="unified-sparkles">
-            <span class="sparkle">✦</span>
-            <span class="sparkle">✦</span>
-            <span class="sparkle">✦</span>
-          </div>
         </div>
 
-        <div class="about-finale enhanced-finale observe-fade">
-          <div class="finale-bg-effect"></div>
-          When the right people unite - with fire in their hearts and purpose in their steps - reaching the top isn't just possible... 
-          <span class="finale-highlight">It's inevitable.</span>
+        <div class="about-finale observe-fade">
+          When the right people unite - with fire in their hearts and purpose in their steps - reaching the top isn't just possible... It's inevitable.
         </div>
 
-        <p class="about-mission enhanced-mission observe-fade">
-          <span class="mission-icon">🎯</span>
-          <strong style="color: var(--gold);">Our Mission:</strong> 
-          <strong>Nothing less than the peak.</strong><br>
-          This isn't just a community. It's a <span class="movement-text">movement</span>.<br>
-          And we want <strong class="you-highlight">YOU</strong> with us.
+        <p class="about-mission observe-fade">
+          <strong style="color: var(--gold);">Our Mission:</strong> <strong>Nothing less than the peak.</strong><br>
+          This isn't just a community. It's a movement.<br>
+          And we want <strong style="color: var(--accent);">YOU</strong> with us.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- REST OF SECTIONS (keeping existing structure but with enhanced classes) -->
-  
   <!-- IDENTITY SECTION -->
-  <section class="identity enhanced-identity">
+  <section class="identity">
     <div class="container">
       <h2 class="section-title observe-fade">Do You Belong Here?</h2>
-      <p class="section-lead observe-fade stagger-1">
-        <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> 
-        is for those ready to climb further, faster - and lift others as they rise.
-      </p>
+      <p class="section-lead observe-fade stagger-1"><span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> is for those ready to climb further, faster - and lift others as they rise.</p>
       
       <div class="identity-grid">
-        <div class="identity-card yes enhanced-identity-card observe-fade">
-          <div class="identity-glow positive"></div>
+        <div class="identity-card yes observe-fade">
           <div class="identity-header">
-            <span class="identity-badge yes enhanced-badge">✓</span>
+            <span class="identity-badge yes">✓</span>
             <span>You Belong If You Are</span>
           </div>
           <ul class="identity-list" role="list">
@@ -399,17 +296,11 @@
             <li><strong>Accountable:</strong> you bring energy and follow through.</li>
             <li><strong>Driven:</strong> you seek people who raise the bar - and rise with them.</li>
           </ul>
-          <div class="card-particles">
-            <div class="particle particle-1"></div>
-            <div class="particle particle-2"></div>
-            <div class="particle particle-3"></div>
-          </div>
         </div>
         
-        <div class="identity-card no enhanced-identity-card observe-fade stagger-1">
-          <div class="identity-glow negative"></div>
+        <div class="identity-card no observe-fade stagger-1">
           <div class="identity-header">
-            <span class="identity-badge no enhanced-badge">×</span>
+            <span class="identity-badge no">×</span>
             <span>This Isn't For</span>
           </div>
           <ul class="identity-list" role="list">
@@ -424,218 +315,456 @@
     </div>
   </section>
 
-  <!-- Continue with remaining sections... -->
-  <!-- PILLARS, TESTIMONIALS, QUOTE, APPLY, FOOTER -->
-  <!-- (I'll add the enhanced versions of these sections in the next part to keep the artifact manageable) -->
+  <!-- PILLARS SECTION -->
+  <section id="edge" class="pillars">
+    <div class="container">
+      <h2 class="section-title observe-fade">The <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> Pillars</h2>
+      
+      <div class="pillars-lead observe-fade stagger-1">
+        Every peak stands on a foundation. Ours? Mindset, health, wealth, and community. Together, they create balance, power, and lasting growth.
+      </div>
+      
+      <div class="pillars-grid">
+        <article class="pillar-card observe-fade">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
+              <path d="M12 8v8"/>
+              <path d="M8 12h8"/>
+              <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"/>
+            </svg>
+          </div>
+          <h3>Mindset</h3>
+          <p>Cultivate unshakable focus, discipline, and clarity - turning obstacles into opportunities.</p>
+          <ul class="pillar-features">
+            <li>Weekly mindset workshops</li>
+            <li>Expert-led meditation sessions</li>
+            <li>Accountability partnerships</li>
+          </ul>
+        </article>
+        
+        <article class="pillar-card observe-fade stagger-1">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3>Health</h3>
+          <p>Real fitness. Real nutrition. Real energy - fueling peak performance.</p>
+          <ul class="pillar-features">
+            <li>Group fitness challenges</li>
+            <li>Nutrition planning resources</li>
+            <li>Recovery & wellness techniques</li>
+          </ul>
+        </article>
+        
+        <article class="pillar-card observe-fade stagger-2">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <circle cx="12" cy="8" r="5"/>
+              <path d="M12 13v9"/>
+              <path d="M8 16h8"/>
+              <path d="M16 13a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <h3>Wealth</h3>
+          <p>Smarter strategies to earn, grow, and protect your wealth - with proven results.</p>
+          <ul class="pillar-features">
+            <li>Investment workshops</li>
+            <li>Business networking events</li>
+            <li>Financial planning resources</li>
+          </ul>
+        </article>
+        
+        <article class="pillar-card observe-fade stagger-3">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Community</h3>
+          <p>Masterminds, challenges, and retreats that accelerate your growth - together.</p>
+          <ul class="pillar-features">
+            <li>Exclusive networking events</li>
+            <li>Mastermind groups</li>
+            <li>Adventure retreats</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <!-- Enhanced Styles for new elements -->
-  <style>
-    /* Enhanced Hero Styles */
-    .hero-floating-elements {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title observe-fade">Hear From Our Community</h2>
+      <p class="section-lead observe-fade stagger-1">Real stories from people who have reached new heights with <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>.</p>
+      
+      <div class="testimonial-slider">
+        <div class="testimonial active">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              "<span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> transformed my approach to business and personal growth. The connections I've made here have been invaluable to my success."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-image">MK</div>
+              <div class="author-details">
+                <h4>Maria K.</h4>
+                <p>Entrepreneur, Member since 2023</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              "The accountability and support system at <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span> helped me achieve fitness goals I'd been struggling with for years."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-image">AS</div>
+              <div class="author-details">
+                <h4>Andreas S.</h4>
+                <p>Fitness Coach, Member since 2022</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <div class="testimonial-text">
+              "I've doubled my income and found my purpose through the wealth-building strategies and mindset work at <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>."
+            </div>
+            <div class="testimonial-author">
+              <div class="author-image">EC</div>
+              <div class="author-details">
+                <h4>Elena C.</h4>
+                <p>Marketing Director, Member since 2024</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-controls">
+          <button class="testimonial-prev" aria-label="Previous testimonial">←</button>
+          <div class="testimonial-dots"></div>
+          <button class="testimonial-next" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    .floating-orb {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(10, 223, 131, 0.3), rgba(10, 223, 131, 0.05));
-      backdrop-filter: blur(20px);
-      animation: floatOrb 20s ease-in-out infinite;
-    }
+  <!-- QUOTE SECTION -->
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-box observe-fade">
+        <p class="quote">
+          "Excellence is not a single act, but a habit - formed in the company of those who demand more from themselves, and from you."
+        </p>
+        <cite class="quote-author">- Inspired by Aristotle</cite>
+      </div>
+    </div>
+  </section>
 
-    .orb-1 {
-      width: 120px;
-      height: 120px;
-      top: 20%;
-      right: 15%;
-      animation-delay: 0s;
-    }
+  <!-- APPLY SECTION -->
+  <section id="apply" class="apply">
+    <div class="container">
+      <h2 class="section-title observe-fade">Ready to Reach Your Peak?</h2>
+      <p class="section-lead observe-fade stagger-1">We review every application personally. Short, honest answers work best.</p>
+      
+      <div class="apply-container">
+        <div class="apply-content observe-fade">
+          <h3>Why Join <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>?</h3>
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <div class="benefit-icon">✓</div>
+              <div class="benefit-content">
+                <h4>Curated Access</h4>
+                <p>Invite-only. Members can vouch for you. We value quality over quantity.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">✓</div>
+              <div class="benefit-content">
+                <h4>Monthly Gatherings</h4>
+                <p>One anchor event per month, plus optional hikes, gym sessions, and dinners.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon">✓</div>
+              <div class="benefit-content">
+                <h4>Real Growth</h4>
+                <p>Grow alongside people who give as much as they get.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-container observe-fade stagger-1">
+          <div class="form-wrap">
+            <form id="applicationForm" novalidate>
+              <div class="form-group">
+                <label for="fullName">Full Name <span aria-label="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" required placeholder="Your full name" aria-describedby="fullName-error" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number <span aria-label="required">*</span></label>
+                <input type="tel" id="phone" name="phone" required placeholder="+357 99 123456" aria-describedby="phone-error" autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="telegram">Telegram ID <span aria-label="required">*</span></label>
+                <input type="text" id="telegram" name="telegram" required placeholder="@yourtelegram" aria-describedby="telegram-error">
+              </div>
+              <div class="form-group">
+                <label for="reason">Why do you want to join us? <span aria-label="required">*</span></label>
+                <textarea id="reason" name="reason" required placeholder="Tell us about your goals and what you hope to achieve..." rows="4"></textarea>
+              </div>
+              <button type="submit" class="submit-btn">
+                Send Application
+                <span class="sr-only">to join PeakCY</span>
+              </button>
+            </form>
+            <div id="formMessage" class="form-message" style="display: none;" role="alert" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    .orb-2 {
-      width: 80px;
-      height: 80px;
-      bottom: 30%;
-      left: 10%;
-      background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.05));
-      animation-delay: -5s;
-    }
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/#about">About</a>
+        <a href="/partners">Partners</a>
+        <a href="/#apply">Apply</a>
+      </nav>
 
-    .orb-3 {
-      width: 60px;
-      height: 60px;
-      top: 60%;
-      right: 25%;
-      animation-delay: -10s;
-    }
+      <p class="socials-heading">Follow us on socials</p>
+      <div class="social-links-footer">
+        <a class="social-link" href="https://www.instagram.com/thepeakcy" target="_blank" rel="noopener" aria-label="Instagram">
+          <img src="https://cdn.simpleicons.org/instagram/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.tiktok.com/@thepeakcy" target="_blank" rel="noopener" aria-label="TikTok">
+          <img src="https://cdn.simpleicons.org/tiktok/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@thepeakcy" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="https://cdn.simpleicons.org/youtube/FFFFFF" alt="" width="22" height="22" loading="lazy">
+        </a>
+      </div>
 
-    @keyframes floatOrb {
-      0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.6; }
-      25% { transform: translateY(-20px) translateX(10px) scale(1.1); opacity: 0.8; }
-      50% { transform: translateY(-40px) translateX(-5px) scale(0.9); opacity: 0.4; }
-      75% { transform: translateY(-20px) translateX(-10px) scale(1.05); opacity: 0.7; }
-    }
+      <div class="copyright">
+        © 2025 <span class="logo-text"><span class="peak">Peak</span><span class="cy">CY</span></span>. Growing together. All the way to your peak.
+      </div>
+    </div>
+  </footer>
 
-    /* Enhanced Badge */
-    .badge {
-      position: relative;
-      overflow: hidden;
-    }
+  <!-- Scripts -->
+  <script src="./js/app.js?v=9" defer></script>
+  
+  <!-- Fallback JavaScript if app.js fails to load -->
+  <script>
+    // Essential functionality inline as fallback
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // Typing animation
+      const typedTextSpan = document.querySelector('.typed-text');
+      const cursorSpan = document.querySelector('.cursor');
+      if (typedTextSpan && cursorSpan) {
+        const textArray = ['health', 'wealth', 'mindset', 'community'];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 1500;
+        let textArrayIndex = 0;
+        let charIndex = 0;
 
-    .badge-glow {
-      position: absolute;
-      inset: -2px;
-      background: var(--gradient);
-      border-radius: inherit;
-      opacity: 0.3;
-      filter: blur(8px);
-      z-index: -1;
-      animation: pulseGlow 3s ease-in-out infinite;
-    }
+        function type() {
+          if (charIndex < textArray[textArrayIndex].length) {
+            cursorSpan.classList.add('typing');
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(type, typingDelay);
+          } else {
+            cursorSpan.classList.remove('typing');
+            setTimeout(erase, newTextDelay);
+          }
+        }
 
-    .badge-sparkles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
+        function erase() {
+          if (charIndex > 0) {
+            cursorSpan.classList.add('typing');
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(erase, erasingDelay);
+          } else {
+            cursorSpan.classList.remove('typing');
+            textArrayIndex++;
+            if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+            setTimeout(type, typingDelay + 1000);
+          }
+        }
 
-    .sparkle {
-      position: absolute;
-      color: var(--accent);
-      font-size: 12px;
-      opacity: 0;
-      animation: sparkleFloat 4s ease-in-out infinite;
-    }
+        if (textArray.length) setTimeout(type, newTextDelay + 250);
+      }
 
-    .sparkle-1 { top: -5px; right: -5px; animation-delay: 0s; }
-    .sparkle-2 { bottom: -5px; left: 20%; animation-delay: 1.3s; }
-    .sparkle-3 { top: 50%; right: 20%; animation-delay: 2.6s; }
+      // Counter animation
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 200;
+      
+      function animateCounters() {
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-count');
+          const count = +counter.innerText;
+          const increment = Math.ceil(target / speed);
 
-    @keyframes sparkleFloat {
-      0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
-      50% { opacity: 1; transform: translateY(-10px) rotate(180deg); }
-    }
+          if (count < target) {
+            counter.innerText = Math.min(count + increment, target);
+            setTimeout(() => animateCounters(), 1);
+          }
+        });
+      }
 
-    /* Enhanced Hero Logo */
-    .hero-logo {
-      position: relative;
-    }
+      // Trigger counter animation when stats section is visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
 
-    .logo-glow {
-      position: absolute;
-      inset: 0;
-      background: var(--gradient);
-      opacity: 0.2;
-      filter: blur(30px);
-      z-index: -1;
-      animation: logoGlow 4s ease-in-out infinite alternate;
-    }
+      const statsBar = document.querySelector('.stats-bar');
+      if (statsBar) observer.observe(statsBar);
 
-    @keyframes logoGlow {
-      0% { opacity: 0.2; transform: scale(1); }
-      100% { opacity: 0.4; transform: scale(1.05); }
-    }
+      // Mobile menu functionality
+      const toggle = document.getElementById('menuToggle');
+      const panel = document.getElementById('mobileMenu');
+      
+      if (toggle && panel) {
+        const isMenuOpen = () => toggle.getAttribute('aria-expanded') === 'true';
 
-    /* Enhanced Subtitle */
-    .location-highlight {
-      color: var(--gold);
-      font-weight: 700;
-      text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-    }
+        const openMenu = () => {
+          panel.removeAttribute('hidden');
+          panel.classList.add('active');
+          toggle.classList.add('active');
+          toggle.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        };
 
-    .subtitle-decoration {
-      display: inline-block;
-      width: 40px;
-      height: 2px;
-      background: var(--gradient);
-      margin-left: 15px;
-      vertical-align: middle;
-      border-radius: 2px;
-    }
+        const closeMenu = () => {
+          panel.classList.remove('active');
+          panel.setAttribute('hidden', '');
+          toggle.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        };
 
-    /* Enhanced CTA Buttons */
-    .cta-enhanced {
-      position: relative;
-      overflow: hidden;
-    }
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          isMenuOpen() ? closeMenu() : openMenu();
+        });
 
-    .cta-primary .btn-glow {
-      position: absolute;
-      inset: 0;
-      background: var(--gradient);
-      opacity: 0.2;
-      filter: blur(20px);
-      z-index: -1;
-      animation: btnGlow 3s ease-in-out infinite;
-    }
+        // Close menu when clicking links
+        panel.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (isMenuOpen()) closeMenu();
+          });
+        });
 
-    .btn-arrow {
-      margin-left: 8px;
-      transition: transform 0.3s ease;
-    }
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && isMenuOpen()) closeMenu();
+        });
+      }
 
-    .cta-primary:hover .btn-arrow {
-      transform: translateX(4px);
-    }
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          let id = null;
+          if (href.startsWith('#')) id = href.slice(1);
+          else if (href.startsWith('/#')) id = href.replace('/#', '');
 
-    .btn-ripple {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.4s ease;
-    }
+          if (id) {
+            const el = document.getElementById(id);
+            if (el) {
+              e.preventDefault();
+              const navHeight = document.querySelector('.navbar')?.offsetHeight || 72;
+              const top = el.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          }
+        });
+      });
 
-    .cta-secondary:hover .btn-ripple {
-      opacity: 1;
-      transform: scale(1);
-    }
+      // Video controls
+      const video = document.getElementById('heroVideo');
+      const videoControls = document.querySelector('.hero-video-controls');
+      
+      if (video && videoControls) {
+        function syncUI() {
+          const playIcon = videoControls.querySelector('.play-icon');
+          const pauseIcon = videoControls.querySelector('.pause-icon');
+          const volOnIcon = videoControls.querySelector('.volume-on');
+          const volOffIcon = videoControls.querySelector('.volume-off');
+          const playing = !video.paused;
+          const muted = video.muted;
 
-    /* Enhanced Scroll Indicator */
-    .enhanced-scroll {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
+          if (playIcon && pauseIcon) {
+            playIcon.style.display = playing ? 'none' : '';
+            pauseIcon.style.display = playing ? '' : 'none';
+          }
+          if (volOnIcon && volOffIcon) {
+            volOnIcon.style.display = muted ? 'none' : '';
+            volOffIcon.style.display = muted ? '' : 'none';
+          }
+        }
 
-    .scroll-text {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 500;
-    }
+        videoControls.addEventListener('click', (e) => {
+          const btn = e.target.closest('button');
+          if (!btn) return;
 
-    .scroll-line {
-      position: relative;
-      width: 2px;
-      height: 50px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      border-radius: 2px;
-    }
+          const isToggle = btn.classList.contains('video-toggle');
+          const isMute = btn.classList.contains('video-mute');
 
-    .scroll-dot {
-      position: absolute;
-      top: 0;
-      left: -3px;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: scrollDot 2s ease-in-out infinite;
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
+          if (isToggle) {
+            if (video.paused) {
+              video.muted = true;
+              video.play().finally(syncUI);
+            } else {
+              video.pause();
+              syncUI();
+            }
+          } else if (isMute) {
+            video.muted = !video.muted;
+            syncUI();
+          }
+        });
 
-    @keyframes scrollDot {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(35px); opacity: 0; }
-    }
+        ['play', 'pause', 'volumechange'].forEach(evt => 
+          video.addEventListener(evt, syncUI)
+        );
+        
+        syncUI();
+      }
 
-    .scroll-chevron {
-      color: var(--accent);
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    /* Enhanced Video Controls
+      // Navbar scroll effect
+      const navbar = document.querySelector('.navbar');
+      if (navbar) {
+        window.addEventListener('scroll', () => {
+          if (window.pageYOffset > 50) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
